@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>Mi Tiendita v2</title>
+<title>Mi Tiendita — Eleventa</title>
 
 <style>
 :root{
@@ -12,37 +12,15 @@
   color:#111827;
   background:#f3f4f6;
 }
-
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  background:#f3f4f6;
-}
-
-.app{
-  max-width:760px;
-  margin:auto;
-  padding:16px 14px 90px;
-}
-
-header{
-  margin:8px 0 18px;
-}
-
-h1{
-  font-size:28px;
-  margin:0;
-}
-
-.sub{
-  color:#6b7280;
-  font-size:13px;
-  margin-top:3px;
-}
+body{margin:0;background:#f3f4f6}
+.app{max-width:760px;margin:auto;padding:16px 14px 90px}
+header{margin:8px 0 18px}
+h1{font-size:28px;margin:0}
+.sub{color:#6b7280;font-size:13px;margin-top:3px}
 
 .card{
-  background:white;
+  background:#fff;
   border-radius:18px;
   padding:16px;
   margin:12px 0;
@@ -66,38 +44,15 @@ button{
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
+button:active{transform:scale(.98)}
+button.secondary{background:#e5e7eb;color:#111827}
+button.green{background:#166534}
+button.blue{background:#1d4ed8}
+button.orange{background:#c2410c}
+button.red{background:#dc2626}
+button.small{padding:9px 11px;font-size:13px}
 
-button:active{
-  transform:scale(.98);
-}
-
-button.secondary{
-  background:#e5e7eb;
-  color:#111827;
-}
-
-button.green{
-  background:#166534;
-}
-
-button.blue{
-  background:#1d4ed8;
-}
-
-button.orange{
-  background:#c2410c;
-}
-
-button.red{
-  background:#dc2626;
-}
-
-button.small{
-  padding:9px 11px;
-  font-size:14px;
-}
-
-input,select{
+input{
   width:100%;
   padding:13px;
   border:1px solid #d1d5db;
@@ -105,150 +60,97 @@ input,select{
   font-size:16px;
   margin:6px 0;
   background:white;
-  color:#111827;
-}
-
-label{
-  font-size:13px;
-  font-weight:700;
-  color:#374151;
-  display:block;
-  margin-top:9px;
 }
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:9px;
+  gap:8px;
 }
-
 .stat{
   background:#f9fafb;
   border-radius:14px;
-  padding:12px;
+  padding:11px;
 }
-
 .stat b{
   display:block;
   font-size:20px;
 }
-
 .stat span{
   font-size:12px;
   color:#6b7280;
 }
 
-.dashboard-warning{
-  margin-top:10px;
-  background:#fff7ed;
-  color:#9a3412;
-  border-radius:14px;
-  padding:12px;
-  font-size:13px;
+.mode{
   display:none;
+  padding:13px;
+  border-radius:14px;
+  margin:12px 0;
+  font-size:14px;
+  font-weight:700;
 }
-
-.dashboard-ok{
-  margin-top:10px;
+.mode.count{
+  background:#eff6ff;
+  color:#1d4ed8;
+}
+.mode.done{
   background:#f0fdf4;
   color:#166534;
-  border-radius:14px;
-  padding:12px;
-  font-size:13px;
 }
 
 .product{
   border-top:1px solid #eee;
   padding:14px 0;
 }
-
-.product:first-child{
-  border-top:0;
-}
-
-.product-main{
+.product:first-child{border-top:0}
+.product-top{
   display:flex;
   justify-content:space-between;
   gap:12px;
 }
-
 .name{
   font-weight:800;
   font-size:16px;
 }
-
 .meta{
-  font-size:12px;
   color:#6b7280;
+  font-size:12px;
   margin-top:4px;
-  line-height:1.45;
+  line-height:1.5;
 }
-
-.stock{
+.qty{
+  font-size:22px;
+  font-weight:900;
   text-align:right;
-  font-size:20px;
-  font-weight:800;
 }
-
-.stock.low{
-  color:#dc2626;
+.qty-label{
+  font-size:11px;
+  color:#6b7280;
+  text-align:right;
 }
-
-.stock.ok{
-  color:#166534;
-}
-
 .product-actions{
   display:flex;
   gap:7px;
-  margin-top:9px;
-  flex-wrap:wrap;
+  margin-top:10px;
 }
-
-.product-actions button{
-  padding:8px 11px;
-  font-size:13px;
-}
-
 .empty{
   text-align:center;
   color:#6b7280;
   padding:28px 10px;
 }
 
-.mode{
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-  font-size:14px;
-  font-weight:700;
-  display:none;
+.progress{
+  height:9px;
+  background:#e5e7eb;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:10px;
 }
-
-.mode.count{
-  background:#eff6ff;
-  color:#1d4ed8;
-}
-
-.mode.receive{
-  background:#f0fdf4;
-  color:#166534;
-}
-
-.lookup{
-  background:#f0fdf4;
-  color:#166534;
-  border-radius:12px;
-  padding:10px;
-  font-size:13px;
-  margin-top:8px;
-  display:none;
-}
-
-.help{
-  color:#6b7280;
-  font-size:12px;
-  line-height:1.5;
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:#166534;
+  transition:width .2s;
 }
 
 #scanner{
@@ -260,46 +162,39 @@ label{
   padding:18px;
   overflow-y:auto;
 }
-
 .scanner-title{
-  color:white;
+  color:#fff;
   text-align:center;
   font-weight:800;
   font-size:21px;
   margin-top:18px;
 }
-
 .scanner-status{
   color:#d1d5db;
   text-align:center;
-  font-size:14px;
-  margin:8px auto;
-  min-height:20px;
+  min-height:22px;
+  margin:8px;
 }
-
 .scanner-count{
   color:#86efac;
   text-align:center;
   font-weight:800;
-  font-size:15px;
-  margin:5px 0 15px;
+  margin-bottom:12px;
 }
-
 #reader{
   width:100%;
   max-width:700px;
   margin:15px auto;
+  background:#111;
   border-radius:16px;
   overflow:hidden;
-  background:#111;
 }
-
 .scanner-buttons{
   max-width:700px;
   margin:auto;
 }
 
-#newProduct{
+#resultBox{
   display:none;
   background:white;
   color:#111827;
@@ -308,30 +203,20 @@ label{
   max-width:700px;
   margin:15px auto;
 }
-
-#newProduct h3{
-  margin-top:0;
+.result-name{
+  font-size:20px;
+  font-weight:900;
 }
-
-.badge{
-  display:inline-block;
-  padding:4px 8px;
-  border-radius:999px;
-  font-size:11px;
-  font-weight:800;
-  background:#e5e7eb;
-  color:#374151;
-  margin-left:4px;
+.result-number{
+  font-size:42px;
+  font-weight:900;
+  text-align:center;
+  margin:8px 0;
 }
-
-.badge.low{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.badge.new{
-  background:#dbeafe;
-  color:#1e40af;
+.result-info{
+  text-align:center;
+  color:#6b7280;
+  font-size:13px;
 }
 
 .modal{
@@ -343,7 +228,6 @@ label{
   padding:20px;
   overflow:auto;
 }
-
 .modal-box{
   background:white;
   border-radius:18px;
@@ -352,22 +236,31 @@ label{
   margin:40px auto;
 }
 
+.badge{
+  display:inline-block;
+  padding:3px 7px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+  background:#dcfce7;
+  color:#166534;
+}
+
+.badge.new{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.help{
+  color:#6b7280;
+  font-size:12px;
+  line-height:1.5;
+}
+
 @media(max-width:480px){
-  .stats{
-    gap:6px;
-  }
-
-  .stat{
-    padding:10px 8px;
-  }
-
-  .stat b{
-    font-size:18px;
-  }
-
-  .actions button{
-    font-size:14px;
-  }
+  .stats{gap:6px}
+  .stat{padding:9px 7px}
+  .stat b{font-size:18px}
 }
 </style>
 </head>
@@ -378,7 +271,7 @@ label{
 
 <header>
   <h1>Mi Tiendita 📦</h1>
-  <div class="sub">Inventario móvil v2</div>
+  <div class="sub">Contador de inventario para eleventa</div>
 </header>
 
 <!-- DASHBOARD -->
@@ -388,43 +281,91 @@ label{
   <div class="stats">
 
     <div class="stat">
-      <b id="products">0</b>
+      <b id="totalProducts">0</b>
       <span>Productos</span>
     </div>
 
     <div class="stat">
-      <b id="units">0</b>
-      <span>Piezas</span>
+      <b id="countedProducts">0</b>
+      <span>Contados</span>
     </div>
 
     <div class="stat">
-      <b id="value">$0.00</b>
-      <span>Valor venta</span>
+      <b id="totalUnits">0</b>
+      <span>Piezas</span>
     </div>
 
   </div>
 
-  <div id="lowWarning" class="dashboard-warning"></div>
+  <div class="progress">
+    <div
+      id="progressBar"
+      class="progress-bar">
+    </div>
+  </div>
 
-  <div id="allGood" class="dashboard-ok">
-    🟢 Todo en orden.
+  <div
+    id="progressText"
+    style="
+      text-align:center;
+      color:#6b7280;
+      font-size:12px;
+      margin-top:6px;
+    ">
+    Importa tu inventario de eleventa para comenzar.
   </div>
 
 </div>
 
-<!-- MODES -->
+<!-- IMPORT / EXPORT -->
 
-<div id="modeCount" class="mode count">
+<div class="card">
+
+  <h3 style="margin-top:0">
+    🔄 Inventario de eleventa
+  </h3>
+
+  <button
+    class="blue"
+    style="width:100%"
+    onclick="document.getElementById('eleventaFile').click()">
+    📥 Importar inventario de eleventa
+  </button>
+
+  <input
+    id="eleventaFile"
+    type="file"
+    accept=".csv,text/csv"
+    style="display:none"
+    onchange="importEleventa(event)">
+
+  <button
+    class="green"
+    style="width:100%;margin-top:10px"
+    onclick="exportEleventa()">
+    📤 Exportar inventario actualizado
+  </button>
+
+  <p class="help">
+    Importa el CSV que exportaste desde eleventa,
+    cuenta las existencias con tu teléfono y después
+    exporta el archivo actualizado para volverlo a importar.
+  </p>
+
+</div>
+
+<!-- COUNT MODE -->
+
+<div
+  id="countMode"
+  class="mode count">
+
   🧮 <b>Modo conteo activo</b><br>
-  Escanea cada pieza físicamente en tu tienda.
-</div>
 
-<div id="modeReceive" class="mode receive">
-  📥 <b>Modo recibir mercancía activo</b><br>
-  Cada escaneo agrega una pieza a tu inventario actual.
-</div>
+  Escanea cada pieza que encuentres.
+  La existencia será reemplazada por el conteo físico.
 
-<!-- MAIN ACTIONS -->
+</div>
 
 <div class="card">
 
@@ -432,131 +373,24 @@ label{
 
     <button
       class="blue"
-      onclick="startInventoryCount()">
-      🧮 Nuevo conteo
-    </button>
-
-    <button
-      class="green"
-      onclick="startReceiveMode()">
-      📥 Recibir mercancía
-    </button>
-
-  </div>
-
-  <button
-    style="width:100%;margin-top:10px"
-    onclick="startNormalScanner()">
-    📷 Escanear producto
-  </button>
-
-  <button
-    class="secondary"
-    style="width:100%;margin-top:10px"
-    onclick="showAddForm()">
-    ➕ Registrar producto
-  </button>
-
-</div>
-
-<!-- ADD / EDIT -->
-
-<div class="card" id="productForm" style="display:none">
-
-  <h3 id="formTitle" style="margin-top:0">
-    Registrar producto
-  </h3>
-
-  <input id="editId" type="hidden">
-
-  <label>Nombre</label>
-
-  <input
-    id="name"
-    placeholder="Ej. Coca-Cola 600ml"
-    autocomplete="off">
-
-  <label>Código de barras</label>
-
-  <input
-    id="barcode"
-    inputmode="numeric"
-    placeholder="Ej. 750..."
-    autocomplete="off">
-
-  <div
-    id="formLookup"
-    class="lookup">
-  </div>
-
-  <label>Precio de venta</label>
-
-  <input
-    id="price"
-    type="number"
-    step=".01"
-    inputmode="decimal"
-    placeholder="0.00">
-
-  <label>Costo</label>
-
-  <input
-    id="cost"
-    type="number"
-    step=".01"
-    inputmode="decimal"
-    placeholder="0.00">
-
-  <label>Existencia</label>
-
-  <input
-    id="qty"
-    type="number"
-    min="0"
-    step="1"
-    inputmode="numeric"
-    value="0">
-
-  <label>Inventario mínimo</label>
-
-  <input
-    id="min"
-    type="number"
-    min="0"
-    step="1"
-    inputmode="numeric"
-    value="3">
-
-  <label>Inventario máximo</label>
-
-  <input
-    id="max"
-    type="number"
-    min="0"
-    step="1"
-    inputmode="numeric"
-    value="10">
-
-  <label>Departamento</label>
-
-  <input
-    id="department"
-    placeholder="Ej. Refrescos">
-
-  <div class="actions" style="margin-top:12px">
-
-    <button
-      onclick="saveForm()">
-      💾 Guardar
+      onclick="startCount()">
+      🧮 Iniciar conteo
     </button>
 
     <button
       class="secondary"
-      onclick="hideProductForm()">
-      Cancelar
+      onclick="openScannerNormal()">
+      📷 Escanear
     </button>
 
   </div>
+
+  <button
+    class="secondary"
+    style="width:100%;margin-top:10px"
+    onclick="finishCount()">
+    ✅ Terminar conteo
+  </button>
 
 </div>
 
@@ -566,66 +400,55 @@ label{
 
   <input
     id="search"
-    type="search"
-    placeholder="🔎 Buscar nombre, código o departamento..."
+    placeholder="🔎 Buscar producto o código..."
     oninput="render()">
 
   <div id="list"></div>
 
 </div>
 
-<!-- EXPORT -->
+<!-- BACKUP -->
 
 <div class="card">
 
   <h3 style="margin-top:0">
-    📤 Exportar / respaldar
+    💾 Respaldo
   </h3>
 
-  <button
-    style="width:100%"
-    onclick="exportEleventaCSV()">
-    📤 Exportar CSV para eleventa
-  </button>
-
-  <div class="actions" style="margin-top:10px">
+  <div class="actions">
 
     <button
       class="secondary"
-      onclick="exportJSON()">
-      💾 Respaldo JSON
+      onclick="backup()">
+      💾 Guardar respaldo
     </button>
 
     <button
-      class="green"
-      onclick="document.getElementById('importFile').click()">
-      📥 Importar respaldo
+      class="secondary"
+      onclick="document.getElementById('backupFile').click()">
+      📥 Restaurar
     </button>
 
   </div>
 
   <input
-    id="importFile"
+    id="backupFile"
     type="file"
     accept=".json,application/json"
     style="display:none"
-    onchange="importJSON(event)">
-
-  <p class="help">
-    El respaldo JSON conserva tu catálogo y existencias
-    para poder restaurarlos después.
-  </p>
+    onchange="restoreBackup(event)">
 
 </div>
 
 </div>
+
 
 <!-- SCANNER -->
 
 <div id="scanner">
 
   <div class="scanner-title">
-    📷 Escáner
+    📷 Escanear inventario
   </div>
 
   <div
@@ -642,83 +465,29 @@ label{
 
   <div id="reader"></div>
 
-  <div
-    id="newProduct"
-    class="">
-
-    <h3>🆕 Producto nuevo</h3>
+  <div id="resultBox">
 
     <div
-      id="lookupResult"
-      class="lookup"
-      style="display:block">
-      🔎 Buscando información...
+      id="resultName"
+      class="result-name">
     </div>
 
-    <label>Nombre</label>
+    <div
+      id="resultQty"
+      class="result-number">
+      0
+    </div>
 
-    <input
-      id="newName"
-      placeholder="Nombre del producto">
-
-    <label>Código de barras</label>
-
-    <input
-      id="newBarcode"
-      readonly>
-
-    <label>Precio de venta</label>
-
-    <input
-      id="newPrice"
-      type="number"
-      step=".01"
-      inputmode="decimal"
-      placeholder="0.00">
-
-    <label>Costo</label>
-
-    <input
-      id="newCost"
-      type="number"
-      step=".01"
-      inputmode="decimal"
-      placeholder="0.00">
-
-    <label>Inventario mínimo</label>
-
-    <input
-      id="newMin"
-      type="number"
-      min="0"
-      value="3">
-
-    <label>Inventario máximo</label>
-
-    <input
-      id="newMax"
-      type="number"
-      min="0"
-      value="10">
-
-    <label>Departamento</label>
-
-    <input
-      id="newDepartment"
-      placeholder="Ej. Refrescos">
+    <div
+      id="resultInfo"
+      class="result-info">
+    </div>
 
     <button
       class="green"
-      style="width:100%;margin-top:10px"
-      onclick="registerScannedProduct()">
-      ➕ Registrar producto
-    </button>
-
-    <button
-      class="secondary"
-      style="width:100%;margin-top:8px"
-      onclick="cancelNewProduct()">
-      Continuar escaneando
+      style="width:100%;margin-top:12px"
+      onclick="resumeScanner()">
+      📷 Seguir escaneando
     </button>
 
   </div>
@@ -727,22 +496,15 @@ label{
 
     <button
       class="red"
-      style="width:100%;margin-top:15px"
+      style="width:100%;margin-top:12px"
       onclick="closeScanner()">
-      ❌ Cerrar escáner
-    </button>
-
-    <button
-      id="finishCountButton"
-      class="green"
-      style="width:100%;margin-top:10px;display:none"
-      onclick="finishInventoryCount()">
-      ✅ Terminar conteo
+      ❌ Cerrar
     </button>
 
   </div>
 
 </div>
+
 
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 
@@ -752,111 +514,41 @@ label{
    STORAGE
 ========================================================= */
 
-const STORAGE_KEY = 'tiendita_inventory';
+const STORAGE_KEY =
+  'mi_tiendita_eleventa_v1';
 
-let items = [];
+let data =
+  JSON.parse(
+    localStorage.getItem(
+      STORAGE_KEY
+    ) || 'null'
+  );
 
-try{
+if(!data){
 
-  items =
-    JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || '[]'
-    );
-
-  if(!Array.isArray(items)){
-    items = [];
-  }
-
-}catch(e){
-
-  items = [];
+  data = {
+    headers:[],
+    rows:[],
+    counting:false,
+    scanned:{}
+  };
 
 }
 
+if(!Array.isArray(data.headers))
+  data.headers=[];
 
-/* =========================================================
-   STATE
-========================================================= */
+if(!Array.isArray(data.rows))
+  data.rows=[];
 
-let scanner = null;
-let scannerRunning = false;
-
-let mode = 'normal';
-
-let processingScan = false;
-let lastBarcode = '';
-let lastBarcodeTime = 0;
-
-let scannedCount = 0;
-
-let pendingBarcode = '';
-
-let countBackup = null;
-
-
-/* =========================================================
-   NORMALIZE OLD PRODUCTS
-   Keeps your old inventory compatible.
-========================================================= */
-
-items = items.map((x,index) => ({
-
-  id:
-    x.id ||
-    Date.now().toString() +
-    Math.random().toString(36).slice(2),
-
-  name:
-    String(x.name || 'Producto sin nombre'),
-
-  barcode:
-    String(x.barcode || ''),
-
-  price:
-    Number(x.price || 0),
-
-  cost:
-    Number(x.cost || 0),
-
-  qty:
-    Number(x.qty || 0),
-
-  min:
-    Number(
-      x.min ??
-      x.minimum ??
-      3
-    ),
-
-  max:
-    Number(
-      x.max ??
-      x.maximum ??
-      10
-    ),
-
-  department:
-    String(
-      x.department ||
-      x.departamento ||
-      ''
-    )
-
-}));
-
-
-save();
-
-
-/* =========================================================
-   SAVE
-========================================================= */
+if(typeof data.scanned !== 'object')
+  data.scanned={};
 
 function save(){
 
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify(items)
+    JSON.stringify(data)
   );
 
   render();
@@ -865,676 +557,342 @@ function save(){
 
 
 /* =========================================================
-   MONEY
+   CSV PARSER
+   Handles quoted commas.
 ========================================================= */
 
-function money(n){
+function parseCSV(text){
 
-  return '$' +
-    Number(n || 0).toFixed(2);
+  const rows=[];
+  let row=[];
+  let cell='';
+  let insideQuotes=false;
 
-}
+  for(let i=0;i<text.length;i++){
 
+    const char=text[i];
+    const next=text[i+1];
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
+    if(char === '"' && insideQuotes && next === '"'){
 
-function esc(s){
-
-  return String(s || '')
-    .replace(
-      /[&<>"']/g,
-      c => ({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#39;'
-      }[c])
-    );
-
-}
-
-
-/* =========================================================
-   DASHBOARD
-========================================================= */
-
-function updateDashboard(){
-
-  const totalProducts =
-    items.length;
-
-  const totalUnits =
-    items.reduce(
-      (a,x) =>
-        a + Number(x.qty || 0),
-      0
-    );
-
-  const totalValue =
-    items.reduce(
-      (a,x) =>
-        a +
-        Number(x.qty || 0) *
-        Number(x.price || 0),
-      0
-    );
-
-  const low =
-    items.filter(
-      x =>
-        Number(x.qty || 0) <=
-        Number(x.min || 0)
-    );
-
-  document.getElementById(
-    'products'
-  ).textContent =
-    totalProducts;
-
-  document.getElementById(
-    'units'
-  ).textContent =
-    totalUnits;
-
-  document.getElementById(
-    'value'
-  ).textContent =
-    money(totalValue);
-
-  const warning =
-    document.getElementById(
-      'lowWarning'
-    );
-
-  const good =
-    document.getElementById(
-      'allGood'
-    );
-
-  if(low.length){
-
-    warning.style.display =
-      'block';
-
-    warning.innerHTML =
-      '⚠️ <b>' +
-      low.length +
-      ' producto' +
-      (low.length === 1 ? '' : 's') +
-      '</b> con existencia baja.';
-
-    good.style.display =
-      'none';
-
-  }else{
-
-    warning.style.display =
-      'none';
-
-    good.style.display =
-      'block';
-
-  }
-
-}
-
-
-/* =========================================================
-   RENDER PRODUCTS
-========================================================= */
-
-function render(){
-
-  updateDashboard();
-
-  const search =
-    (
-      document.getElementById(
-        'search'
-      )?.value || ''
-    )
-    .toLowerCase()
-    .trim();
-
-  const shown =
-    items.filter(x => {
-
-      const text =
-        (
-          x.name +
-          ' ' +
-          x.barcode +
-          ' ' +
-          x.department
-        )
-        .toLowerCase();
-
-      return text.includes(search);
-
-    });
-
-  const list =
-    document.getElementById('list');
-
-  if(!shown.length){
-
-    list.innerHTML =
-      '<div class="empty">' +
-      'No hay productos aquí todavía.' +
-      '</div>';
-
-    return;
-
-  }
-
-  list.innerHTML =
-    shown.map(x => {
-
-      const qty =
-        Number(x.qty || 0);
-
-      const min =
-        Number(x.min || 0);
-
-      const isLow =
-        qty <= min;
-
-      return `
-
-        <div class="product">
-
-          <div class="product-main">
-
-            <div>
-
-              <div class="name">
-
-                ${esc(x.name)}
-
-                ${
-                  isLow
-                  ? '<span class="badge low">POCO STOCK</span>'
-                  : ''
-                }
-
-              </div>
-
-              <div class="meta">
-
-                ${
-                  x.barcode
-                  ? '📦 ' + esc(x.barcode)
-                  : '📦 Sin código'
-                }
-
-                <br>
-
-                💰 Venta:
-                ${money(x.price)}
-
-                ${
-                  x.cost
-                  ? ' · Costo: ' +
-                    money(x.cost)
-                  : ''
-                }
-
-                ${
-                  x.department
-                  ? '<br>📂 ' +
-                    esc(x.department)
-                  : ''
-                }
-
-                <br>
-
-                Mín:
-                ${min}
-
-                · Máx:
-                ${Number(x.max || 0)}
-
-              </div>
-
-            </div>
-
-            <div>
-
-              <div
-                class="stock ${
-                  isLow
-                  ? 'low'
-                  : 'ok'
-                }">
-
-                ${qty}
-
-              </div>
-
-              <div
-                style="
-                  font-size:11px;
-                  color:#6b7280;
-                  text-align:right
-                ">
-
-                piezas
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="product-actions">
-
-            <button
-              onclick="changeQty('${x.id}',-1)">
-              − 1
-            </button>
-
-            <button
-              class="green"
-              onclick="changeQty('${x.id}',1)">
-              + 1
-            </button>
-
-            <button
-              class="secondary"
-              onclick="editProduct('${x.id}')">
-              ✏️ Editar
-            </button>
-
-            <button
-              class="secondary"
-              onclick="scanSpecificProduct('${x.id}')">
-              📷
-            </button>
-
-          </div>
-
-        </div>
-
-      `;
-
-    }).join('');
-
-}
-
-
-/* =========================================================
-   QUANTITY
-========================================================= */
-
-function changeQty(id,amount){
-
-  const item =
-    items.find(
-      x => x.id === id
-    );
-
-  if(!item){
-    return;
-  }
-
-  item.qty =
-    Math.max(
-      0,
-      Number(item.qty || 0) +
-      amount
-    );
-
-  save();
-
-}
-
-
-/* =========================================================
-   FORM
-========================================================= */
-
-function showAddForm(){
-
-  document.getElementById(
-    'productForm'
-  ).style.display =
-    'block';
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'Registrar producto';
-
-  clearForm();
-
-  document
-    .getElementById('name')
-    .focus();
-
-}
-
-
-function hideProductForm(){
-
-  document.getElementById(
-    'productForm'
-  ).style.display =
-    'none';
-
-}
-
-
-function clearForm(){
-
-  document.getElementById(
-    'editId'
-  ).value = '';
-
-  document.getElementById(
-    'name'
-  ).value = '';
-
-  document.getElementById(
-    'barcode'
-  ).value = '';
-
-  document.getElementById(
-    'price'
-  ).value = '';
-
-  document.getElementById(
-    'cost'
-  ).value = '';
-
-  document.getElementById(
-    'qty'
-  ).value = '0';
-
-  document.getElementById(
-    'min'
-  ).value = '3';
-
-  document.getElementById(
-    'max'
-  ).value = '10';
-
-  document.getElementById(
-    'department'
-  ).value = '';
-
-  document.getElementById(
-    'formLookup'
-  ).style.display =
-    'none';
-
-}
-
-
-/* =========================================================
-   EDIT PRODUCT
-========================================================= */
-
-function editProduct(id){
-
-  const item =
-    items.find(
-      x => x.id === id
-    );
-
-  if(!item){
-    return;
-  }
-
-  document.getElementById(
-    'productForm'
-  ).style.display =
-    'block';
-
-  document.getElementById(
-    'formTitle'
-  ).textContent =
-    'Editar producto';
-
-  document.getElementById(
-    'editId'
-  ).value =
-    item.id;
-
-  document.getElementById(
-    'name'
-  ).value =
-    item.name;
-
-  document.getElementById(
-    'barcode'
-  ).value =
-    item.barcode;
-
-  document.getElementById(
-    'price'
-  ).value =
-    item.price;
-
-  document.getElementById(
-    'cost'
-  ).value =
-    item.cost;
-
-  document.getElementById(
-    'qty'
-  ).value =
-    item.qty;
-
-  document.getElementById(
-    'min'
-  ).value =
-    item.min;
-
-  document.getElementById(
-    'max'
-  ).value =
-    item.max;
-
-  document.getElementById(
-    'department'
-  ).value =
-    item.department;
-
-  window.scrollTo({
-    top:0,
-    behavior:'smooth'
-  });
-
-}
-
-
-/* =========================================================
-   SAVE FORM
-========================================================= */
-
-function saveForm(){
-
-  const id =
-    document.getElementById(
-      'editId'
-    ).value;
-
-  const name =
-    document.getElementById(
-      'name'
-    ).value.trim();
-
-  const barcode =
-    document.getElementById(
-      'barcode'
-    ).value.trim();
-
-  if(!name){
-
-    alert(
-      'Ponle un nombre al producto.'
-    );
-
-    return;
-
-  }
-
-  const product = {
-
-    name,
-
-    barcode,
-
-    price:
-      Number(
-        document.getElementById(
-          'price'
-        ).value || 0
-      ),
-
-    cost:
-      Number(
-        document.getElementById(
-          'cost'
-        ).value || 0
-      ),
-
-    qty:
-      Math.max(
-        0,
-        Number(
-          document.getElementById(
-            'qty'
-          ).value || 0
-        )
-      ),
-
-    min:
-      Math.max(
-        0,
-        Number(
-          document.getElementById(
-            'min'
-          ).value || 0
-        )
-      ),
-
-    max:
-      Math.max(
-        0,
-        Number(
-          document.getElementById(
-            'max'
-          ).value || 0
-        )
-      ),
-
-    department:
-      document.getElementById(
-        'department'
-      ).value.trim()
-
-  };
-
-  if(id){
-
-    const existing =
-      items.find(
-        x => x.id === id
-      );
-
-    if(existing){
-
-      Object.assign(
-        existing,
-        product
-      );
+      cell += '"';
+      i++;
+      continue;
 
     }
 
-  }else{
+    if(char === '"'){
 
-    const duplicate =
-      barcode &&
-      items.find(
-        x =>
-          x.barcode === barcode
-      );
+      insideQuotes =
+        !insideQuotes;
 
-    if(duplicate){
-
-      alert(
-        'Ese código ya está registrado como "' +
-        duplicate.name +
-        '".'
-      );
-
-      return;
+      continue;
 
     }
 
-    items.push({
+    if(char === ',' && !insideQuotes){
 
-      id:
-        Date.now().toString() +
-        Math.random()
-          .toString(36)
-          .slice(2),
+      row.push(cell);
+      cell='';
+      continue;
 
-      ...product
+    }
 
-    });
+    if(
+      (char === '\n' || char === '\r') &&
+      !insideQuotes
+    ){
+
+      if(char === '\r' && next === '\n')
+        i++;
+
+      row.push(cell);
+
+      if(
+        row.length > 1 ||
+        row[0] !== ''
+      ){
+
+        rows.push(row);
+
+      }
+
+      row=[];
+      cell='';
+
+      continue;
+
+    }
+
+    cell += char;
 
   }
 
-  save();
-  hideProductForm();
+  if(cell.length || row.length){
+
+    row.push(cell);
+    rows.push(row);
+
+  }
+
+  return rows;
 
 }
 
 
 /* =========================================================
-   NORMAL SCANNER
+   CSV ESCAPE
 ========================================================= */
 
-function startNormalScanner(){
+function csvCell(value){
 
-  mode = 'normal';
+  const s =
+    String(value ?? '');
 
-  openScanner();
+  if(
+    s.includes(',') ||
+    s.includes('"') ||
+    s.includes('\n') ||
+    s.includes('\r')
+  ){
+
+    return '"' +
+      s.replace(/"/g,'""') +
+      '"';
+
+  }
+
+  return s;
 
 }
 
 
 /* =========================================================
-   RECEIVE MERCHANDISE
+   FIND COLUMN
 ========================================================= */
 
-function startReceiveMode(){
+function findColumn(name){
 
-  mode = 'receive';
-
-  openScanner();
+  return data.headers.findIndex(
+    h =>
+      String(h)
+        .trim()
+        .toLowerCase() ===
+      name
+        .trim()
+        .toLowerCase()
+  );
 
 }
 
 
 /* =========================================================
-   INVENTORY COUNT
+   BARCODE COLUMN
 ========================================================= */
 
-function startInventoryCount(){
+function barcodeIndex(){
 
-  if(!items.length){
-
-    alert(
-      'Primero registra algunos productos.'
+  let index =
+    findColumn(
+      'Codigo de Barras'
     );
 
-    showAddForm();
+  if(index < 0){
+
+    index =
+      findColumn(
+        'Código de Barras'
+      );
+
+  }
+
+  return index;
+
+}
+
+
+/* =========================================================
+   NAME COLUMN
+========================================================= */
+
+function nameIndex(){
+
+  return findColumn(
+    'Nombre'
+  );
+
+}
+
+
+/* =========================================================
+   EXISTENCE COLUMN
+========================================================= */
+
+function existenceIndex(){
+
+  return findColumn(
+    'Existencia'
+  );
+
+}
+
+
+/* =========================================================
+   IMPORT ELEVENTA
+========================================================= */
+
+function importEleventa(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file)
+    return;
+
+  const reader =
+    new FileReader();
+
+  reader.onload =
+    function(e){
+
+      try{
+
+        let text =
+          e.target.result;
+
+        /*
+          Remove BOM.
+        */
+
+        text =
+          text.replace(
+            /^\uFEFF/,
+            ''
+          );
+
+        const parsed =
+          parseCSV(text);
+
+        if(parsed.length < 2){
+
+          alert(
+            '❌ El archivo no parece contener productos.'
+          );
+
+          return;
+
+        }
+
+        const headers =
+          parsed[0].map(
+            x =>
+              String(x).trim()
+          );
+
+        const barcodeCol =
+          headers.findIndex(
+            h =>
+              h.toLowerCase() ===
+              'codigo de barras' ||
+              h.toLowerCase() ===
+              'código de barras'
+          );
+
+        const nameCol =
+          headers.findIndex(
+            h =>
+              h.toLowerCase() ===
+              'nombre'
+          );
+
+        const existenceCol =
+          headers.findIndex(
+            h =>
+              h.toLowerCase() ===
+              'existencia'
+          );
+
+        if(
+          barcodeCol < 0 ||
+          nameCol < 0 ||
+          existenceCol < 0
+        ){
+
+          alert(
+            '❌ No encontré las columnas necesarias:\n\n' +
+            'Codigo de Barras\n' +
+            'Nombre\n' +
+            'Existencia'
+          );
+
+          return;
+
+        }
+
+        data.headers =
+          headers;
+
+        data.rows =
+          parsed
+            .slice(1)
+            .filter(
+              row =>
+                row.some(
+                  cell =>
+                    String(
+                      cell || ''
+                    ).trim() !== ''
+                )
+            );
+
+        data.counting =
+          false;
+
+        data.scanned =
+          {};
+
+        save();
+
+        event.target.value='';
+
+        alert(
+          '✅ Inventario importado.\n\n' +
+          data.rows.length +
+          ' productos encontrados.'
+        );
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        alert(
+          '❌ No pude leer el archivo CSV.'
+        );
+
+      }
+
+    };
+
+  reader.readAsText(
+    file,
+    'UTF-8'
+  );
+
+}
+
+
+/* =========================================================
+   START COUNT
+========================================================= */
+
+function startCount(){
+
+  if(!data.rows.length){
+
+    alert(
+      'Primero importa tu inventario de eleventa.'
+    );
 
     return;
 
@@ -1542,30 +900,28 @@ function startInventoryCount(){
 
   const answer =
     confirm(
-      '🧮 NUEVO CONTEO\n\n' +
-      'Las existencias actuales se pondrán en 0.\n\n' +
-      'Tus productos, códigos, precios, costos y mínimos NO se borrarán.\n\n' +
-      'Antes de continuar asegúrate de tener un respaldo JSON.\n\n' +
+      '🧮 INICIAR CONTEO\n\n' +
+      'Esto pondrá el conteo físico en 0 para todos los productos.\n\n' +
+      'No borra nombres, precios, códigos ni datos de eleventa.\n\n' +
       '¿Comenzar?'
     );
 
-  if(!answer){
+  if(!answer)
     return;
-  }
 
-  countBackup =
-    items.map(x => ({
-      id:x.id,
-      qty:x.qty
-    }));
+  data.scanned={};
 
-  items.forEach(
-    x => x.qty = 0
+  data.rows.forEach(
+    (row,index) => {
+
+      data.scanned[index]=0;
+
+    }
   );
 
-  save();
+  data.counting=true;
 
-  mode = 'count';
+  save();
 
   openScanner();
 
@@ -1573,50 +929,78 @@ function startInventoryCount(){
 
 
 /* =========================================================
-   OPEN SCANNER
+   OPEN NORMAL SCANNER
 ========================================================= */
+
+function openScannerNormal(){
+
+  if(!data.rows.length){
+
+    alert(
+      'Primero importa tu inventario de eleventa.'
+    );
+
+    return;
+
+  }
+
+  data.counting=false;
+
+  openScanner();
+
+}
+
+
+/* =========================================================
+   SCANNER
+========================================================= */
+
+let scanner=null;
+let scannerRunning=false;
+let lastCode='';
+let lastTime=0;
+let scanTotal=0;
 
 function openScanner(){
 
   document.getElementById(
     'scanner'
-  ).style.display =
-    'block';
+  ).style.display='block';
 
   document.getElementById(
-    'newProduct'
-  ).style.display =
-    'none';
+    'resultBox'
+  ).style.display='none';
 
-  document.getElementById(
-    'finishCountButton'
-  ).style.display =
-    mode === 'count'
-    ? 'block'
-    : 'none';
-
-  updateScannerModeText();
-
-  scannedCount = 0;
-  processingScan = false;
-  lastBarcode = '';
-  lastBarcodeTime = 0;
+  scanTotal=0;
 
   document.getElementById(
     'scannerCount'
-  ).textContent =
+  ).textContent=
     'Escaneados: 0';
 
-  if(scannerRunning){
-    return;
-  }
+  document.getElementById(
+    'scannerStatus'
+  ).textContent=
+    data.counting
+    ? '🧮 Cuenta cada pieza física.'
+    : '📷 Escanea un producto.';
 
-  scannerRunning = true;
+  startCamera();
+
+}
+
+
+function startCamera(){
+
+  if(scannerRunning)
+    return;
 
   scanner =
     new Html5Qrcode(
       'reader'
     );
+
+  scannerRunning=true;
 
   scanner.start(
 
@@ -1626,19 +1010,17 @@ function openScanner(){
 
     {
       fps:10,
-
       qrbox:{
         width:280,
         height:160
-      },
-
-      aspectRatio:1.7777778
-
+      }
     },
 
     code => {
 
-      handleBarcode(code);
+      handleScan(
+        String(code).trim()
+      );
 
     },
 
@@ -1648,16 +1030,11 @@ function openScanner(){
 
     console.error(error);
 
-    scannerRunning = false;
-    scanner = null;
-
-    document.getElementById(
-      'scanner'
-    ).style.display =
-      'none';
+    scannerRunning=false;
+    scanner=null;
 
     alert(
-      'No se pudo acceder a la cámara. Revisa que Safari tenga permiso para usar la cámara.'
+      'No se pudo acceder a la cámara. Revisa el permiso de cámara de Safari.'
     );
 
   });
@@ -1666,678 +1043,259 @@ function openScanner(){
 
 
 /* =========================================================
-   MODE TEXT
+   HANDLE SCAN
 ========================================================= */
 
-function updateScannerModeText(){
+function handleScan(code){
 
-  const status =
-    document.getElementById(
-      'scannerStatus'
-    );
-
-  if(mode === 'count'){
-
-    status.textContent =
-      '🧮 Cuenta físicamente cada pieza.';
-
-  }else if(mode === 'receive'){
-
-    status.textContent =
-      '📥 Escanea cada pieza que recibiste.';
-
-  }else{
-
-    status.textContent =
-      '📷 Escanea un producto.';
-
-  }
-
-}
-
-
-/* =========================================================
-   BARCODE HANDLER
-========================================================= */
-
-function handleBarcode(code){
-
-  code =
-    String(code || '').trim();
-
-  if(!code){
+  if(!code)
     return;
-  }
 
-  const now =
-    Date.now();
-
-  /*
-    Prevent the same physical barcode from being
-    counted multiple times from one camera frame.
-  */
+  const now=Date.now();
 
   if(
-    code === lastBarcode &&
-    now - lastBarcodeTime < 1000
+    code === lastCode &&
+    now-lastTime < 1000
   ){
 
     return;
 
   }
 
-  lastBarcode = code;
-  lastBarcodeTime = now;
+  lastCode=code;
+  lastTime=now;
 
-  if(processingScan){
-    return;
-  }
+  const barcodeCol =
+    barcodeIndex();
 
-  processingScan = true;
+  const nameCol =
+    nameIndex();
 
-  const found =
-    items.find(
-      x =>
-        String(x.barcode || '') ===
-        code
+  const existenceCol =
+    existenceIndex();
+
+  const rowIndex =
+    data.rows.findIndex(
+      row =>
+        String(
+          row[barcodeCol] || ''
+        ).trim() === code
     );
 
-  /* EXISTING PRODUCT */
+  /* PRODUCT NOT FOUND */
 
-  if(found){
+  if(rowIndex < 0){
 
-    if(mode === 'count'){
+    pauseCamera();
 
-      found.qty =
-        Number(found.qty || 0) + 1;
+    document.getElementById(
+      'scannerStatus'
+    ).textContent=
+      '⚠️ Producto no encontrado';
 
-      scannedCount++;
+    document.getElementById(
+      'resultBox'
+    ).style.display='block';
 
-      showScanSuccess(
-        found.name,
-        found.qty
-      );
+    document.getElementById(
+      'resultName'
+    ).textContent=
+      '🆕 No está en Eleventa';
 
-    }else if(mode === 'receive'){
+    document.getElementById(
+      'resultQty'
+    ).textContent=
+      code;
 
-      found.qty =
-        Number(found.qty || 0) + 1;
-
-      scannedCount++;
-
-      showScanSuccess(
-        found.name,
-        found.qty
-      );
-
-    }else{
-
-      showScanSuccess(
-        found.name,
-        found.qty
-      );
-
-      /*
-        Normal scanner does not change stock.
-      */
-
-    }
-
-    save();
-
-    setTimeout(
-      () => {
-        processingScan = false;
-      },
-      650
-    );
+    document.getElementById(
+      'resultInfo'
+    ).textContent=
+      'Este código no existe en el inventario importado.';
 
     return;
 
   }
 
 
-  /* NEW PRODUCT */
-
-  pendingBarcode = code;
-
-  document.getElementById(
-    'newProduct'
-  ).style.display =
-    'block';
-
-  document.getElementById(
-    'newBarcode'
-  ).value =
-    code;
-
-  document.getElementById(
-    'newName'
-  ).value =
-    '';
-
-  document.getElementById(
-    'newPrice'
-  ).value =
-    '';
-
-  document.getElementById(
-    'newCost'
-  ).value =
-    '';
-
-  document.getElementById(
-    'newDepartment'
-  ).value =
-    '';
-
-  document.getElementById(
-    'lookupResult'
-  ).textContent =
-    '🔎 Buscando automáticamente...';
-
-  document.getElementById(
-    'scannerStatus'
-  ).textContent =
-    '🆕 Producto nuevo';
-
-  /*
-    Temporarily stop camera so the user can
-    enter/register the new product without
-    the camera continuing to scan.
-  */
-
-  stopCameraOnly();
-
-  lookupProduct(code);
-
-}
-
-
-/* =========================================================
-   SCAN SUCCESS
-========================================================= */
-
-function showScanSuccess(
-  name,
-  quantity
-){
-
-  document.getElementById(
-    'scannerStatus'
-  ).textContent =
-    '✅ ' + name;
-
-  document.getElementById(
-    'scannerCount'
-  ).textContent =
-    'Escaneados: ' +
-    scannedCount +
-    ' · Stock: ' +
-    quantity;
-
-}
-
-
-/* =========================================================
-   AUTOMATIC BARCODE LOOKUP
-========================================================= */
-
-async function lookupProduct(
-  barcode
-){
-
-  const box =
-    document.getElementById(
-      'lookupResult'
-    );
-
-  box.style.display =
-    'block';
-
-  box.textContent =
-    '🔎 Buscando en la base de datos...';
-
-  try{
-
-    const url =
-      'https://world.openfoodfacts.org/api/v2/product/' +
-      encodeURIComponent(barcode) +
-      '?fields=product_name,product_name_es,brands,quantity,categories';
-
-    const response =
-      await fetch(url);
-
-    if(!response.ok){
-
-      throw new Error(
-        'HTTP ' +
-        response.status
-      );
-
-    }
-
-    const data =
-      await response.json();
-
-    if(
-      data.status === 1 &&
-      data.product
-    ){
-
-      const p =
-        data.product;
-
-      let name =
-        p.product_name_es ||
-        p.product_name ||
-        '';
-
-      const brand =
-        p.brands ||
-        '';
-
-      if(!name && brand){
-
-        name = brand;
-
-      }
-
-      if(
-        name &&
-        p.quantity &&
-        !name
-          .toLowerCase()
-          .includes(
-            String(
-              p.quantity
-            ).toLowerCase()
-          )
-      ){
-
-        name +=
-          ' ' +
-          p.quantity;
-
-      }
-
-      if(name){
-
-        document.getElementById(
-          'newName'
-        ).value =
-          name;
-
-        box.textContent =
-          '✅ Encontrado automáticamente: ' +
-          name;
-
-        document.getElementById(
-          'scannerStatus'
-        ).textContent =
-          '✅ Producto encontrado';
-
-        return;
-
-      }
-
-    }
-
-    box.textContent =
-      '⚠️ No encontré este código. Escribe el nombre manualmente.';
-
-    document.getElementById(
-      'scannerStatus'
-    ).textContent =
-      '📝 Necesitamos el nombre manualmente.';
-
-  }
-  catch(error){
-
-    console.log(
-      'Lookup error:',
-      error
-    );
-
-    box.textContent =
-      '⚠️ No se pudo consultar la base de datos. Puedes escribir el nombre manualmente.';
-
-    document.getElementById(
-      'scannerStatus'
-    ).textContent =
-      '📝 Escribe el nombre manualmente.';
-
-  }
-
-  document.getElementById(
-    'newName'
-  ).focus();
-
-}
-
-
-/* =========================================================
-   REGISTER NEW SCANNED PRODUCT
-========================================================= */
-
-function registerScannedProduct(){
+  const row =
+    data.rows[rowIndex];
 
   const name =
-    document.getElementById(
-      'newName'
-    ).value.trim();
+    row[nameCol] ||
+    'Producto';
 
-  const barcode =
-    document.getElementById(
-      'newBarcode'
-    ).value.trim();
+  /* COUNT MODE */
 
-  if(!name){
+  if(data.counting){
 
-    alert(
-      'Escribe el nombre del producto.'
+    data.scanned[rowIndex] =
+      Number(
+        data.scanned[rowIndex] || 0
+      ) + 1;
+
+    scanTotal++;
+
+    const quantity =
+      data.scanned[rowIndex];
+
+    showResult(
+      name,
+      quantity,
+      'Conteo físico'
     );
 
-    return;
-
   }
 
-  const product = {
+  /* NORMAL MODE */
 
-    id:
-      Date.now().toString() +
-      Math.random()
-        .toString(36)
-        .slice(2),
+  else{
 
-    name,
-
-    barcode,
-
-    price:
+    const current =
       Number(
-        document.getElementById(
-          'newPrice'
-        ).value || 0
-      ),
+        row[existenceCol] || 0
+      );
 
-    cost:
-      Number(
-        document.getElementById(
-          'newCost'
-        ).value || 0
-      ),
-
-    min:
-      Number(
-        document.getElementById(
-          'newMin'
-        ).value || 3
-      ),
-
-    max:
-      Number(
-        document.getElementById(
-          'newMax'
-        ).value || 10
-      ),
-
-    department:
-      document.getElementById(
-        'newDepartment'
-      ).value.trim(),
-
-    qty:0
-
-  };
-
-
-  /*
-    If we're in inventory counting mode,
-    the barcode that was scanned is already
-    one physical piece.
-  */
-
-  if(
-    mode === 'count' ||
-    mode === 'receive'
-  ){
-
-    product.qty = 1;
-
-    scannedCount++;
+    showResult(
+      name,
+      current,
+      'Existencia en Eleventa'
+    );
 
   }
-
-
-  /*
-    Normal mode starts at zero unless the
-    user is just registering a product.
-  */
-
-  items.push(product);
 
   save();
 
-  pendingBarcode = '';
+}
 
-  document.getElementById(
-    'newProduct'
-  ).style.display =
-    'none';
+
+/* =========================================================
+   SHOW RESULT
+========================================================= */
+
+function showResult(
+  name,
+  quantity,
+  info
+){
+
+  pauseCamera();
 
   document.getElementById(
     'scannerStatus'
-  ).textContent =
-    '✅ ' +
-    name +
-    ' registrado';
+  ).textContent=
+    '✅ Producto encontrado';
 
   document.getElementById(
     'scannerCount'
-  ).textContent =
+  ).textContent=
     'Escaneados: ' +
-    scannedCount;
+    scanTotal;
 
-  /*
-    Restart camera.
-  */
+  document.getElementById(
+    'resultBox'
+  ).style.display='block';
 
-  setTimeout(
-    () => {
+  document.getElementById(
+    'resultName'
+  ).textContent=
+    name;
 
-      processingScan = false;
-      lastBarcode = '';
+  document.getElementById(
+    'resultQty'
+  ).textContent=
+    quantity;
 
-      restartCamera();
-
-    },
-    500
-  );
+  document.getElementById(
+    'resultInfo'
+  ).textContent=
+    info;
 
 }
 
 
 /* =========================================================
-   CANCEL NEW PRODUCT
+   PAUSE CAMERA
 ========================================================= */
 
-function cancelNewProduct(){
+function pauseCamera(){
 
-  pendingBarcode = '';
-
-  document.getElementById(
-    'newProduct'
-  ).style.display =
-    'none';
-
-  document.getElementById(
-    'scannerStatus'
-  ).textContent =
-    '📷 Escanea otro producto...';
-
-  setTimeout(
-    () => {
-
-      processingScan = false;
-      lastBarcode = '';
-
-      restartCamera();
-
-    },
-    300
-  );
-
-}
-
-
-/* =========================================================
-   RESTART CAMERA
-========================================================= */
-
-function restartCamera(){
-
-  if(scannerRunning){
+  if(!scanner)
     return;
-  }
-
-  scanner =
-    new Html5Qrcode(
-      'reader'
-    );
-
-  scannerRunning = true;
-
-  scanner.start(
-
-    {
-      facingMode:'environment'
-    },
-
-    {
-      fps:10,
-
-      qrbox:{
-        width:280,
-        height:160
-      },
-
-      aspectRatio:1.7777778
-
-    },
-
-    code => {
-
-      handleBarcode(code);
-
-    },
-
-    error => {}
-
-  ).catch(error => {
-
-    console.error(error);
-
-    scannerRunning = false;
-    scanner = null;
-
-    document.getElementById(
-      'scannerStatus'
-    ).textContent =
-      '⚠️ Cámara detenida.';
-
-  });
-
-}
-
-
-/* =========================================================
-   STOP CAMERA
-========================================================= */
-
-function stopCameraOnly(){
 
   const old =
     scanner;
 
-  scanner = null;
-  scannerRunning = false;
+  scanner=null;
+  scannerRunning=false;
 
-  if(!old){
-    return;
-  }
-
-  try{
-
-    old.stop()
-      .then(() => {
-
+  old.stop()
+    .then(
+      () => {
         try{
           old.clear();
         }catch(e){}
-
-      })
-      .catch(() => {
-
+      }
+    )
+    .catch(
+      () => {
         try{
           old.clear();
         }catch(e){}
-
-      });
-
-  }catch(e){
-
-    try{
-      old.clear();
-    }catch(error){}
-
-  }
+      }
+    );
 
 }
 
 
 /* =========================================================
-   CLOSE SCANNER
+   RESUME
+========================================================= */
+
+function resumeScanner(){
+
+  document.getElementById(
+    'resultBox'
+  ).style.display='none';
+
+  lastCode='';
+
+  startCamera();
+
+}
+
+
+/* =========================================================
+   CLOSE
 ========================================================= */
 
 function closeScanner(){
 
   document.getElementById(
     'scanner'
-  ).style.display =
-    'none';
+  ).style.display='none';
 
   document.getElementById(
-    'newProduct'
-  ).style.display =
-    'none';
+    'resultBox'
+  ).style.display='none';
 
-  processingScan = false;
-  pendingBarcode = '';
-  lastBarcode = '';
+  pauseCamera();
 
-  /*
-    IMPORTANT:
-    Closing the scanner does NOT erase
-    inventory.
-  */
-
-  stopCameraOnly();
-
-  mode = 'normal';
+  lastCode='';
 
 }
 
 
 /* =========================================================
-   FINISH INVENTORY COUNT
+   FINISH COUNT
 ========================================================= */
 
-function finishInventoryCount(){
+function finishCount(){
 
-  if(mode !== 'count'){
+  if(!data.counting){
 
-    closeScanner();
+    alert(
+      'No hay un conteo activo.'
+    );
 
     return;
 
@@ -2346,140 +1304,95 @@ function finishInventoryCount(){
   const answer =
     confirm(
       '✅ TERMINAR CONTEO\n\n' +
-      'Las cantidades que contaste se convertirán en tu nuevo inventario.\n\n' +
-      '¿Ya terminaste de contar toda la tienda?'
+      'Las cantidades físicas escaneadas reemplazarán las existencias de Eleventa.\n\n' +
+      '¿Ya terminaste de contar?'
     );
 
-  if(!answer){
+  if(!answer)
     return;
-  }
 
-  countBackup = null;
+  const existenceCol =
+    existenceIndex();
 
-  mode = 'normal';
+  data.rows.forEach(
+    (row,index) => {
+
+      row[existenceCol] =
+        String(
+          Number(
+            data.scanned[index] || 0
+          )
+        );
+
+    }
+  );
+
+  data.counting=false;
+
+  save();
 
   closeScanner();
 
   alert(
     '✅ Conteo terminado.\n\n' +
-    'Tu nuevo inventario ya está guardado.'
+    'Las existencias fueron actualizadas.'
   );
 
 }
 
 
 /* =========================================================
-   SCAN SPECIFIC PRODUCT
+   EXPORT ELEVENTA
 ========================================================= */
 
-function scanSpecificProduct(id){
+function exportEleventa(){
 
-  const item =
-    items.find(
-      x => x.id === id
-    );
-
-  if(!item){
-    return;
-  }
-
-  mode = 'normal';
-
-  openScanner();
-
-  document.getElementById(
-    'scannerStatus'
-  ).textContent =
-    '📷 Escanea: ' +
-    item.name;
-
-}
-
-
-/* =========================================================
-   EXPORT ELEVENTA CSV
-========================================================= */
-
-function exportEleventaCSV(){
-
-  if(!items.length){
+  if(!data.rows.length){
 
     alert(
-      'No hay productos para exportar.'
+      'No hay inventario para exportar.'
     );
 
     return;
 
   }
 
-  /*
-    This produces the simple product inventory
-    CSV used by the current workflow.
-  */
-
   let csv =
-    'Codigo,Nombre,Precio,Costo,Existencia,Departamento,Inv. Minimo,Inv. Maximo\r\n';
+    data.headers
+      .map(csvCell)
+      .join(',') +
+    '\r\n';
 
-  items.forEach(x => {
+  data.rows.forEach(
+    row => {
 
-    const name =
-      String(
-        x.name || ''
-      )
-      .replace(
-        /"/g,
-        '""'
-      );
+      /*
+        Make sure every row has the same
+        number of columns as the header.
+      */
 
-    const department =
-      String(
-        x.department || ''
-      )
-      .replace(
-        /"/g,
-        '""'
-      );
+      const fixed=[];
 
-    csv +=
-      '"' +
-      (x.barcode || '') +
-      '",' +
+      for(
+        let i=0;
+        i<data.headers.length;
+        i++
+      ){
 
-      '"' +
-      name +
-      '",' +
+        fixed.push(
+          row[i] ?? ''
+        );
 
-      Number(
-        x.price || 0
-      ) +
-      ',' +
+      }
 
-      Number(
-        x.cost || 0
-      ) +
-      ',' +
+      csv +=
+        fixed
+          .map(csvCell)
+          .join(',') +
+        '\r\n';
 
-      Number(
-        x.qty || 0
-      ) +
-      ',' +
-
-      '"' +
-      department +
-      '",' +
-
-      Number(
-        x.min || 0
-      ) +
-      ',' +
-
-      Number(
-        x.max || 0
-      ) +
-
-      '\r\n';
-
-  });
+    }
+  );
 
   const blob =
     new Blob(
@@ -2499,14 +1412,12 @@ function exportEleventaCSV(){
     );
 
   const a =
-    document.createElement(
-      'a'
-    );
+    document.createElement('a');
 
-  a.href = url;
+  a.href=url;
 
-  a.download =
-    'Mi_Tiendita_Eleventa.csv';
+  a.download=
+    'inventario_eleventa_actualizado.csv';
 
   document.body.appendChild(a);
 
@@ -2524,21 +1435,20 @@ function exportEleventaCSV(){
 
 
 /* =========================================================
-   JSON EXPORT
+   BACKUP
 ========================================================= */
 
-function exportJSON(){
-
-  const data =
-    JSON.stringify(
-      items,
-      null,
-      2
-    );
+function backup(){
 
   const blob =
     new Blob(
-      [data],
+      [
+        JSON.stringify(
+          data,
+          null,
+          2
+        )
+      ],
       {
         type:
           'application/json'
@@ -2551,14 +1461,12 @@ function exportJSON(){
     );
 
   const a =
-    document.createElement(
-      'a'
-    );
+    document.createElement('a');
 
-  a.href = url;
+  a.href=url;
 
-  a.download =
-    'Mi_Tiendita_Backup.json';
+  a.download=
+    'mi_tiendita_eleventa_backup.json';
 
   document.body.appendChild(a);
 
@@ -2576,17 +1484,16 @@ function exportJSON(){
 
 
 /* =========================================================
-   JSON IMPORT
+   RESTORE
 ========================================================= */
 
-function importJSON(event){
+function restoreBackup(event){
 
   const file =
     event.target.files[0];
 
-  if(!file){
+  if(!file)
     return;
-  }
 
   const reader =
     new FileReader();
@@ -2596,170 +1503,45 @@ function importJSON(event){
 
       try{
 
-        const imported =
+        const restored =
           JSON.parse(
             e.target.result
           );
 
-        if(!Array.isArray(imported)){
+        if(
+          !restored ||
+          !Array.isArray(
+            restored.headers
+          ) ||
+          !Array.isArray(
+            restored.rows
+          )
+        ){
 
-          alert(
-            '❌ El archivo no parece ser un respaldo válido.'
+          throw new Error(
+            'Invalid backup'
           );
-
-          return;
 
         }
 
         const answer =
           confirm(
-            '📥 IMPORTAR RESPALDO\n\n' +
-            'Los productos del respaldo se agregarán o actualizarán en este dispositivo.\n\n' +
+            '📥 Restaurar respaldo\n\n' +
+            'Esto reemplazará el inventario guardado actualmente en este teléfono.\n\n' +
             '¿Continuar?'
           );
 
-        if(!answer){
+        if(!answer)
           return;
-        }
 
-        let added = 0;
-        let updated = 0;
-
-        imported.forEach(p => {
-
-          if(!p.name){
-            return;
-          }
-
-          const barcode =
-            String(
-              p.barcode || ''
-            ).trim();
-
-          let existing = null;
-
-          if(barcode){
-
-            existing =
-              items.find(
-                x =>
-                  String(
-                    x.barcode || ''
-                  ).trim() ===
-                  barcode
-              );
-
-          }
-
-          if(existing){
-
-            existing.name =
-              String(p.name);
-
-            existing.barcode =
-              barcode;
-
-            existing.price =
-              Number(p.price || 0);
-
-            existing.cost =
-              Number(p.cost || 0);
-
-            existing.qty =
-              Number(p.qty || 0);
-
-            existing.min =
-              Number(
-                p.min ??
-                p.minimum ??
-                3
-              );
-
-            existing.max =
-              Number(
-                p.max ??
-                p.maximum ??
-                10
-              );
-
-            existing.department =
-              String(
-                p.department ||
-                ''
-              );
-
-            updated++;
-
-          }else{
-
-            items.push({
-
-              id:
-                p.id ||
-                Date.now().toString() +
-                Math.random()
-                  .toString(36)
-                  .slice(2),
-
-              name:
-                String(p.name),
-
-              barcode,
-
-              price:
-                Number(
-                  p.price || 0
-                ),
-
-              cost:
-                Number(
-                  p.cost || 0
-                ),
-
-              qty:
-                Number(
-                  p.qty || 0
-                ),
-
-              min:
-                Number(
-                  p.min ??
-                  p.minimum ??
-                  3
-                ),
-
-              max:
-                Number(
-                  p.max ??
-                  p.maximum ??
-                  10
-                ),
-
-              department:
-                String(
-                  p.department ||
-                  ''
-                )
-
-            });
-
-            added++;
-
-          }
-
-        });
+        data=restored;
 
         save();
 
-        event.target.value = '';
+        event.target.value='';
 
         alert(
-          '✅ Respaldo importado.\n\n' +
-          'Nuevos: ' +
-          added +
-          '\n' +
-          'Actualizados: ' +
-          updated
+          '✅ Respaldo restaurado.'
         );
 
       }
@@ -2768,20 +1550,367 @@ function importJSON(event){
         console.error(error);
 
         alert(
-          '❌ No se pudo leer el respaldo.'
+          '❌ El respaldo no es válido.'
         );
 
       }
 
     };
 
-  reader.readAsText(file);
+  reader.readAsText(
+    file
+  );
 
 }
 
 
 /* =========================================================
-   INITIALIZE
+   RENDER
+========================================================= */
+
+function render(){
+
+  const total =
+    data.rows.length;
+
+  const counted =
+    Object.keys(
+      data.scanned || {}
+    ).filter(
+      index =>
+        Number(
+          data.scanned[index]
+        ) > 0
+    ).length;
+
+  const units =
+    data.rows.reduce(
+      (total,row) => {
+
+        const col =
+          existenceIndex();
+
+        return total +
+          Number(
+            row[col] || 0
+          );
+
+      },
+      0
+    );
+
+  document.getElementById(
+    'totalProducts'
+  ).textContent=
+    total;
+
+  document.getElementById(
+    'countedProducts'
+  ).textContent=
+    data.counting
+    ? counted
+    : '—';
+
+  document.getElementById(
+    'totalUnits'
+  ).textContent=
+    units;
+
+
+  let percent=0;
+
+  if(total){
+
+    percent =
+      Math.round(
+        counted /
+        total *
+        100
+      );
+
+  }
+
+  document.getElementById(
+    'progressBar'
+  ).style.width=
+    percent + '%';
+
+  document.getElementById(
+    'progressText'
+  ).textContent=
+    total
+    ? (
+        data.counting
+        ? counted +
+          ' de ' +
+          total +
+          ' productos contados (' +
+          percent +
+          '%)'
+        : total +
+          ' productos cargados desde Eleventa'
+      )
+    : 'Importa tu inventario de eleventa para comenzar.';
+
+
+  const search =
+    (
+      document.getElementById(
+        'search'
+      )?.value ||
+      ''
+    )
+    .toLowerCase()
+    .trim();
+
+  const list =
+    document.getElementById(
+      'list'
+    );
+
+  if(!total){
+
+    list.innerHTML=
+      '<div class="empty">' +
+      '📥 Importa primero tu inventario de Eleventa.' +
+      '</div>';
+
+    return;
+
+  }
+
+  const barcodeCol =
+    barcodeIndex();
+
+  const nameCol =
+    nameIndex();
+
+  const existenceCol =
+    existenceIndex();
+
+  const shown =
+    data.rows
+      .map(
+        (row,index) => ({
+          row,
+          index
+        })
+      )
+      .filter(
+        item => {
+
+          const row =
+            item.row;
+
+          const text =
+            (
+              row[nameCol] || '' +
+              ' ' +
+              row[barcodeCol] || ''
+            )
+            .toString()
+            .toLowerCase();
+
+          return text.includes(
+            search
+          );
+
+        }
+      )
+      .slice(0,100);
+
+
+  if(!shown.length){
+
+    list.innerHTML=
+      '<div class="empty">' +
+      'No se encontraron productos.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  list.innerHTML=
+    shown
+      .map(
+        item => {
+
+          const row =
+            item.row;
+
+          const index =
+            item.index;
+
+          const name =
+            row[nameCol] ||
+            'Sin nombre';
+
+          const barcode =
+            row[barcodeCol] ||
+            '';
+
+          const existence =
+            row[existenceCol] ||
+            '0';
+
+          const physical =
+            Number(
+              data.scanned[index] || 0
+            );
+
+          return `
+
+            <div class="product">
+
+              <div class="product-top">
+
+                <div>
+
+                  <div class="name">
+
+                    ${escapeHTML(name)}
+
+                    ${
+                      data.counting &&
+                      physical > 0
+                      ? '<span class="badge">CONTADO</span>'
+                      : ''
+                    }
+
+                  </div>
+
+                  <div class="meta">
+
+                    📦 ${escapeHTML(barcode)}
+
+                    <br>
+
+                    Existencia Eleventa:
+                    <b>${escapeHTML(existence)}</b>
+
+                    ${
+                      data.counting
+                      ? '<br>🧮 Conteo: <b>' +
+                        physical +
+                        '</b>'
+                      : ''
+                    }
+
+                  </div>
+
+                </div>
+
+                <div>
+
+                  <div class="qty">
+
+                    ${
+                      data.counting
+                      ? physical
+                      : existence
+                    }
+
+                  </div>
+
+                  <div class="qty-label">
+
+                    ${
+                      data.counting
+                      ? 'contadas'
+                      : 'en Eleventa'
+                    }
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              ${
+                data.counting
+                ? `
+                  <div class="product-actions">
+
+                    <button
+                      onclick="manualAdjust(${index},-1)">
+                      −
+                    </button>
+
+                    <button
+                      class="green"
+                      onclick="manualAdjust(${index},1)">
+                      +
+                    </button>
+
+                  </div>
+                `
+                : ''
+              }
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join('');
+
+}
+
+
+/* =========================================================
+   MANUAL ADJUST
+========================================================= */
+
+function manualAdjust(
+  index,
+  amount
+){
+
+  if(!data.counting)
+    return;
+
+  data.scanned[index] =
+    Math.max(
+      0,
+      Number(
+        data.scanned[index] || 0
+      ) + amount
+    );
+
+  save();
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHTML(text){
+
+  return String(
+    text ?? ''
+  )
+  .replace(
+    /[&<>"']/g,
+    char =>
+      ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[char])
+  );
+
+}
+
+
+/* =========================================================
+   INITIAL RENDER
 ========================================================= */
 
 render();
