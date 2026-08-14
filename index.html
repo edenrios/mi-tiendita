@@ -1,0 +1,1798 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>Mi Tiendita — Inventario</title>
+
+<style>
+:root{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  color:#111827;
+  background:#f3f4f6;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#f3f4f6;
+}
+
+.app{
+  max-width:760px;
+  margin:auto;
+  padding:16px 14px 90px;
+}
+
+header{
+  margin:8px 0 18px;
+}
+
+h1{
+  font-size:26px;
+  margin:0;
+}
+
+.sub{
+  color:#6b7280;
+  font-size:13px;
+  margin-top:3px;
+}
+
+.card{
+  background:white;
+  border-radius:18px;
+  padding:16px;
+  margin:12px 0;
+  box-shadow:0 2px 10px #0000000b;
+}
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+button{
+  border:0;
+  border-radius:13px;
+  padding:13px 12px;
+  font-weight:700;
+  font-size:15px;
+  background:#111827;
+  color:white;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+button.secondary{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+button.green{
+  background:#166534;
+  color:white;
+}
+
+button.red{
+  background:#dc2626;
+  color:white;
+}
+
+input{
+  width:100%;
+  padding:13px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:16px;
+  margin:6px 0;
+  background:white;
+  color:#111827;
+}
+
+label{
+  font-size:13px;
+  font-weight:700;
+  color:#374151;
+  display:block;
+  margin-top:9px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+
+.stat{
+  background:#f9fafb;
+  border-radius:14px;
+  padding:12px;
+}
+
+.stat b{
+  display:block;
+  font-size:20px;
+}
+
+.stat span{
+  font-size:12px;
+  color:#6b7280;
+}
+
+.product{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  border-top:1px solid #eee;
+  padding:13px 0;
+}
+
+.product:first-child{
+  border-top:0;
+}
+
+.name{
+  font-weight:750;
+}
+
+.meta{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:3px;
+}
+
+.qty{
+  font-size:19px;
+  font-weight:800;
+  text-align:right;
+  margin-bottom:5px;
+}
+
+.row{
+  display:flex;
+  gap:7px;
+  align-items:center;
+}
+
+.row button{
+  padding:9px 12px;
+  min-width:42px;
+}
+
+.empty{
+  text-align:center;
+  color:#6b7280;
+  padding:25px;
+}
+
+small{
+  color:#6b7280;
+}
+
+/* SCANNER */
+
+#scanner{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:9999;
+  padding:18px;
+  overflow-y:auto;
+}
+
+.scanner-title{
+  color:white;
+  text-align:center;
+  font-weight:800;
+  font-size:21px;
+  margin-top:20px;
+}
+
+.scanner-status{
+  color:#d1d5db;
+  text-align:center;
+  font-size:14px;
+  margin:8px auto;
+  min-height:20px;
+}
+
+.scanner-count{
+  color:#86efac;
+  text-align:center;
+  font-weight:800;
+  font-size:15px;
+  margin:5px 0 15px;
+}
+
+#reader{
+  width:100%;
+  max-width:700px;
+  margin:15px auto 10px;
+  border-radius:16px;
+  overflow:hidden;
+  background:#111;
+}
+
+.scanner-button{
+  width:100%;
+  max-width:700px;
+  display:block;
+  margin:15px auto;
+}
+
+#newProductNotice{
+  display:none;
+  background:white;
+  color:#111827;
+  border-radius:16px;
+  padding:16px;
+  max-width:700px;
+  margin:15px auto;
+}
+
+#newProductNotice h3{
+  margin-top:0;
+}
+
+@media(max-width:480px){
+  .actions button{
+    font-size:14px;
+  }
+
+  .stat b{
+    font-size:18px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <h1>Mi Tiendita 📦</h1>
+  <div class="sub">Inventario móvil</div>
+</header>
+
+
+<!-- STATS -->
+
+<div class="card">
+
+  <div class="stats">
+
+    <div class="stat">
+      <b id="products">0</b>
+      <span>Productos</span>
+    </div>
+
+    <div class="stat">
+      <b id="units">0</b>
+      <span>Piezas</span>
+    </div>
+
+    <div class="stat">
+      <b id="value">$0.00</b>
+      <span>Valor venta</span>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- MAIN BUTTONS -->
+
+<div class="card">
+
+  <div class="actions">
+
+    <button onclick="startSingleScanner()">
+      📷 Escanear
+    </button>
+
+    <button class="green" onclick="startInventoryMode()">
+      📦 Inventario
+    </button>
+
+  </div>
+
+  <button
+    class="secondary"
+    style="width:100%;margin-top:10px"
+    onclick="showAdd()"
+  >
+    ➕ Agregar producto manualmente
+  </button>
+
+</div>
+
+
+<!-- ADD PRODUCT -->
+
+<div
+  class="card"
+  id="addBox"
+  style="display:none"
+>
+
+  <h3 style="margin-top:0">
+    Agregar producto
+  </h3>
+
+  <label>Nombre</label>
+
+  <input
+    id="name"
+    placeholder="Ej. Refresco Cola 600ml"
+    autocomplete="off"
+  >
+
+  <label>Código de barras</label>
+
+  <input
+    id="barcode"
+    inputmode="numeric"
+    placeholder="Escanea o escribe"
+    autocomplete="off"
+  >
+
+  <label>Precio de venta</label>
+
+  <input
+    id="price"
+    type="number"
+    step=".01"
+    inputmode="decimal"
+    placeholder="0.00"
+  >
+
+  <label>Costo</label>
+
+  <input
+    id="cost"
+    type="number"
+    step=".01"
+    inputmode="decimal"
+    placeholder="0.00"
+  >
+
+  <label>Cantidad</label>
+
+  <input
+    id="qty"
+    type="number"
+    min="1"
+    inputmode="numeric"
+    value="1"
+  >
+
+  <div class="actions" style="margin-top:10px">
+
+    <button onclick="saveProduct()">
+      Guardar
+    </button>
+
+    <button
+      class="secondary"
+      onclick="hideAdd()"
+    >
+      Cancelar
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- PRODUCT LIST -->
+
+<div class="card">
+
+  <input
+    id="search"
+    type="search"
+    placeholder="🔎 Buscar producto..."
+    oninput="render()"
+  >
+
+  <div id="list"></div>
+
+</div>
+
+
+<!-- BACKUP / EXPORT -->
+
+<div class="card">
+
+  <h3 style="margin-top:0">
+    💾 Respaldo e inventario
+  </h3>
+
+  <div class="actions">
+
+    <button onclick="exportEleventaCSV()">
+      📤 Exportar CSV
+    </button>
+
+    <button
+      class="secondary"
+      onclick="exportJSON()"
+    >
+      💾 Respaldo JSON
+    </button>
+
+  </div>
+
+  <button
+    class="green"
+    style="width:100%;margin-top:10px"
+    onclick="document.getElementById('importFile').click()"
+  >
+    📥 Importar respaldo
+  </button>
+
+  <input
+    id="importFile"
+    type="file"
+    accept=".json,application/json"
+    style="display:none"
+    onchange="importJSON(event)"
+  >
+
+  <small style="display:block;margin-top:10px">
+    Importa un respaldo anterior para recuperar tu inventario.
+  </small>
+
+</div>
+
+</div>
+
+
+<!-- SCANNER -->
+
+<div id="scanner">
+
+  <div class="scanner-title">
+    📦 Modo inventario
+  </div>
+
+  <div
+    id="scannerStatus"
+    class="scanner-status"
+  >
+    Escanea un producto...
+  </div>
+
+  <div
+    id="scannerCount"
+    class="scanner-count"
+  >
+    Escaneados: 0
+  </div>
+
+  <div id="reader"></div>
+
+
+  <!-- NEW PRODUCT -->
+
+  <div id="newProductNotice">
+
+    <h3>
+      🆕 Producto nuevo
+    </h3>
+
+    <p>
+      Este código todavía no está registrado.
+    </p>
+
+    <label>Código</label>
+
+    <input
+      id="newBarcode"
+      readonly
+    >
+
+    <button
+      class="green"
+      style="width:100%;margin-top:8px"
+      onclick="registerNewFromScanner()"
+    >
+      ➕ Registrar producto
+    </button>
+
+    <button
+      class="secondary"
+      style="width:100%;margin-top:8px"
+      onclick="cancelNewProduct()"
+    >
+      Continuar escaneando
+    </button>
+
+  </div>
+
+
+  <button
+    class="red scanner-button"
+    onclick="stopScanner()"
+  >
+    ❌ Terminar inventario
+  </button>
+
+</div>
+
+
+<!-- BARCODE SCANNER -->
+
+<script
+  src="https://unpkg.com/html5-qrcode"
+  type="text/javascript">
+</script>
+
+
+<script>
+
+/* ==========================================
+   INVENTORY DATA
+========================================== */
+
+let items = JSON.parse(
+  localStorage.getItem(
+    'tiendita_inventory'
+  ) || '[]'
+);
+
+
+/* ==========================================
+   SCANNER VARIABLES
+========================================== */
+
+let scanner = null;
+
+let scannerRunning = false;
+
+let inventoryMode = false;
+
+let processingScan = false;
+
+let scannedCount = 0;
+
+let pendingBarcode = null;
+
+let lastBarcode = '';
+
+let lastBarcodeTime = 0;
+
+let returnToInventory = false;
+
+
+/* ==========================================
+   SAVE
+========================================== */
+
+function save(){
+
+  localStorage.setItem(
+    'tiendita_inventory',
+    JSON.stringify(items)
+  );
+
+  render();
+
+}
+
+
+/* ==========================================
+   MONEY
+========================================== */
+
+function money(n){
+
+  return '$' +
+    Number(n || 0).toFixed(2);
+
+}
+
+
+/* ==========================================
+   HTML ESCAPE
+========================================== */
+
+function esc(s){
+
+  return String(s || '').replace(
+    /[&<>"']/g,
+    c => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
+    }[c])
+  );
+
+}
+
+
+/* ==========================================
+   RENDER
+========================================== */
+
+function render(){
+
+  const q =
+    (
+      document.getElementById(
+        'search'
+      ).value || ''
+    )
+    .toLowerCase()
+    .trim();
+
+
+  const shown =
+    items.filter(x => {
+
+      const text =
+        (x.name || '') +
+        ' ' +
+        (x.barcode || '');
+
+      return text
+        .toLowerCase()
+        .includes(q);
+
+    });
+
+
+  document.getElementById(
+    'products'
+  ).textContent =
+    items.length;
+
+
+  document.getElementById(
+    'units'
+  ).textContent =
+    items.reduce(
+      (total,x) =>
+        total + Number(x.qty || 0),
+      0
+    );
+
+
+  document.getElementById(
+    'value'
+  ).textContent =
+    money(
+      items.reduce(
+        (total,x) =>
+          total +
+          Number(x.qty || 0) *
+          Number(x.price || 0),
+        0
+      )
+    );
+
+
+  if(!shown.length){
+
+    document.getElementById(
+      'list'
+    ).innerHTML =
+      '<div class="empty">' +
+      'No hay productos aquí todavía.' +
+      '</div>';
+
+    return;
+
+  }
+
+
+  document.getElementById(
+    'list'
+  ).innerHTML =
+
+    shown.map(x => `
+
+      <div class="product">
+
+        <div>
+
+          <div class="name">
+            ${esc(x.name)}
+          </div>
+
+          <div class="meta">
+
+            ${
+              x.barcode
+              ? 'Código: ' + esc(x.barcode)
+              : 'Sin código'
+            }
+
+            · Venta
+            ${money(x.price)}
+
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="qty">
+            ${x.qty}
+          </div>
+
+          <div class="row">
+
+            <button
+              onclick="change('${x.id}',-1)"
+            >
+              −
+            </button>
+
+            <button
+              onclick="change('${x.id}',1)"
+            >
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    `).join('');
+
+}
+
+
+/* ==========================================
+   ADD FORM
+========================================== */
+
+function showAdd(){
+
+  document.getElementById(
+    'addBox'
+  ).style.display =
+    'block';
+
+  document.getElementById(
+    'name'
+  ).focus();
+
+}
+
+
+function hideAdd(){
+
+  document.getElementById(
+    'addBox'
+  ).style.display =
+    'none';
+
+}
+
+
+function clearAddForm(){
+
+  document.getElementById('name').value = '';
+
+  document.getElementById('barcode').value = '';
+
+  document.getElementById('price').value = '';
+
+  document.getElementById('cost').value = '';
+
+  document.getElementById('qty').value = '1';
+
+}
+
+
+/* ==========================================
+   SAVE PRODUCT
+========================================== */
+
+function saveProduct(){
+
+  const name =
+    document.getElementById(
+      'name'
+    ).value.trim();
+
+
+  if(!name){
+
+    alert(
+      'Ponle un nombre al producto.'
+    );
+
+    return;
+
+  }
+
+
+  const barcode =
+    document.getElementById(
+      'barcode'
+    ).value.trim();
+
+
+  const price =
+    Number(
+      document.getElementById(
+        'price'
+      ).value || 0
+    );
+
+
+  const cost =
+    Number(
+      document.getElementById(
+        'cost'
+      ).value || 0
+    );
+
+
+  const qty =
+    Math.max(
+      1,
+      Number(
+        document.getElementById(
+          'qty'
+        ).value || 1
+      )
+    );
+
+
+  const existing =
+    barcode &&
+    items.find(
+      x =>
+        String(x.barcode || '') === barcode
+    );
+
+
+  if(existing){
+
+    existing.qty =
+      Number(existing.qty || 0) + qty;
+
+    if(price > 0){
+      existing.price = price;
+    }
+
+    if(cost > 0){
+      existing.cost = cost;
+    }
+
+    save();
+
+    hideAdd();
+
+    clearAddForm();
+
+    if(returnToInventory){
+
+      returnToInventory = false;
+
+      setTimeout(
+        startInventoryMode,
+        300
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  items.push({
+
+    id:
+      Date.now().toString() +
+      Math.random()
+        .toString(36)
+        .slice(2),
+
+    name:name,
+
+    barcode:barcode,
+
+    price:price,
+
+    cost:cost,
+
+    qty:qty
+
+  });
+
+
+  save();
+
+  hideAdd();
+
+  clearAddForm();
+
+
+  if(returnToInventory){
+
+    returnToInventory = false;
+
+    setTimeout(
+      startInventoryMode,
+      300
+    );
+
+  }
+
+}
+
+
+/* ==========================================
+   CHANGE QUANTITY
+========================================== */
+
+function change(id,d){
+
+  const item =
+    items.find(
+      x => x.id === id
+    );
+
+
+  if(!item){
+    return;
+  }
+
+
+  item.qty =
+    Math.max(
+      0,
+      Number(item.qty || 0) + d
+    );
+
+
+  save();
+
+}
+
+
+/* ==========================================
+   SINGLE SCAN
+========================================== */
+
+function startSingleScanner(){
+
+  inventoryMode = false;
+
+  scannedCount = 0;
+
+  openScanner();
+
+}
+
+
+/* ==========================================
+   INVENTORY MODE
+========================================== */
+
+function startInventoryMode(){
+
+  inventoryMode = true;
+
+  scannedCount = 0;
+
+  processingScan = false;
+
+  lastBarcode = '';
+
+  lastBarcodeTime = 0;
+
+
+  document.getElementById(
+    'scannerCount'
+  ).textContent =
+    'Escaneados: 0';
+
+
+  document.getElementById(
+    'scannerStatus'
+  ).textContent =
+    'Escanea productos continuamente...';
+
+
+  openScanner();
+
+}
+
+
+/* ==========================================
+   OPEN CAMERA
+========================================== */
+
+function openScanner(){
+
+  document.getElementById(
+    'scanner'
+  ).style.display =
+    'block';
+
+
+  document.getElementById(
+    'newProductNotice'
+  ).style.display =
+    'none';
+
+
+  if(scannerRunning){
+    return;
+  }
+
+
+  scannerRunning = true;
+
+  processingScan = false;
+
+
+  scanner =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
+  scanner.start(
+
+    {
+      facingMode:'environment'
+    },
+
+    {
+      fps:10,
+
+      qrbox:{
+        width:280,
+        height:160
+      },
+
+      aspectRatio:1.777
+    },
+
+    code => {
+
+      handleScan(code);
+
+    },
+
+    error => {
+
+      /* Ignore normal scan errors */
+
+    }
+
+  )
+
+  .catch(error => {
+
+    console.log(error);
+
+    scannerRunning = false;
+
+    scanner = null;
+
+    document.getElementById(
+      'scanner'
+    ).style.display =
+      'none';
+
+    alert(
+      'No se pudo acceder a la cámara. ' +
+      'Asegúrate de permitir el acceso a la cámara.'
+    );
+
+  });
+
+}
+
+
+/* ==========================================
+   HANDLE BARCODE
+========================================== */
+
+function handleScan(code){
+
+  code =
+    String(code || '').trim();
+
+
+  if(!code){
+    return;
+  }
+
+
+  const now =
+    Date.now();
+
+
+  /*
+    Prevent the same barcode from being
+    counted multiple times instantly.
+  */
+
+  if(
+    code === lastBarcode &&
+    now - lastBarcodeTime < 1200
+  ){
+
+    return;
+
+  }
+
+
+  lastBarcode = code;
+
+  lastBarcodeTime = now;
+
+
+  if(processingScan){
+    return;
+  }
+
+
+  processingScan = true;
+
+
+  const found =
+    items.find(
+      x =>
+        String(x.barcode || '') === code
+    );
+
+
+  /* ========================================
+     EXISTING PRODUCT
+  ======================================== */
+
+  if(found){
+
+    found.qty =
+      Number(found.qty || 0) + 1;
+
+
+    save();
+
+
+    scannedCount++;
+
+
+    document.getElementById(
+      'scannerStatus'
+    ).textContent =
+      '✅ ' +
+      found.name +
+      ' +1';
+
+
+    document.getElementById(
+      'scannerCount'
+    ).textContent =
+      'Escaneados: ' +
+      scannedCount;
+
+
+    setTimeout(() => {
+
+      processingScan = false;
+
+    },700);
+
+
+    return;
+
+  }
+
+
+  /* ========================================
+     NEW PRODUCT IN INVENTORY MODE
+  ======================================== */
+
+  if(inventoryMode){
+
+    pendingBarcode =
+      code;
+
+
+    document.getElementById(
+      'newBarcode'
+    ).value =
+      code;
+
+
+    document.getElementById(
+      'newProductNotice'
+    ).style.display =
+      'block';
+
+
+    document.getElementById(
+      'scannerStatus'
+    ).textContent =
+      '🆕 Producto nuevo';
+
+
+    /*
+      Keep camera alive, but block
+      processing until user decides.
+    */
+
+    processingScan = true;
+
+    return;
+
+  }
+
+
+  /* ========================================
+     NEW PRODUCT IN SINGLE MODE
+  ======================================== */
+
+  stopScanner();
+
+  showAdd();
+
+  document.getElementById(
+    'barcode'
+  ).value =
+    code;
+
+  document.getElementById(
+    'name'
+  ).focus();
+
+  processingScan = false;
+
+}
+
+
+/* ==========================================
+   REGISTER NEW PRODUCT
+========================================== */
+
+function registerNewFromScanner(){
+
+  if(!pendingBarcode){
+    return;
+  }
+
+
+  const code =
+    pendingBarcode;
+
+
+  pendingBarcode = null;
+
+  returnToInventory = true;
+
+
+  /*
+    Hide scanner.
+  */
+
+  document.getElementById(
+    'scanner'
+  ).style.display =
+    'none';
+
+
+  stopCameraOnly();
+
+
+  /*
+    Open registration form.
+  */
+
+  showAdd();
+
+
+  document.getElementById(
+    'barcode'
+  ).value =
+    code;
+
+
+  document.getElementById(
+    'qty'
+  ).value =
+    '1';
+
+
+  document.getElementById(
+    'name'
+  ).focus();
+
+}
+
+
+/* ==========================================
+   CANCEL NEW PRODUCT
+========================================== */
+
+function cancelNewProduct(){
+
+  pendingBarcode = null;
+
+
+  document.getElementById(
+    'newProductNotice'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'scannerStatus'
+  ).textContent =
+    'Escanea productos continuamente...';
+
+
+  setTimeout(() => {
+
+    processingScan = false;
+
+    lastBarcode = '';
+
+  },500);
+
+}
+
+
+/* ==========================================
+   STOP CAMERA
+========================================== */
+
+function stopCameraOnly(){
+
+  const oldScanner =
+    scanner;
+
+
+  scanner = null;
+
+  scannerRunning = false;
+
+
+  if(oldScanner){
+
+    oldScanner
+      .stop()
+      .then(() => {
+
+        try{
+          oldScanner.clear();
+        }catch(e){}
+
+      })
+      .catch(() => {
+
+        try{
+          oldScanner.clear();
+        }catch(e){}
+
+      });
+
+  }
+
+}
+
+
+/* ==========================================
+   CLOSE SCANNER
+========================================== */
+
+function stopScanner(){
+
+  document.getElementById(
+    'scanner'
+  ).style.display =
+    'none';
+
+
+  inventoryMode = false;
+
+  processingScan = false;
+
+  pendingBarcode = null;
+
+  lastBarcode = '';
+
+  lastBarcodeTime = 0;
+
+
+  document.getElementById(
+    'newProductNotice'
+  ).style.display =
+    'none';
+
+
+  stopCameraOnly();
+
+}
+
+
+/* ==========================================
+   EXPORT CSV
+========================================== */
+
+function exportEleventaCSV(){
+
+  if(items.length === 0){
+
+    alert(
+      'No hay productos para exportar.'
+    );
+
+    return;
+
+  }
+
+
+  let csv =
+    'Codigo,Nombre,Precio,Costo,Existencia\r\n';
+
+
+  items.forEach(row => {
+
+    const name =
+      String(row.name || '')
+      .replace(/"/g,'""');
+
+
+    csv +=
+      `"${row.barcode || ''}",` +
+      `"${name}",` +
+      `${Number(row.price || 0)},` +
+      `${Number(row.cost || 0)},` +
+      `${Number(row.qty || 0)}\r\n`;
+
+  });
+
+
+  const blob =
+    new Blob(
+      ['\ufeff' + csv],
+      {
+        type:'text/csv;charset=utf-8'
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement('a');
+
+
+  a.href = url;
+
+  a.download =
+    'productos_eleventa.csv';
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+
+
+  setTimeout(() => {
+
+    URL.revokeObjectURL(url);
+
+  },1000);
+
+}
+
+
+/* ==========================================
+   EXPORT JSON
+========================================== */
+
+function exportJSON(){
+
+  const blob =
+    new Blob(
+      [
+        JSON.stringify(
+          items,
+          null,
+          2
+        )
+      ],
+      {
+        type:'application/json'
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(blob);
+
+
+  const a =
+    document.createElement('a');
+
+
+  a.href = url;
+
+  a.download =
+    'inventario-tiendita.json';
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+
+
+  setTimeout(() => {
+
+    URL.revokeObjectURL(url);
+
+  },1000);
+
+}
+
+
+/* ==========================================
+   IMPORT JSON BACKUP
+========================================== */
+
+function importJSON(event){
+
+  const file =
+    event.target.files[0];
+
+
+  if(!file){
+    return;
+  }
+
+
+  const reader =
+    new FileReader();
+
+
+  reader.onload =
+    function(e){
+
+      try{
+
+        const imported =
+          JSON.parse(
+            e.target.result
+          );
+
+
+        if(!Array.isArray(imported)){
+
+          alert(
+            '❌ Este archivo no parece ser un respaldo válido.'
+          );
+
+          return;
+
+        }
+
+
+        let added = 0;
+
+        let updated = 0;
+
+
+        imported.forEach(product => {
+
+          if(!product.name){
+            return;
+          }
+
+
+          const barcode =
+            String(
+              product.barcode || ''
+            ).trim();
+
+
+          let existing = null;
+
+
+          /*
+            Match by barcode first.
+          */
+
+          if(barcode){
+
+            existing =
+              items.find(
+                x =>
+                  String(
+                    x.barcode || ''
+                  ).trim() === barcode
+              );
+
+          }
+
+
+          /*
+            If there is no barcode,
+            match by product name.
+          */
+
+          if(
+            !existing &&
+            !barcode
+          ){
+
+            existing =
+              items.find(
+                x =>
+                  String(
+                    x.name || ''
+                  )
+                  .toLowerCase()
+                  .trim() ===
+
+                  String(
+                    product.name || ''
+                  )
+                  .toLowerCase()
+                  .trim()
+              );
+
+          }
+
+
+          /* EXISTING */
+
+          if(existing){
+
+            existing.name =
+              String(
+                product.name
+              );
+
+
+            existing.barcode =
+              barcode;
+
+
+            existing.price =
+              Number(
+                product.price || 0
+              );
+
+
+            existing.cost =
+              Number(
+                product.cost || 0
+              );
+
+
+            existing.qty =
+              Number(
+                product.qty || 0
+              );
+
+
+            updated++;
+
+            return;
+
+          }
+
+
+          /* NEW */
+
+          items.push({
+
+            id:
+              product.id ||
+              Date.now().toString() +
+              Math.random()
+                .toString(36)
+                .slice(2),
+
+            name:
+              String(
+                product.name || ''
+              ),
+
+            barcode:
+              barcode,
+
+            price:
+              Number(
+                product.price || 0
+              ),
+
+            cost:
+              Number(
+                product.cost || 0
+              ),
+
+            qty:
+              Number(
+                product.qty || 0
+              )
+
+          });
+
+
+          added++;
+
+        });
+
+
+        save();
+
+
+        event.target.value = '';
+
+
+        alert(
+          '✅ Respaldo importado.\n\n' +
+          'Productos nuevos: ' +
+          added +
+          '\n' +
+          'Productos actualizados: ' +
+          updated
+        );
+
+
+      }catch(error){
+
+        console.error(error);
+
+
+        alert(
+          '❌ No se pudo leer el respaldo. ' +
+          'Selecciona un archivo JSON creado por Mi Tiendita.'
+        );
+
+      }
+
+    };
+
+
+  reader.readAsText(file);
+
+}
+
+
+/* ==========================================
+   START
+========================================== */
+
+render();
+
+</script>
+
+</body>
+</html>
