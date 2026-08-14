@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <meta name="theme-color" content="#0b0d12">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -365,7 +366,7 @@ button{
   color:#991b1b;
 }
 
-/* IMPORT CARD */
+/* IMPORT */
 
 .import-box{
   border:1px dashed #cdd0d7;
@@ -611,6 +612,8 @@ button{
 
 .scanner-bottom{
   margin-top:14px;
+  display:grid;
+  gap:8px;
 }
 
 .continue-button{
@@ -619,6 +622,15 @@ button{
   border-radius:15px;
   background:white;
   color:#111318;
+  font-weight:850;
+}
+
+.finish-button{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  background:#16a34a;
+  color:white;
   font-weight:850;
 }
 
@@ -663,6 +675,7 @@ button{
 /* DESKTOP */
 
 @media(min-width:700px){
+
   .quick-grid{
     grid-template-columns:repeat(4,1fr);
   }
@@ -670,6 +683,7 @@ button{
   .quick{
     min-height:130px;
   }
+
 }
 </style>
 </head>
@@ -678,313 +692,333 @@ button{
 
 <div class="app">
 
-  <!-- HEADER -->
+<header class="header">
 
-  <header class="header">
+  <div class="brand">
 
-    <div class="brand">
+    <div class="logo">📦</div>
 
-      <div class="logo">📦</div>
+    <div>
 
-      <div>
-        <h1>Mi Tiendita</h1>
-        <p>Inventario inteligente</p>
-      </div>
+      <h1>Mi Tiendita</h1>
 
-    </div>
-
-    <button
-      class="icon-button"
-      onclick="openSettings()">
-      ⚙️
-    </button>
-
-  </header>
-
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <div class="hero-top">
-
-      <div>
-        <div class="hero-title">
-          Progreso del inventario
-        </div>
-
-        <div
-          id="heroNumber"
-          class="hero-number">
-          0%
-        </div>
-
-        <div
-          id="heroSub"
-          class="hero-sub">
-          Importa tu inventario de Eleventa
-        </div>
-      </div>
-
-      <div style="font-size:30px">
-        📊
-      </div>
+      <p>Inventario inteligente</p>
 
     </div>
-
-    <div class="progress">
-      <div
-        id="progressBar"
-        class="progress-bar">
-      </div>
-    </div>
-
-    <div class="progress-label">
-      <span id="progressLeft">0 productos</span>
-      <span id="progressRight">0 contados</span>
-    </div>
-
-  </section>
-
-
-  <!-- QUICK ACTIONS -->
-
-  <div class="quick-grid">
-
-    <button
-      class="quick"
-      onclick="startInventory()">
-
-      <div class="quick-icon">
-        📷
-      </div>
-
-      <div class="quick-title">
-        Contar inventario
-      </div>
-
-      <div class="quick-sub">
-        Escanea productos
-      </div>
-
-    </button>
-
-
-    <button
-      class="quick"
-      onclick="document.getElementById('fileInput').click()">
-
-      <div class="quick-icon">
-        📥
-      </div>
-
-      <div class="quick-title">
-        Importar Eleventa
-      </div>
-
-      <div class="quick-sub">
-        Cargar productos
-      </div>
-
-    </button>
-
-
-    <button
-      class="quick"
-      onclick="exportEleventa()">
-
-      <div class="quick-icon">
-        📤
-      </div>
-
-      <div class="quick-title">
-        Exportar
-      </div>
-
-      <div class="quick-sub">
-        Volver a Eleventa
-      </div>
-
-    </button>
-
-
-    <button
-      class="quick"
-      onclick="createBackup()">
-
-      <div class="quick-icon">
-        💾
-      </div>
-
-      <div class="quick-title">
-        Respaldo
-      </div>
-
-      <div class="quick-sub">
-        Guardar progreso
-      </div>
-
-    </button>
 
   </div>
 
+  <button
+    class="icon-button"
+    onclick="openSettings()">
 
-  <!-- STATS -->
+    ⚙️
 
-  <section class="card">
+  </button>
 
-    <h2 class="section-title">
-      Resumen
-    </h2>
+</header>
 
-    <div class="stats">
 
-      <div class="stat">
-        <div
-          id="statProducts"
-          class="stat-number">
-          0
-        </div>
-        <div class="stat-label">
-          Productos
-        </div>
+<section class="hero">
+
+  <div class="hero-top">
+
+    <div>
+
+      <div class="hero-title">
+        Progreso del inventario
       </div>
 
-      <div class="stat">
-        <div
-          id="statCounted"
-          class="stat-number">
-          0
-        </div>
-        <div class="stat-label">
-          Contados
-        </div>
+      <div
+        id="heroNumber"
+        class="hero-number">
+
+        0%
+
       </div>
 
-      <div class="stat">
-        <div
-          id="statPending"
-          class="stat-number">
-          0
-        </div>
-        <div class="stat-label">
-          Pendientes
-        </div>
+      <div
+        id="heroSub"
+        class="hero-sub">
+
+        Importa tu inventario de Eleventa
+
       </div>
 
     </div>
 
-  </section>
-
-
-  <!-- SEARCH -->
-
-  <section class="card">
-
-    <h2 class="section-title">
-      Productos
-    </h2>
-
-    <div class="search-wrap">
-
-      <span class="search-icon">
-        🔎
-      </span>
-
-      <input
-        id="search"
-        class="search"
-        placeholder="Buscar producto o código..."
-        oninput="renderProducts()">
-
+    <div style="font-size:30px">
+      📊
     </div>
 
-    <div id="productList"></div>
+  </div>
 
-  </section>
+  <div class="progress">
 
-
-  <!-- IMPORT -->
-
-  <section class="card">
-
-    <div class="import-box">
-
-      <div class="import-icon">
-        📦
-      </div>
-
-      <div class="import-title">
-        Inventario de Eleventa
-      </div>
-
-      <div class="import-text">
-
-        Importa el archivo CSV que exportaste
-        desde Eleventa. Mi Tiendita conservará
-        los datos del producto y actualizará
-        solamente la existencia.
-
-      </div>
-
-      <button
-        class="main-button blue"
-        onclick="document.getElementById('fileInput').click()">
-
-        📥 Seleccionar inventario
-
-      </button>
-
-      <input
-        id="fileInput"
-        type="file"
-        accept=".csv,text/csv"
-        style="display:none"
-        onchange="importEleventa(event)">
-
+    <div
+      id="progressBar"
+      class="progress-bar">
     </div>
 
-  </section>
+  </div>
+
+  <div class="progress-label">
+
+    <span id="progressLeft">
+      0 productos
+    </span>
+
+    <span id="progressRight">
+      0 contados
+    </span>
+
+  </div>
+
+</section>
 
 
-  <!-- BACKUP -->
+<div class="quick-grid">
 
-  <section class="card">
+  <button
+    class="quick"
+    onclick="startInventory()">
 
-    <h2 class="section-title">
-      💾 Seguridad
-    </h2>
+    <div class="quick-icon">
+      📷
+    </div>
 
-    <button
-      class="secondary-button"
-      onclick="createBackup()">
+    <div class="quick-title">
+      Contar inventario
+    </div>
 
-      Guardar respaldo
+    <div class="quick-sub">
+      Escanea productos
+    </div>
 
-    </button>
+  </button>
 
-    <button
-      class="secondary-button"
-      style="margin-top:8px"
-      onclick="document.getElementById('backupInput').click()">
 
-      Restaurar respaldo
+  <button
+    class="quick"
+    onclick="document.getElementById('fileInput').click()">
 
-    </button>
+    <div class="quick-icon">
+      📥
+    </div>
 
-    <input
-      id="backupInput"
-      type="file"
-      accept=".json,application/json"
-      style="display:none"
-      onchange="restoreBackup(event)">
+    <div class="quick-title">
+      Importar Eleventa
+    </div>
 
-  </section>
+    <div class="quick-sub">
+      Archivo Excel (.xlsx)
+    </div>
+
+  </button>
+
+
+  <button
+    class="quick"
+    onclick="exportEleventa()">
+
+    <div class="quick-icon">
+      📤
+    </div>
+
+    <div class="quick-title">
+      Exportar
+    </div>
+
+    <div class="quick-sub">
+      Archivo Excel
+    </div>
+
+  </button>
+
+
+  <button
+    class="quick"
+    onclick="createBackup()">
+
+    <div class="quick-icon">
+      💾
+    </div>
+
+    <div class="quick-title">
+      Respaldo
+    </div>
+
+    <div class="quick-sub">
+      Guardar progreso
+    </div>
+
+  </button>
 
 </div>
 
 
-<!-- BOTTOM NAV -->
+<section class="card">
+
+  <h2 class="section-title">
+    Resumen
+  </h2>
+
+  <div class="stats">
+
+    <div class="stat">
+
+      <div
+        id="statProducts"
+        class="stat-number">
+
+        0
+
+      </div>
+
+      <div class="stat-label">
+        Productos
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div
+        id="statCounted"
+        class="stat-number">
+
+        0
+
+      </div>
+
+      <div class="stat-label">
+        Contados
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div
+        id="statPending"
+        class="stat-number">
+
+        0
+
+      </div>
+
+      <div class="stat-label">
+        Pendientes
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="card">
+
+  <h2 class="section-title">
+    Productos
+  </h2>
+
+  <div class="search-wrap">
+
+    <span class="search-icon">
+      🔎
+    </span>
+
+    <input
+      id="search"
+      class="search"
+      placeholder="Buscar producto o código..."
+      oninput="renderProducts()">
+
+  </div>
+
+  <div id="productList"></div>
+
+</section>
+
+
+<section class="card">
+
+  <div class="import-box">
+
+    <div class="import-icon">
+      📊
+    </div>
+
+    <div class="import-title">
+      Inventario de Eleventa
+    </div>
+
+    <div class="import-text">
+
+      Selecciona directamente el archivo
+      <b>.xlsx</b> que exportaste desde Eleventa.
+      No necesitas convertirlo.
+
+    </div>
+
+    <button
+      class="main-button blue"
+      onclick="document.getElementById('fileInput').click()">
+
+      📥 Importar archivo Excel
+
+    </button>
+
+    <input
+      id="fileInput"
+      type="file"
+      accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      style="display:none"
+      onchange="importEleventa(event)">
+
+  </div>
+
+</section>
+
+
+<section class="card">
+
+  <h2 class="section-title">
+    💾 Seguridad
+  </h2>
+
+  <button
+    class="secondary-button"
+    onclick="createBackup()">
+
+    Guardar respaldo
+
+  </button>
+
+  <button
+    class="secondary-button"
+    style="margin-top:8px"
+    onclick="document.getElementById('backupInput').click()">
+
+    Restaurar respaldo
+
+  </button>
+
+  <input
+    id="backupInput"
+    type="file"
+    accept=".json,application/json"
+    style="display:none"
+    onchange="restoreBackup(event)">
+
+</section>
+
+</div>
+
 
 <nav class="bottom-nav">
 
@@ -994,25 +1028,36 @@ button{
       class="nav-button active"
       onclick="scrollTopApp()">
 
-      <span class="nav-icon">🏠</span>
+      <span class="nav-icon">
+        🏠
+      </span>
+
       Inicio
 
     </button>
+
 
     <button
       class="nav-button"
       onclick="startInventory()">
 
-      <span class="nav-icon">📷</span>
+      <span class="nav-icon">
+        📷
+      </span>
+
       Escanear
 
     </button>
+
 
     <button
       class="nav-button"
       onclick="scrollToProducts()">
 
-      <span class="nav-icon">📦</span>
+      <span class="nav-icon">
+        📦
+      </span>
+
       Productos
 
     </button>
@@ -1022,15 +1067,11 @@ button{
 </nav>
 
 
-<!-- TOAST -->
-
 <div
   id="toast"
   class="toast">
 </div>
 
-
-<!-- SCANNER -->
 
 <div id="scanner">
 
@@ -1043,10 +1084,13 @@ button{
     <button
       class="scanner-close"
       onclick="closeScanner()">
+
       ✕
+
     </button>
 
   </div>
+
 
   <div
     id="scannerStatus"
@@ -1055,6 +1099,7 @@ button{
     Apunta la cámara al código de barras.
 
   </div>
+
 
   <div id="reader"></div>
 
@@ -1089,6 +1134,7 @@ button{
       piezas contadas
     </div>
 
+
     <div class="scanner-bottom">
 
       <button
@@ -1099,14 +1145,21 @@ button{
 
       </button>
 
+
+      <button
+        class="finish-button"
+        onclick="finishInventory()">
+
+        ✅ Terminar inventario
+
+      </button>
+
     </div>
 
   </div>
 
 </div>
 
-
-<!-- SETTINGS MODAL -->
 
 <div
   id="settingsModal"
@@ -1155,16 +1208,22 @@ button{
 </div>
 
 
+<!-- Excel reader/writer -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- Barcode scanner -->
 <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
 
 <script>
 
 /* =========================================================
-   DATA
+   STORAGE
 ========================================================= */
 
 const STORAGE_KEY =
-  "mi_tiendita_eleventa_premium_v1";
+  "mi_tiendita_eleventa_xlsx_v1";
+
 
 let inventory =
   JSON.parse(
@@ -1172,6 +1231,7 @@ let inventory =
       STORAGE_KEY
     ) || "null"
   );
+
 
 if(!inventory){
 
@@ -1198,10 +1258,13 @@ function save(){
 
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify(inventory)
+    JSON.stringify(
+      inventory
+    )
   );
 
   updateDashboard();
+
   renderProducts();
 
 }
@@ -1244,208 +1307,45 @@ function toast(message){
 
 
 /* =========================================================
-   CSV PARSER
+   NORMALIZE HEADER
 ========================================================= */
 
-function parseCSV(text){
+function normalizeHeader(value){
 
-  const result=[];
-
-  let row=[];
-
-  let value="";
-
-  let quotes=false;
-
-  for(
-    let i=0;
-    i<text.length;
-    i++
-  ){
-
-    const char =
-      text[i];
-
-    const next =
-      text[i+1];
-
-    if(
-      char === '"' &&
-      quotes &&
-      next === '"'
-    ){
-
-      value += '"';
-
-      i++;
-
-      continue;
-
-    }
-
-    if(
-      char === '"'
-    ){
-
-      quotes =
-        !quotes;
-
-      continue;
-
-    }
-
-    if(
-      char === "," &&
-      !quotes
-    ){
-
-      row.push(
-        value
-      );
-
-      value="";
-
-      continue;
-
-    }
-
-    if(
-      (char === "\n" ||
-       char === "\r") &&
-      !quotes
-    ){
-
-      if(
-        char === "\r" &&
-        next === "\n"
-      ){
-
-        i++;
-
-      }
-
-      row.push(
-        value
-      );
-
-      value="";
-
-      if(
-        row.some(
-          x =>
-            String(
-              x
-            ).trim() !== ""
-        )
-      ){
-
-        result.push(
-          row
-        );
-
-      }
-
-      row=[];
-
-      continue;
-
-    }
-
-    value +=
-      char;
-
-  }
-
-  if(
-    value.length ||
-    row.length
-  ){
-
-    row.push(
-      value
-    );
-
-    if(
-      row.some(
-        x =>
-          String(
-            x
-          ).trim() !== ""
-      )
-    ){
-
-      result.push(
-        row
-      );
-
-    }
-
-  }
-
-  return result;
+  return String(
+    value ?? ""
+  )
+  .trim()
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(
+    /[\u0300-\u036f]/g,
+    ""
+  );
 
 }
 
 
 /* =========================================================
-   CSV CELL
+   FIND COLUMN
 ========================================================= */
 
-function csvCell(value){
+function findColumn(
+  ...names
+){
 
-  const text =
-    String(
-      value ?? ""
+  const normalized =
+    names.map(
+      normalizeHeader
     );
-
-  if(
-    text.includes(",") ||
-    text.includes('"') ||
-    text.includes("\n") ||
-    text.includes("\r")
-  ){
-
-    return '"' +
-      text.replace(
-        /"/g,
-        '""'
-      ) +
-      '"';
-
-  }
-
-  return text;
-
-}
-
-
-/* =========================================================
-   COLUMN FINDER
-========================================================= */
-
-function findColumn(...names){
 
   return inventory.headers.findIndex(
-    header => {
-
-      const clean =
-        String(
+    header =>
+      normalized.includes(
+        normalizeHeader(
           header
         )
-        .trim()
-        .toLowerCase();
-
-      return names.some(
-        name =>
-          clean ===
-          String(
-            name
-          )
-          .trim()
-          .toLowerCase()
-      );
-
-    }
+      )
   );
 
 }
@@ -1551,7 +1451,7 @@ function supplierColumn(){
 
 
 /* =========================================================
-   IMPORT ELEVENTA
+   IMPORT XLSX
 ========================================================= */
 
 function importEleventa(event){
@@ -1562,99 +1462,124 @@ function importEleventa(event){
   if(!file)
     return;
 
+
+  if(
+    typeof XLSX ===
+    "undefined"
+  ){
+
+    alert(
+      "❌ No se pudo cargar el lector de Excel.\n\n" +
+      "Comprueba que tengas conexión a Internet y vuelve a cargar la página."
+    );
+
+    return;
+
+  }
+
+
   const reader =
     new FileReader();
+
 
   reader.onload =
     function(e){
 
       try{
 
-        let text =
-          e.target.result;
-
-        text =
-          text.replace(
-            /^\uFEFF/,
-            ""
+        const data =
+          new Uint8Array(
+            e.target.result
           );
 
-        const parsed =
-          parseCSV(
-            text
+
+        const workbook =
+          XLSX.read(
+            data,
+            {
+              type:"array"
+            }
           );
+
+
+        /*
+          Use the first worksheet
+          from the Eleventa workbook.
+        */
+
+        const sheetName =
+          workbook.SheetNames[0];
+
+
+        const sheet =
+          workbook.Sheets[
+            sheetName
+          ];
+
+
+        const rows =
+          XLSX.utils.sheet_to_json(
+            sheet,
+            {
+              header:1,
+              defval:"",
+              raw:false
+            }
+          );
+
 
         if(
-          parsed.length < 2
+          !rows ||
+          rows.length < 2
         ){
 
           alert(
-            "No encontré productos en el archivo."
+            "❌ No encontré productos en ese archivo."
           );
 
           return;
 
         }
 
-        const headers =
-          parsed[0].map(
-            h =>
-              String(
-                h
-              ).trim()
-          );
-
-        const required = [
-          "Código",
-          "Producto",
-          "P. Costo",
-          "P. Venta",
-          "P. Mayoreo",
-          "Departamento",
-          "Existencia",
-          "Inv. Mínimo",
-          "Inv. Máximo",
-          "Tipo de Venta",
-          "Proveedor"
-        ];
 
         /*
-          We require the important columns,
-          but allow minor spelling differences.
+          Find the real header row.
+          Eleventa normally starts at row 1,
+          but this makes the importer more tolerant.
         */
 
-        const codeIndex =
-          headers.findIndex(
-            h =>
-              h.toLowerCase() ===
-              "código" ||
-              h.toLowerCase() ===
-              "codigo"
+        let headerRowIndex =
+          rows.findIndex(
+            row => {
+
+              const normalized =
+                row.map(
+                  normalizeHeader
+                );
+
+              return (
+                normalized.includes(
+                  "codigo"
+                ) &&
+                normalized.includes(
+                  "producto"
+                ) &&
+                normalized.includes(
+                  "existencia"
+                )
+              );
+
+            }
           );
 
-        const productIndex =
-          headers.findIndex(
-            h =>
-              h.toLowerCase() ===
-              "producto"
-          );
-
-        const existenceIndex =
-          headers.findIndex(
-            h =>
-              h.toLowerCase() ===
-              "existencia"
-          );
 
         if(
-          codeIndex < 0 ||
-          productIndex < 0 ||
-          existenceIndex < 0
+          headerRowIndex < 0
         ){
 
           alert(
-            "Este no parece ser el inventario de Eleventa que esperamos.\n\n" +
-            "Necesito encontrar:\n\n" +
+            "❌ No pude reconocer el formato de Eleventa.\n\n" +
+            "El archivo debe contener las columnas:\n\n" +
             "Código\n" +
             "Producto\n" +
             "Existencia"
@@ -1664,25 +1589,63 @@ function importEleventa(event){
 
         }
 
+
+        const headers =
+          rows[
+            headerRowIndex
+          ]
+          .map(
+            value =>
+              String(
+                value ?? ""
+              ).trim()
+          );
+
+
+        const productRows =
+          rows
+          .slice(
+            headerRowIndex + 1
+          )
+          .filter(
+            row =>
+              row.some(
+                cell =>
+                  String(
+                    cell ?? ""
+                  ).trim() !== ""
+              )
+          )
+          .map(
+            row => {
+
+              const fixed=[];
+
+              for(
+                let i=0;
+                i<headers.length;
+                i++
+              ){
+
+                fixed.push(
+                  row[i] ?? ""
+                );
+
+              }
+
+              return fixed;
+
+            }
+          );
+
+
         inventory = {
 
           headers:
-
             headers,
 
           rows:
-
-            parsed
-              .slice(1)
-              .filter(
-                row =>
-                  row.some(
-                    cell =>
-                      String(
-                        cell || ""
-                      ).trim() !== ""
-                  )
-              ),
+            productRows,
 
           counting:false,
 
@@ -1690,25 +1653,58 @@ function importEleventa(event){
 
         };
 
+
+        /*
+          Verify important Eleventa columns.
+        */
+
+        const code =
+          barcodeColumn();
+
+        const product =
+          productColumn();
+
+        const existence =
+          existenceColumn();
+
+
+        if(
+          code < 0 ||
+          product < 0 ||
+          existence < 0
+        ){
+
+          alert(
+            "❌ El archivo se abrió, pero faltan columnas importantes de Eleventa."
+          );
+
+          return;
+
+        }
+
+
         save();
+
 
         event.target.value="";
 
+
         toast(
-          "✅ Inventario importado"
+          "✅ Inventario de Eleventa importado"
         );
+
 
         setTimeout(
           () => {
 
             alert(
-              "✅ Inventario importado correctamente.\n\n" +
-              inventory.rows.length +
-              " productos encontrados."
+              "✅ ¡Listo!\n\n" +
+              productRows.length +
+              " productos importados desde Eleventa."
             );
 
           },
-          200
+          250
         );
 
       }
@@ -1719,17 +1715,17 @@ function importEleventa(event){
         );
 
         alert(
-          "❌ No pude leer el archivo.\n\n" +
-          "Asegúrate de seleccionar el CSV exportado desde Eleventa."
+          "❌ No pude abrir el archivo Excel.\n\n" +
+          "Asegúrate de que sea el archivo .xlsx exportado directamente desde Eleventa."
         );
 
       }
 
     };
 
-  reader.readAsText(
-    file,
-    "UTF-8"
+
+  reader.readAsArrayBuffer(
+    file
   );
 
 }
@@ -1753,11 +1749,9 @@ function startInventory(){
 
   }
 
-  const alreadyCounting =
-    inventory.counting;
 
   if(
-    alreadyCounting
+    inventory.counting
   ){
 
     openScanner();
@@ -1766,18 +1760,22 @@ function startInventory(){
 
   }
 
+
   const answer =
     confirm(
       "🧮 NUEVO CONTEO\n\n" +
-      "Vamos a empezar un conteo físico nuevo.\n\n" +
-      "Las cantidades anteriores del conteo serán reiniciadas a 0.\n\n" +
+      "Esto iniciará un nuevo conteo físico.\n\n" +
+      "Las cantidades anteriores del conteo se pondrán en 0.\n\n" +
       "¿Quieres comenzar?"
     );
+
 
   if(!answer)
     return;
 
+
   inventory.counted={};
+
 
   inventory.rows.forEach(
     (_,index) => {
@@ -1789,13 +1787,17 @@ function startInventory(){
     }
   );
 
+
   inventory.counting=true;
 
+
   save();
+
 
   toast(
     "🧮 Conteo iniciado"
   );
+
 
   openScanner();
 
@@ -1819,18 +1821,21 @@ function openScanner(){
 
   document.getElementById(
     "scanner"
-  ).style.display="block";
+  ).style.display =
+    "block";
+
 
   document.getElementById(
     "scanResult"
-  ).style.display="none";
+  ).style.display =
+    "none";
+
 
   document.getElementById(
     "scannerStatus"
   ).textContent =
-    inventory.counting
-    ? "Escanea cada pieza que encuentres."
-    : "Apunta al código de barras.";
+    "Apunta la cámara al código de barras.";
+
 
   startCamera();
 
@@ -1844,12 +1849,15 @@ function startCamera(){
   )
     return;
 
+
   scanner =
     new Html5Qrcode(
       "reader"
     );
 
+
   scannerRunning=true;
+
 
   scanner.start(
 
@@ -1864,10 +1872,7 @@ function startCamera(){
       qrbox:{
         width:280,
         height:160
-      },
-
-      aspectRatio:
-        1.7777778
+      }
 
     },
 
@@ -1895,6 +1900,7 @@ function startCamera(){
 
       scanner=null;
 
+
       alert(
         "❌ No pude abrir la cámara.\n\n" +
         "Asegúrate de permitir el acceso a la cámara."
@@ -1910,18 +1916,17 @@ function startCamera(){
    HANDLE SCAN
 ========================================================= */
 
-function handleScan(code){
+function handleScan(
+  code
+){
 
   if(!code)
     return;
 
+
   const now =
     Date.now();
 
-  /*
-    Prevent duplicate camera detections
-    within one second.
-  */
 
   if(
     code === lastCode &&
@@ -1932,11 +1937,13 @@ function handleScan(code){
 
   }
 
+
   lastCode =
     code;
 
   lastScanTime =
     now;
+
 
   const codeCol =
     barcodeColumn();
@@ -1944,8 +1951,6 @@ function handleScan(code){
   const nameCol =
     productColumn();
 
-  const existenceCol =
-    existenceColumn();
 
   const index =
     inventory.rows.findIndex(
@@ -1953,67 +1958,73 @@ function handleScan(code){
         String(
           row[
             codeCol
-          ] || ""
-        ).trim()
-        === code
+          ] ?? ""
+        )
+        .trim()
+        ===
+        code
     );
 
+
   /*
-    PRODUCT NOT FOUND
+    NOT FOUND
   */
 
-  if(index < 0){
+  if(
+    index < 0
+  ){
 
     pauseCamera();
+
 
     document.getElementById(
       "scannerStatus"
     ).textContent =
       "⚠️ Producto no encontrado";
 
+
     document.getElementById(
       "scanResult"
-    ).style.display="block";
+    ).style.display =
+      "block";
+
 
     document.getElementById(
       "resultName"
     ).textContent =
       "Producto no encontrado";
 
+
     document.getElementById(
       "resultCode"
     ).textContent =
       code;
+
 
     document.getElementById(
       "resultNumber"
     ).textContent =
       "🆕";
 
+
     document.getElementById(
       "resultLabel"
     ).textContent =
-      "Este código no existe en Eleventa.";
+      "Este código no existe en tu inventario.";
 
     return;
 
   }
 
 
-  const row =
+  const name =
     inventory.rows[
       index
-    ];
-
-  const name =
-    row[
+    ][
       nameCol
     ] ||
     "Producto";
 
-  /*
-    INVENTORY COUNT
-  */
 
   if(
     inventory.counting
@@ -2028,34 +2039,20 @@ function handleScan(code){
         ] || 0
       ) + 1;
 
+
+    save();
+
+
     showScanResult(
       name,
       code,
       inventory.counted[
         index
-      ]
+      ],
+      "piezas contadas"
     );
 
   }
-
-  /*
-    NORMAL SCAN
-  */
-
-  else{
-
-    showScanResult(
-      name,
-      code,
-      row[
-        existenceCol
-      ] || "0",
-      "Existencia actual"
-    );
-
-  }
-
-  save();
 
 }
 
@@ -2068,35 +2065,41 @@ function showScanResult(
   name,
   code,
   number,
-  label="Piezas contadas"
+  label
 ){
 
   pauseCamera();
+
 
   document.getElementById(
     "scannerStatus"
   ).textContent =
     "✅ Producto encontrado";
 
+
   document.getElementById(
     "scanResult"
   ).style.display =
     "block";
+
 
   document.getElementById(
     "resultName"
   ).textContent =
     name;
 
+
   document.getElementById(
     "resultCode"
   ).textContent =
     code;
 
+
   document.getElementById(
     "resultNumber"
   ).textContent =
     number;
+
 
   document.getElementById(
     "resultLabel"
@@ -2117,12 +2120,15 @@ function pauseCamera(){
   )
     return;
 
+
   const current =
     scanner;
+
 
   scanner=null;
 
   scannerRunning=false;
+
 
   current
     .stop()
@@ -2151,7 +2157,7 @@ function pauseCamera(){
 
 
 /* =========================================================
-   CONTINUE
+   CONTINUE SCANNING
 ========================================================= */
 
 function continueScanning(){
@@ -2161,7 +2167,9 @@ function continueScanning(){
   ).style.display =
     "none";
 
+
   lastCode="";
+
 
   startCamera();
 
@@ -2176,15 +2184,18 @@ function closeScanner(){
 
   pauseCamera();
 
+
   document.getElementById(
     "scanner"
   ).style.display =
     "none";
 
+
   document.getElementById(
     "scanResult"
   ).style.display =
     "none";
+
 
   lastCode="";
 
@@ -2209,18 +2220,22 @@ function finishInventory(){
 
   }
 
+
   const answer =
     confirm(
       "✅ TERMINAR INVENTARIO\n\n" +
-      "Las cantidades que escaneaste reemplazarán la columna Existencia de Eleventa.\n\n" +
-      "¿Ya terminaste de contar?"
+      "Las cantidades escaneadas reemplazarán la columna Existencia de Eleventa.\n\n" +
+      "¿Ya terminaste?"
     );
+
 
   if(!answer)
     return;
 
+
   const existenceCol =
     existenceColumn();
+
 
   inventory.rows.forEach(
     (row,index) => {
@@ -2239,11 +2254,15 @@ function finishInventory(){
     }
   );
 
+
   inventory.counting=false;
+
 
   save();
 
+
   closeScanner();
+
 
   toast(
     "✅ Inventario actualizado"
@@ -2253,7 +2272,7 @@ function finishInventory(){
 
 
 /* =========================================================
-   EXPORT ELEVENTA
+   EXPORT XLSX
 ========================================================= */
 
 function exportEleventa(){
@@ -2270,9 +2289,10 @@ function exportEleventa(){
 
   }
 
+
   /*
-    If a count is still active,
-    ask before exporting.
+    If a count is active,
+    finish it first.
   */
 
   if(
@@ -2285,11 +2305,14 @@ function exportEleventa(){
         "¿Quieres terminarlo y actualizar Existencia antes de exportar?"
       );
 
+
     if(!answer)
       return;
 
+
     const existenceCol =
       existenceColumn();
+
 
     inventory.rows.forEach(
       (row,index) => {
@@ -2308,95 +2331,69 @@ function exportEleventa(){
       }
     );
 
+
     inventory.counting=false;
+
 
     save();
 
   }
 
-  let csv =
-    inventory.headers
-      .map(
-        csvCell
-      )
-      .join(",") +
-    "\r\n";
 
-  inventory.rows.forEach(
-    row => {
+  try{
 
-      const fixed=[];
+    /*
+      Build worksheet using the exact
+      headers and rows imported from Eleventa.
+    */
 
-      for(
-        let i=0;
-        i<inventory.headers.length;
-        i++
-      ){
+    const data = [
+      inventory.headers,
+      ...inventory.rows
+    ];
 
-        fixed.push(
-          row[i] ?? ""
-        );
 
-      }
+    const worksheet =
+      XLSX.utils.aoa_to_sheet(
+        data
+      );
 
-      csv +=
-        fixed
-          .map(
-            csvCell
-          )
-          .join(",") +
-        "\r\n";
 
-    }
-  );
+    const workbook =
+      XLSX.utils.book_new();
 
-  const blob =
-    new Blob(
-      [
-        "\ufeff",
-        csv
-      ],
-      {
-        type:
-          "text/csv;charset=utf-8"
-      }
+
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      "Inventario"
     );
 
-  const url =
-    URL.createObjectURL(
-      blob
+
+    XLSX.writeFile(
+      workbook,
+      "inventario_eleventa_actualizado.xlsx"
     );
 
-  const link =
-    document.createElement(
-      "a"
+
+    toast(
+      "📤 Excel listo para Eleventa"
     );
 
-  link.href =
-    url;
 
-  link.download =
-    "inventario_eleventa_actualizado.csv";
+  }
+  catch(error){
 
-  document.body.appendChild(
-    link
-  );
+    console.error(
+      error
+    );
 
-  link.click();
 
-  link.remove();
+    alert(
+      "❌ No pude crear el archivo Excel."
+    );
 
-  setTimeout(
-    () =>
-      URL.revokeObjectURL(
-        url
-      ),
-    1000
-  );
-
-  toast(
-    "📤 Archivo exportado"
-  );
+  }
 
 }
 
@@ -2422,29 +2419,37 @@ function createBackup(){
       }
     );
 
+
   const url =
     URL.createObjectURL(
       blob
     );
+
 
   const link =
     document.createElement(
       "a"
     );
 
+
   link.href =
     url;
 
+
   link.download =
     "mi_tiendita_respaldo.json";
+
 
   document.body.appendChild(
     link
   );
 
+
   link.click();
 
+
   link.remove();
+
 
   setTimeout(
     () =>
@@ -2454,6 +2459,7 @@ function createBackup(){
     1000
   );
 
+
   toast(
     "💾 Respaldo creado"
   );
@@ -2462,7 +2468,7 @@ function createBackup(){
 
 
 /* =========================================================
-   RESTORE BACKUP
+   RESTORE
 ========================================================= */
 
 function restoreBackup(event){
@@ -2470,11 +2476,14 @@ function restoreBackup(event){
   const file =
     event.target.files[0];
 
+
   if(!file)
     return;
 
+
   const reader =
     new FileReader();
+
 
   reader.onload =
     function(e){
@@ -2485,6 +2494,7 @@ function restoreBackup(event){
           JSON.parse(
             e.target.result
           );
+
 
         if(
           !restored ||
@@ -2502,22 +2512,28 @@ function restoreBackup(event){
 
         }
 
+
         const answer =
           confirm(
             "📥 RESTAURAR RESPALDO\n\n" +
-            "Esto reemplazará el inventario actualmente guardado en este teléfono.\n\n" +
+            "Esto reemplazará el inventario actualmente guardado.\n\n" +
             "¿Continuar?"
           );
+
 
         if(!answer)
           return;
 
+
         inventory =
           restored;
 
+
         save();
 
+
         event.target.value="";
+
 
         toast(
           "✅ Respaldo restaurado"
@@ -2530,6 +2546,7 @@ function restoreBackup(event){
           error
         );
 
+
         alert(
           "❌ Ese respaldo no es válido."
         );
@@ -2537,6 +2554,7 @@ function restoreBackup(event){
       }
 
     };
+
 
   reader.readAsText(
     file
@@ -2554,6 +2572,7 @@ function updateDashboard(){
   const total =
     inventory.rows.length;
 
+
   const counted =
     Object.values(
       inventory.counted || {}
@@ -2564,13 +2583,16 @@ function updateDashboard(){
     )
     .length;
 
+
   const pending =
     Math.max(
       0,
       total-counted
     );
 
+
   let percent=0;
+
 
   if(
     total > 0
@@ -2585,10 +2607,12 @@ function updateDashboard(){
 
   }
 
+
   document.getElementById(
     "heroNumber"
   ).textContent =
     percent + "%";
+
 
   document.getElementById(
     "heroSub"
@@ -2599,10 +2623,12 @@ function updateDashboard(){
       : "Inventario listo"
     : "Importa tu inventario de Eleventa";
 
+
   document.getElementById(
     "progressBar"
   ).style.width =
     percent + "%";
+
 
   document.getElementById(
     "progressLeft"
@@ -2610,21 +2636,25 @@ function updateDashboard(){
     total +
     " productos";
 
+
   document.getElementById(
     "progressRight"
   ).textContent =
     counted +
     " contados";
 
+
   document.getElementById(
     "statProducts"
   ).textContent =
     total;
 
+
   document.getElementById(
     "statCounted"
   ).textContent =
     counted;
+
 
   document.getElementById(
     "statPending"
@@ -2644,6 +2674,7 @@ function renderProducts(){
     document.getElementById(
       "productList"
     );
+
 
   if(
     inventory.rows.length === 0
@@ -2675,6 +2706,7 @@ function renderProducts(){
 
   }
 
+
   const search =
     (
       document.getElementById(
@@ -2684,6 +2716,7 @@ function renderProducts(){
     )
     .toLowerCase()
     .trim();
+
 
   const codeCol =
     barcodeColumn();
@@ -2699,6 +2732,7 @@ function renderProducts(){
 
   const existenceCol =
     existenceColumn();
+
 
   const shown =
     inventory.rows
@@ -2717,6 +2751,7 @@ function renderProducts(){
           const row =
             item.row;
 
+
           const text =
             (
               String(
@@ -2732,6 +2767,7 @@ function renderProducts(){
               )
             )
             .toLowerCase();
+
 
           return text.includes(
             search
@@ -2779,11 +2815,13 @@ function renderProducts(){
           const index =
             item.index;
 
+
           const name =
             row[
               nameCol
             ] ||
             "Sin nombre";
+
 
           const code =
             row[
@@ -2791,11 +2829,13 @@ function renderProducts(){
             ] ||
             "";
 
+
           const cost =
             row[
               costCol
             ] ||
             "0";
+
 
           const sale =
             row[
@@ -2803,11 +2843,13 @@ function renderProducts(){
             ] ||
             "0";
 
+
           const existence =
             row[
               existenceCol
             ] ||
             "0";
+
 
           const counted =
             Number(
@@ -2816,8 +2858,10 @@ function renderProducts(){
               ] || 0
             );
 
+
           const isCounted =
             counted > 0;
+
 
           return `
 
@@ -2844,6 +2888,7 @@ function renderProducts(){
                   </div>
 
                 </div>
+
 
                 <div class="product-qty">
 
@@ -2882,6 +2927,7 @@ function renderProducts(){
 
                 </span>
 
+
                 <span class="tag">
 
                   Costo $${escapeHTML(
@@ -2889,6 +2935,7 @@ function renderProducts(){
                   )}
 
                 </span>
+
 
                 ${
                   isCounted
@@ -2916,6 +2963,7 @@ function renderProducts(){
                       −
 
                     </button>
+
 
                     <button
                       class="small-button plus"
@@ -2956,6 +3004,7 @@ function adjustCount(
   )
     return;
 
+
   inventory.counted[
     index
   ] =
@@ -2967,6 +3016,7 @@ function adjustCount(
         ] || 0
       ) + amount
     );
+
 
   save();
 
@@ -3014,6 +3064,7 @@ function openSettings(){
 
 }
 
+
 function closeSettings(){
 
   document.getElementById(
@@ -3037,14 +3088,13 @@ function scrollTopApp(){
 
 }
 
+
 function scrollToProducts(){
 
-  const element =
-    document.getElementById(
-      "productList"
-    );
-
-  element.scrollIntoView({
+  document.getElementById(
+    "productList"
+  )
+  .scrollIntoView({
     behavior:"smooth",
     block:"start"
   });
