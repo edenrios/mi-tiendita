@@ -3,264 +3,673 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
-<title>Mi Tiendita — Eleventa</title>
+<meta name="theme-color" content="#0b0d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Tiendita">
+
+<title>Mi Tiendita</title>
 
 <style>
 :root{
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
-  color:#111827;
-  background:#f3f4f6;
-}
-*{box-sizing:border-box}
-body{margin:0;background:#f3f4f6}
-.app{max-width:760px;margin:auto;padding:16px 14px 90px}
-header{margin:8px 0 18px}
-h1{font-size:28px;margin:0}
-.sub{color:#6b7280;font-size:13px;margin-top:3px}
-
-.card{
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  margin:12px 0;
-  box-shadow:0 2px 10px #0000000b;
+  --bg:#f4f5f7;
+  --card:#ffffff;
+  --text:#111318;
+  --muted:#737985;
+  --line:#e7e8ec;
+  --dark:#111318;
+  --blue:#2563eb;
+  --green:#16a34a;
+  --red:#dc2626;
+  --orange:#ea580c;
+  --shadow:0 8px 30px rgba(0,0,0,.06);
 }
 
-.actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html{
+  background:var(--bg);
+}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+button,input{
+  font:inherit;
 }
 
 button{
   border:0;
-  border-radius:13px;
-  padding:13px 12px;
-  font-weight:700;
-  font-size:15px;
-  background:#111827;
-  color:white;
   cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
 }
-button:active{transform:scale(.98)}
-button.secondary{background:#e5e7eb;color:#111827}
-button.green{background:#166534}
-button.blue{background:#1d4ed8}
-button.orange{background:#c2410c}
-button.red{background:#dc2626}
-button.small{padding:9px 11px;font-size:13px}
 
-input{
+.app{
+  max-width:760px;
+  margin:auto;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    16px
+    calc(100px + env(safe-area-inset-bottom));
+}
+
+/* HEADER */
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#111318;
+  font-size:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.brand h1{
+  margin:0;
+  font-size:25px;
+  letter-spacing:-.6px;
+}
+
+.brand p{
+  margin:2px 0 0;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.icon-button{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  background:var(--card);
+  color:var(--text);
+  box-shadow:var(--shadow);
+  font-size:19px;
+}
+
+/* HERO */
+
+.hero{
+  background:linear-gradient(145deg,#111318,#242832);
+  color:white;
+  border-radius:26px;
+  padding:22px;
+  margin-bottom:14px;
+  box-shadow:0 15px 40px rgba(0,0,0,.14);
+}
+
+.hero-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.hero-title{
+  font-size:14px;
+  opacity:.7;
+}
+
+.hero-number{
+  font-size:42px;
+  font-weight:850;
+  letter-spacing:-1.8px;
+  margin-top:3px;
+}
+
+.hero-sub{
+  font-size:13px;
+  opacity:.65;
+}
+
+.progress{
+  height:8px;
+  background:rgba(255,255,255,.12);
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:20px;
+}
+
+.progress-bar{
+  width:0%;
+  height:100%;
+  background:white;
+  border-radius:20px;
+  transition:width .3s ease;
+}
+
+.progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:12px;
+  margin-top:8px;
+  opacity:.65;
+}
+
+/* QUICK ACTIONS */
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-bottom:14px;
+}
+
+.quick{
+  background:var(--card);
+  border-radius:21px;
+  padding:18px;
+  text-align:left;
+  box-shadow:var(--shadow);
+  min-height:120px;
+  color:var(--text);
+  transition:.15s;
+}
+
+.quick:active{
+  transform:scale(.97);
+}
+
+.quick-icon{
+  font-size:28px;
+  margin-bottom:12px;
+}
+
+.quick-title{
+  font-weight:800;
+  font-size:15px;
+}
+
+.quick-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+/* CARDS */
+
+.card{
+  background:var(--card);
+  border-radius:22px;
+  padding:17px;
+  margin-bottom:14px;
+  box-shadow:var(--shadow);
+}
+
+.section-title{
+  font-size:17px;
+  font-weight:850;
+  margin:0 0 13px;
+}
+
+/* SEARCH */
+
+.search-wrap{
+  position:relative;
+}
+
+.search-icon{
+  position:absolute;
+  left:14px;
+  top:13px;
+  font-size:17px;
+}
+
+.search{
   width:100%;
-  padding:13px;
-  border:1px solid #d1d5db;
-  border-radius:12px;
-  font-size:16px;
-  margin:6px 0;
+  height:48px;
+  border:1px solid var(--line);
+  background:#f7f7f8;
+  border-radius:15px;
+  padding:0 14px 0 42px;
+  outline:none;
+}
+
+.search:focus{
+  border-color:#b9c7ef;
   background:white;
 }
+
+/* STATS */
 
 .stats{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:8px;
 }
+
 .stat{
-  background:#f9fafb;
-  border-radius:14px;
-  padding:11px;
-}
-.stat b{
-  display:block;
-  font-size:20px;
-}
-.stat span{
-  font-size:12px;
-  color:#6b7280;
+  background:#f7f7f8;
+  border-radius:16px;
+  padding:13px;
 }
 
-.mode{
-  display:none;
-  padding:13px;
-  border-radius:14px;
-  margin:12px 0;
-  font-size:14px;
-  font-weight:700;
+.stat-number{
+  font-size:22px;
+  font-weight:850;
 }
-.mode.count{
-  background:#eff6ff;
-  color:#1d4ed8;
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
 }
-.mode.done{
-  background:#f0fdf4;
-  color:#166534;
-}
+
+/* PRODUCT */
 
 .product{
-  border-top:1px solid #eee;
-  padding:14px 0;
+  padding:15px 0;
+  border-top:1px solid var(--line);
 }
-.product:first-child{border-top:0}
-.product-top{
+
+.product:first-child{
+  border-top:0;
+}
+
+.product-head{
   display:flex;
   justify-content:space-between;
   gap:12px;
 }
-.name{
+
+.product-name{
+  font-size:15px;
   font-weight:800;
-  font-size:16px;
-}
-.meta{
-  color:#6b7280;
-  font-size:12px;
-  margin-top:4px;
-  line-height:1.5;
-}
-.qty{
-  font-size:22px;
-  font-weight:900;
-  text-align:right;
-}
-.qty-label{
-  font-size:11px;
-  color:#6b7280;
-  text-align:right;
-}
-.product-actions{
-  display:flex;
-  gap:7px;
-  margin-top:10px;
-}
-.empty{
-  text-align:center;
-  color:#6b7280;
-  padding:28px 10px;
+  line-height:1.25;
 }
 
-.progress{
-  height:9px;
-  background:#e5e7eb;
-  border-radius:999px;
-  overflow:hidden;
+.product-code{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:5px;
+}
+
+.product-qty{
+  text-align:right;
+  min-width:65px;
+}
+
+.product-qty-number{
+  font-size:24px;
+  font-weight:900;
+}
+
+.product-qty-label{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.product-meta{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
   margin-top:10px;
 }
-.progress-bar{
-  height:100%;
-  width:0%;
-  background:#166534;
-  transition:width .2s;
+
+.tag{
+  background:#f2f3f5;
+  border-radius:9px;
+  padding:5px 8px;
+  font-size:10px;
+  color:#60656e;
 }
+
+.tag.counted{
+  background:#dcfce7;
+  color:#166534;
+  font-weight:800;
+}
+
+.product-buttons{
+  display:flex;
+  gap:7px;
+  margin-top:11px;
+}
+
+.small-button{
+  flex:1;
+  padding:10px;
+  border-radius:11px;
+  background:#f0f1f3;
+  color:var(--text);
+  font-weight:800;
+}
+
+.small-button.plus{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.small-button.minus{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+/* IMPORT CARD */
+
+.import-box{
+  border:1px dashed #cdd0d7;
+  border-radius:17px;
+  padding:17px;
+  text-align:center;
+}
+
+.import-icon{
+  font-size:32px;
+}
+
+.import-title{
+  font-weight:850;
+  margin-top:5px;
+}
+
+.import-text{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.5;
+  margin:6px 0 13px;
+}
+
+.main-button{
+  width:100%;
+  border-radius:14px;
+  padding:14px;
+  color:white;
+  background:var(--dark);
+  font-weight:800;
+  box-shadow:0 7px 18px rgba(0,0,0,.12);
+}
+
+.main-button.blue{
+  background:var(--blue);
+}
+
+.main-button.green{
+  background:var(--green);
+}
+
+.main-button.orange{
+  background:var(--orange);
+}
+
+.secondary-button{
+  width:100%;
+  border-radius:14px;
+  padding:13px;
+  background:#eef0f2;
+  color:var(--text);
+  font-weight:800;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:8px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:16px;
+  right:16px;
+  bottom:
+    calc(82px + env(safe-area-inset-bottom));
+  max-width:500px;
+  margin:auto;
+  background:#111318;
+  color:white;
+  padding:13px 16px;
+  border-radius:15px;
+  text-align:center;
+  font-weight:700;
+  font-size:13px;
+  z-index:10000;
+  opacity:0;
+  transform:translateY(15px);
+  pointer-events:none;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* BOTTOM NAV */
+
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:1000;
+  padding:
+    9px 14px
+    calc(9px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(0,0,0,.06);
+}
+
+.bottom-inner{
+  max-width:500px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+
+.nav-button{
+  background:transparent;
+  color:#777b84;
+  padding:5px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.nav-icon{
+  display:block;
+  font-size:21px;
+  margin-bottom:2px;
+}
+
+.nav-button.active{
+  color:#111318;
+}
+
+/* SCANNER */
 
 #scanner{
   display:none;
   position:fixed;
   inset:0;
-  background:#000;
-  z-index:9999;
-  padding:18px;
+  z-index:9000;
+  background:#050608;
+  color:white;
+  padding:
+    calc(18px + env(safe-area-inset-top))
+    16px
+    calc(20px + env(safe-area-inset-bottom));
   overflow-y:auto;
 }
-.scanner-title{
-  color:#fff;
-  text-align:center;
-  font-weight:800;
-  font-size:21px;
-  margin-top:18px;
-}
-.scanner-status{
-  color:#d1d5db;
-  text-align:center;
-  min-height:22px;
-  margin:8px;
-}
-.scanner-count{
-  color:#86efac;
-  text-align:center;
-  font-weight:800;
+
+.scanner-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   margin-bottom:12px;
 }
+
+.scanner-title{
+  font-size:20px;
+  font-weight:850;
+}
+
+.scanner-close{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+  background:#22252c;
+  color:white;
+  font-size:18px;
+}
+
+.scanner-status{
+  text-align:center;
+  color:#aeb4c0;
+  font-size:13px;
+  min-height:20px;
+  margin-bottom:12px;
+}
+
 #reader{
   width:100%;
   max-width:700px;
-  margin:15px auto;
-  background:#111;
-  border-radius:16px;
-  overflow:hidden;
-}
-.scanner-buttons{
-  max-width:700px;
   margin:auto;
+  border-radius:22px;
+  overflow:hidden;
+  background:#111;
 }
 
-#resultBox{
+.scan-result{
   display:none;
   background:white;
-  color:#111827;
-  border-radius:16px;
-  padding:16px;
-  max-width:700px;
-  margin:15px auto;
+  color:#111318;
+  border-radius:22px;
+  padding:18px;
+  margin-top:14px;
+  animation:pop .2s ease;
 }
+
+@keyframes pop{
+  from{
+    opacity:0;
+    transform:scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.result-check{
+  font-size:28px;
+}
+
 .result-name{
-  font-size:20px;
+  font-size:19px;
   font-weight:900;
+  margin-top:5px;
 }
+
+.result-code{
+  color:#737985;
+  font-size:11px;
+  margin-top:3px;
+}
+
 .result-number{
-  font-size:42px;
-  font-weight:900;
   text-align:center;
+  font-size:48px;
+  font-weight:950;
   margin:8px 0;
 }
-.result-info{
+
+.result-label{
   text-align:center;
-  color:#6b7280;
-  font-size:13px;
+  color:#737985;
+  font-size:12px;
 }
+
+.scanner-bottom{
+  margin-top:14px;
+}
+
+.continue-button{
+  width:100%;
+  padding:15px;
+  border-radius:15px;
+  background:white;
+  color:#111318;
+  font-weight:850;
+}
+
+/* MODAL */
 
 .modal{
   display:none;
   position:fixed;
   inset:0;
-  background:#0008;
   z-index:8000;
+  background:rgba(0,0,0,.55);
   padding:20px;
-  overflow:auto;
+  overflow-y:auto;
 }
+
 .modal-box{
+  max-width:500px;
+  margin:50px auto;
   background:white;
-  border-radius:18px;
-  padding:18px;
-  max-width:600px;
-  margin:40px auto;
+  border-radius:24px;
+  padding:20px;
 }
 
-.badge{
-  display:inline-block;
-  padding:3px 7px;
-  border-radius:999px;
-  font-size:10px;
-  font-weight:800;
-  background:#dcfce7;
-  color:#166534;
+.modal-title{
+  font-size:20px;
+  font-weight:900;
+  margin-bottom:7px;
 }
 
-.badge.new{
-  background:#fee2e2;
-  color:#991b1b;
-}
-
-.help{
-  color:#6b7280;
-  font-size:12px;
+.modal-text{
+  color:var(--muted);
+  font-size:13px;
   line-height:1.5;
+  margin-bottom:16px;
 }
 
-@media(max-width:480px){
-  .stats{gap:6px}
-  .stat{padding:9px 7px}
-  .stat b{font-size:18px}
+.modal-buttons{
+  display:grid;
+  gap:8px;
+}
+
+/* DESKTOP */
+
+@media(min-width:700px){
+  .quick-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .quick{
+    min-height:130px;
+  }
 }
 </style>
 </head>
@@ -269,177 +678,355 @@ input{
 
 <div class="app">
 
-<header>
-  <h1>Mi Tiendita 📦</h1>
-  <div class="sub">Contador de inventario para eleventa</div>
-</header>
+  <!-- HEADER -->
 
-<!-- DASHBOARD -->
+  <header class="header">
 
-<div class="card">
+    <div class="brand">
 
-  <div class="stats">
+      <div class="logo">📦</div>
 
-    <div class="stat">
-      <b id="totalProducts">0</b>
-      <span>Productos</span>
+      <div>
+        <h1>Mi Tiendita</h1>
+        <p>Inventario inteligente</p>
+      </div>
+
     </div>
 
-    <div class="stat">
-      <b id="countedProducts">0</b>
-      <span>Contados</span>
+    <button
+      class="icon-button"
+      onclick="openSettings()">
+      ⚙️
+    </button>
+
+  </header>
+
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="hero-top">
+
+      <div>
+        <div class="hero-title">
+          Progreso del inventario
+        </div>
+
+        <div
+          id="heroNumber"
+          class="hero-number">
+          0%
+        </div>
+
+        <div
+          id="heroSub"
+          class="hero-sub">
+          Importa tu inventario de Eleventa
+        </div>
+      </div>
+
+      <div style="font-size:30px">
+        📊
+      </div>
+
     </div>
 
-    <div class="stat">
-      <b id="totalUnits">0</b>
-      <span>Piezas</span>
+    <div class="progress">
+      <div
+        id="progressBar"
+        class="progress-bar">
+      </div>
     </div>
+
+    <div class="progress-label">
+      <span id="progressLeft">0 productos</span>
+      <span id="progressRight">0 contados</span>
+    </div>
+
+  </section>
+
+
+  <!-- QUICK ACTIONS -->
+
+  <div class="quick-grid">
+
+    <button
+      class="quick"
+      onclick="startInventory()">
+
+      <div class="quick-icon">
+        📷
+      </div>
+
+      <div class="quick-title">
+        Contar inventario
+      </div>
+
+      <div class="quick-sub">
+        Escanea productos
+      </div>
+
+    </button>
+
+
+    <button
+      class="quick"
+      onclick="document.getElementById('fileInput').click()">
+
+      <div class="quick-icon">
+        📥
+      </div>
+
+      <div class="quick-title">
+        Importar Eleventa
+      </div>
+
+      <div class="quick-sub">
+        Cargar productos
+      </div>
+
+    </button>
+
+
+    <button
+      class="quick"
+      onclick="exportEleventa()">
+
+      <div class="quick-icon">
+        📤
+      </div>
+
+      <div class="quick-title">
+        Exportar
+      </div>
+
+      <div class="quick-sub">
+        Volver a Eleventa
+      </div>
+
+    </button>
+
+
+    <button
+      class="quick"
+      onclick="createBackup()">
+
+      <div class="quick-icon">
+        💾
+      </div>
+
+      <div class="quick-title">
+        Respaldo
+      </div>
+
+      <div class="quick-sub">
+        Guardar progreso
+      </div>
+
+    </button>
 
   </div>
 
-  <div class="progress">
-    <div
-      id="progressBar"
-      class="progress-bar">
-    </div>
-  </div>
 
-  <div
-    id="progressText"
-    style="
-      text-align:center;
-      color:#6b7280;
-      font-size:12px;
-      margin-top:6px;
-    ">
-    Importa tu inventario de eleventa para comenzar.
-  </div>
+  <!-- STATS -->
+
+  <section class="card">
+
+    <h2 class="section-title">
+      Resumen
+    </h2>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div
+          id="statProducts"
+          class="stat-number">
+          0
+        </div>
+        <div class="stat-label">
+          Productos
+        </div>
+      </div>
+
+      <div class="stat">
+        <div
+          id="statCounted"
+          class="stat-number">
+          0
+        </div>
+        <div class="stat-label">
+          Contados
+        </div>
+      </div>
+
+      <div class="stat">
+        <div
+          id="statPending"
+          class="stat-number">
+          0
+        </div>
+        <div class="stat-label">
+          Pendientes
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SEARCH -->
+
+  <section class="card">
+
+    <h2 class="section-title">
+      Productos
+    </h2>
+
+    <div class="search-wrap">
+
+      <span class="search-icon">
+        🔎
+      </span>
+
+      <input
+        id="search"
+        class="search"
+        placeholder="Buscar producto o código..."
+        oninput="renderProducts()">
+
+    </div>
+
+    <div id="productList"></div>
+
+  </section>
+
+
+  <!-- IMPORT -->
+
+  <section class="card">
+
+    <div class="import-box">
+
+      <div class="import-icon">
+        📦
+      </div>
+
+      <div class="import-title">
+        Inventario de Eleventa
+      </div>
+
+      <div class="import-text">
+
+        Importa el archivo CSV que exportaste
+        desde Eleventa. Mi Tiendita conservará
+        los datos del producto y actualizará
+        solamente la existencia.
+
+      </div>
+
+      <button
+        class="main-button blue"
+        onclick="document.getElementById('fileInput').click()">
+
+        📥 Seleccionar inventario
+
+      </button>
+
+      <input
+        id="fileInput"
+        type="file"
+        accept=".csv,text/csv"
+        style="display:none"
+        onchange="importEleventa(event)">
+
+    </div>
+
+  </section>
+
+
+  <!-- BACKUP -->
+
+  <section class="card">
+
+    <h2 class="section-title">
+      💾 Seguridad
+    </h2>
+
+    <button
+      class="secondary-button"
+      onclick="createBackup()">
+
+      Guardar respaldo
+
+    </button>
+
+    <button
+      class="secondary-button"
+      style="margin-top:8px"
+      onclick="document.getElementById('backupInput').click()">
+
+      Restaurar respaldo
+
+    </button>
+
+    <input
+      id="backupInput"
+      type="file"
+      accept=".json,application/json"
+      style="display:none"
+      onchange="restoreBackup(event)">
+
+  </section>
 
 </div>
 
-<!-- IMPORT / EXPORT -->
 
-<div class="card">
+<!-- BOTTOM NAV -->
 
-  <h3 style="margin-top:0">
-    🔄 Inventario de eleventa
-  </h3>
+<nav class="bottom-nav">
 
-  <button
-    class="blue"
-    style="width:100%"
-    onclick="document.getElementById('eleventaFile').click()">
-    📥 Importar inventario de eleventa
-  </button>
+  <div class="bottom-inner">
 
-  <input
-    id="eleventaFile"
-    type="file"
-    accept=".csv,text/csv"
-    style="display:none"
-    onchange="importEleventa(event)">
+    <button
+      class="nav-button active"
+      onclick="scrollTopApp()">
 
-  <button
-    class="green"
-    style="width:100%;margin-top:10px"
-    onclick="exportEleventa()">
-    📤 Exportar inventario actualizado
-  </button>
+      <span class="nav-icon">🏠</span>
+      Inicio
 
-  <p class="help">
-    Importa el CSV que exportaste desde eleventa,
-    cuenta las existencias con tu teléfono y después
-    exporta el archivo actualizado para volverlo a importar.
-  </p>
+    </button>
 
-</div>
+    <button
+      class="nav-button"
+      onclick="startInventory()">
 
-<!-- COUNT MODE -->
+      <span class="nav-icon">📷</span>
+      Escanear
+
+    </button>
+
+    <button
+      class="nav-button"
+      onclick="scrollToProducts()">
+
+      <span class="nav-icon">📦</span>
+      Productos
+
+    </button>
+
+  </div>
+
+</nav>
+
+
+<!-- TOAST -->
 
 <div
-  id="countMode"
-  class="mode count">
-
-  🧮 <b>Modo conteo activo</b><br>
-
-  Escanea cada pieza que encuentres.
-  La existencia será reemplazada por el conteo físico.
-
-</div>
-
-<div class="card">
-
-  <div class="actions">
-
-    <button
-      class="blue"
-      onclick="startCount()">
-      🧮 Iniciar conteo
-    </button>
-
-    <button
-      class="secondary"
-      onclick="openScannerNormal()">
-      📷 Escanear
-    </button>
-
-  </div>
-
-  <button
-    class="secondary"
-    style="width:100%;margin-top:10px"
-    onclick="finishCount()">
-    ✅ Terminar conteo
-  </button>
-
-</div>
-
-<!-- SEARCH -->
-
-<div class="card">
-
-  <input
-    id="search"
-    placeholder="🔎 Buscar producto o código..."
-    oninput="render()">
-
-  <div id="list"></div>
-
-</div>
-
-<!-- BACKUP -->
-
-<div class="card">
-
-  <h3 style="margin-top:0">
-    💾 Respaldo
-  </h3>
-
-  <div class="actions">
-
-    <button
-      class="secondary"
-      onclick="backup()">
-      💾 Guardar respaldo
-    </button>
-
-    <button
-      class="secondary"
-      onclick="document.getElementById('backupFile').click()">
-      📥 Restaurar
-    </button>
-
-  </div>
-
-  <input
-    id="backupFile"
-    type="file"
-    accept=".json,application/json"
-    style="display:none"
-    onchange="restoreBackup(event)">
-
-</div>
-
+  id="toast"
+  class="toast">
 </div>
 
 
@@ -447,25 +1034,38 @@ input{
 
 <div id="scanner">
 
-  <div class="scanner-title">
-    📷 Escanear inventario
+  <div class="scanner-header">
+
+    <div class="scanner-title">
+      Escanear inventario
+    </div>
+
+    <button
+      class="scanner-close"
+      onclick="closeScanner()">
+      ✕
+    </button>
+
   </div>
 
   <div
     id="scannerStatus"
     class="scanner-status">
-    Apunta al código de barras...
-  </div>
 
-  <div
-    id="scannerCount"
-    class="scanner-count">
-    Escaneados: 0
+    Apunta la cámara al código de barras.
+
   </div>
 
   <div id="reader"></div>
 
-  <div id="resultBox">
+
+  <div
+    id="scanResult"
+    class="scan-result">
+
+    <div class="result-check">
+      ✅
+    </div>
 
     <div
       id="resultName"
@@ -473,33 +1073,82 @@ input{
     </div>
 
     <div
-      id="resultQty"
+      id="resultCode"
+      class="result-code">
+    </div>
+
+    <div
+      id="resultNumber"
       class="result-number">
       0
     </div>
 
     <div
-      id="resultInfo"
-      class="result-info">
+      id="resultLabel"
+      class="result-label">
+      piezas contadas
     </div>
 
-    <button
-      class="green"
-      style="width:100%;margin-top:12px"
-      onclick="resumeScanner()">
-      📷 Seguir escaneando
-    </button>
+    <div class="scanner-bottom">
+
+      <button
+        class="continue-button"
+        onclick="continueScanning()">
+
+        📷 Seguir escaneando
+
+      </button>
+
+    </div>
 
   </div>
 
-  <div class="scanner-buttons">
+</div>
 
-    <button
-      class="red"
-      style="width:100%;margin-top:12px"
-      onclick="closeScanner()">
-      ❌ Cerrar
-    </button>
+
+<!-- SETTINGS MODAL -->
+
+<div
+  id="settingsModal"
+  class="modal">
+
+  <div class="modal-box">
+
+    <div class="modal-title">
+      ⚙️ Ajustes
+    </div>
+
+    <div class="modal-text">
+
+      Mi Tiendita guarda automáticamente
+      tu inventario en este navegador.
+
+      <br><br>
+
+      También puedes crear un respaldo
+      para guardarlo fuera del teléfono.
+
+    </div>
+
+    <div class="modal-buttons">
+
+      <button
+        class="main-button"
+        onclick="createBackup()">
+
+        💾 Crear respaldo
+
+      </button>
+
+      <button
+        class="secondary-button"
+        onclick="closeSettings()">
+
+        Cerrar
+
+      </button>
+
+    </div>
 
   </div>
 
@@ -511,227 +1160,391 @@ input{
 <script>
 
 /* =========================================================
-   STORAGE
+   DATA
 ========================================================= */
 
 const STORAGE_KEY =
-  'mi_tiendita_eleventa_v1';
+  "mi_tiendita_eleventa_premium_v1";
 
-let data =
+let inventory =
   JSON.parse(
     localStorage.getItem(
       STORAGE_KEY
-    ) || 'null'
+    ) || "null"
   );
 
-if(!data){
+if(!inventory){
 
-  data = {
+  inventory = {
+
     headers:[],
+
     rows:[],
+
     counting:false,
-    scanned:{}
+
+    counted:{}
+
   };
 
 }
 
-if(!Array.isArray(data.headers))
-  data.headers=[];
 
-if(!Array.isArray(data.rows))
-  data.rows=[];
-
-if(typeof data.scanned !== 'object')
-  data.scanned={};
+/* =========================================================
+   SAVE
+========================================================= */
 
 function save(){
 
   localStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify(data)
+    JSON.stringify(inventory)
   );
 
-  render();
+  updateDashboard();
+  renderProducts();
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer;
+
+function toast(message){
+
+  const box =
+    document.getElementById(
+      "toast"
+    );
+
+  box.textContent =
+    message;
+
+  box.classList.add(
+    "show"
+  );
+
+  clearTimeout(
+    toastTimer
+  );
+
+  toastTimer =
+    setTimeout(
+      () =>
+        box.classList.remove(
+          "show"
+        ),
+      2300
+    );
 
 }
 
 
 /* =========================================================
    CSV PARSER
-   Handles quoted commas.
 ========================================================= */
 
 function parseCSV(text){
 
-  const rows=[];
+  const result=[];
+
   let row=[];
-  let cell='';
-  let insideQuotes=false;
 
-  for(let i=0;i<text.length;i++){
+  let value="";
 
-    const char=text[i];
-    const next=text[i+1];
+  let quotes=false;
 
-    if(char === '"' && insideQuotes && next === '"'){
+  for(
+    let i=0;
+    i<text.length;
+    i++
+  ){
 
-      cell += '"';
+    const char =
+      text[i];
+
+    const next =
+      text[i+1];
+
+    if(
+      char === '"' &&
+      quotes &&
+      next === '"'
+    ){
+
+      value += '"';
+
       i++;
-      continue;
 
-    }
-
-    if(char === '"'){
-
-      insideQuotes =
-        !insideQuotes;
-
-      continue;
-
-    }
-
-    if(char === ',' && !insideQuotes){
-
-      row.push(cell);
-      cell='';
       continue;
 
     }
 
     if(
-      (char === '\n' || char === '\r') &&
-      !insideQuotes
+      char === '"'
     ){
 
-      if(char === '\r' && next === '\n')
-        i++;
-
-      row.push(cell);
-
-      if(
-        row.length > 1 ||
-        row[0] !== ''
-      ){
-
-        rows.push(row);
-
-      }
-
-      row=[];
-      cell='';
+      quotes =
+        !quotes;
 
       continue;
 
     }
 
-    cell += char;
+    if(
+      char === "," &&
+      !quotes
+    ){
+
+      row.push(
+        value
+      );
+
+      value="";
+
+      continue;
+
+    }
+
+    if(
+      (char === "\n" ||
+       char === "\r") &&
+      !quotes
+    ){
+
+      if(
+        char === "\r" &&
+        next === "\n"
+      ){
+
+        i++;
+
+      }
+
+      row.push(
+        value
+      );
+
+      value="";
+
+      if(
+        row.some(
+          x =>
+            String(
+              x
+            ).trim() !== ""
+        )
+      ){
+
+        result.push(
+          row
+        );
+
+      }
+
+      row=[];
+
+      continue;
+
+    }
+
+    value +=
+      char;
 
   }
 
-  if(cell.length || row.length){
+  if(
+    value.length ||
+    row.length
+  ){
 
-    row.push(cell);
-    rows.push(row);
+    row.push(
+      value
+    );
+
+    if(
+      row.some(
+        x =>
+          String(
+            x
+          ).trim() !== ""
+      )
+    ){
+
+      result.push(
+        row
+      );
+
+    }
 
   }
 
-  return rows;
+  return result;
 
 }
 
 
 /* =========================================================
-   CSV ESCAPE
+   CSV CELL
 ========================================================= */
 
 function csvCell(value){
 
-  const s =
-    String(value ?? '');
+  const text =
+    String(
+      value ?? ""
+    );
 
   if(
-    s.includes(',') ||
-    s.includes('"') ||
-    s.includes('\n') ||
-    s.includes('\r')
+    text.includes(",") ||
+    text.includes('"') ||
+    text.includes("\n") ||
+    text.includes("\r")
   ){
 
     return '"' +
-      s.replace(/"/g,'""') +
+      text.replace(
+        /"/g,
+        '""'
+      ) +
       '"';
 
   }
 
-  return s;
+  return text;
 
 }
 
 
 /* =========================================================
-   FIND COLUMN
+   COLUMN FINDER
 ========================================================= */
 
-function findColumn(name){
+function findColumn(...names){
 
-  return data.headers.findIndex(
-    h =>
-      String(h)
+  return inventory.headers.findIndex(
+    header => {
+
+      const clean =
+        String(
+          header
+        )
         .trim()
-        .toLowerCase() ===
-      name
-        .trim()
-        .toLowerCase()
-  );
+        .toLowerCase();
 
-}
-
-
-/* =========================================================
-   BARCODE COLUMN
-========================================================= */
-
-function barcodeIndex(){
-
-  let index =
-    findColumn(
-      'Codigo de Barras'
-    );
-
-  if(index < 0){
-
-    index =
-      findColumn(
-        'Código de Barras'
+      return names.some(
+        name =>
+          clean ===
+          String(
+            name
+          )
+          .trim()
+          .toLowerCase()
       );
 
-  }
-
-  return index;
-
-}
-
-
-/* =========================================================
-   NAME COLUMN
-========================================================= */
-
-function nameIndex(){
-
-  return findColumn(
-    'Nombre'
+    }
   );
 
 }
 
 
 /* =========================================================
-   EXISTENCE COLUMN
+   ELEVENTA COLUMNS
 ========================================================= */
 
-function existenceIndex(){
+function barcodeColumn(){
 
   return findColumn(
-    'Existencia'
+    "Código",
+    "Codigo"
+  );
+
+}
+
+function productColumn(){
+
+  return findColumn(
+    "Producto"
+  );
+
+}
+
+function costColumn(){
+
+  return findColumn(
+    "P. Costo",
+    "P.Costo"
+  );
+
+}
+
+function saleColumn(){
+
+  return findColumn(
+    "P. Venta",
+    "P.Venta"
+  );
+
+}
+
+function wholesaleColumn(){
+
+  return findColumn(
+    "P. Mayoreo",
+    "P.Mayoreo"
+  );
+
+}
+
+function departmentColumn(){
+
+  return findColumn(
+    "Departamento"
+  );
+
+}
+
+function existenceColumn(){
+
+  return findColumn(
+    "Existencia"
+  );
+
+}
+
+function minimumColumn(){
+
+  return findColumn(
+    "Inv. Mínimo",
+    "Inv. Minimo"
+  );
+
+}
+
+function maximumColumn(){
+
+  return findColumn(
+    "Inv. Máximo",
+    "Inv. Maximo"
+  );
+
+}
+
+function saleTypeColumn(){
+
+  return findColumn(
+    "Tipo de Venta"
+  );
+
+}
+
+function supplierColumn(){
+
+  return findColumn(
+    "Proveedor"
   );
 
 }
@@ -760,23 +1573,23 @@ function importEleventa(event){
         let text =
           e.target.result;
 
-        /*
-          Remove BOM.
-        */
-
         text =
           text.replace(
             /^\uFEFF/,
-            ''
+            ""
           );
 
         const parsed =
-          parseCSV(text);
+          parseCSV(
+            text
+          );
 
-        if(parsed.length < 2){
+        if(
+          parsed.length < 2
+        ){
 
           alert(
-            '❌ El archivo no parece contener productos.'
+            "No encontré productos en el archivo."
           );
 
           return;
@@ -785,89 +1598,129 @@ function importEleventa(event){
 
         const headers =
           parsed[0].map(
-            x =>
-              String(x).trim()
+            h =>
+              String(
+                h
+              ).trim()
           );
 
-        const barcodeCol =
+        const required = [
+          "Código",
+          "Producto",
+          "P. Costo",
+          "P. Venta",
+          "P. Mayoreo",
+          "Departamento",
+          "Existencia",
+          "Inv. Mínimo",
+          "Inv. Máximo",
+          "Tipo de Venta",
+          "Proveedor"
+        ];
+
+        /*
+          We require the important columns,
+          but allow minor spelling differences.
+        */
+
+        const codeIndex =
           headers.findIndex(
             h =>
               h.toLowerCase() ===
-              'codigo de barras' ||
+              "código" ||
               h.toLowerCase() ===
-              'código de barras'
+              "codigo"
           );
 
-        const nameCol =
+        const productIndex =
           headers.findIndex(
             h =>
               h.toLowerCase() ===
-              'nombre'
+              "producto"
           );
 
-        const existenceCol =
+        const existenceIndex =
           headers.findIndex(
             h =>
               h.toLowerCase() ===
-              'existencia'
+              "existencia"
           );
 
         if(
-          barcodeCol < 0 ||
-          nameCol < 0 ||
-          existenceCol < 0
+          codeIndex < 0 ||
+          productIndex < 0 ||
+          existenceIndex < 0
         ){
 
           alert(
-            '❌ No encontré las columnas necesarias:\n\n' +
-            'Codigo de Barras\n' +
-            'Nombre\n' +
-            'Existencia'
+            "Este no parece ser el inventario de Eleventa que esperamos.\n\n" +
+            "Necesito encontrar:\n\n" +
+            "Código\n" +
+            "Producto\n" +
+            "Existencia"
           );
 
           return;
 
         }
 
-        data.headers =
-          headers;
+        inventory = {
 
-        data.rows =
-          parsed
-            .slice(1)
-            .filter(
-              row =>
-                row.some(
-                  cell =>
-                    String(
-                      cell || ''
-                    ).trim() !== ''
-                )
-            );
+          headers:
 
-        data.counting =
-          false;
+            headers,
 
-        data.scanned =
-          {};
+          rows:
+
+            parsed
+              .slice(1)
+              .filter(
+                row =>
+                  row.some(
+                    cell =>
+                      String(
+                        cell || ""
+                      ).trim() !== ""
+                  )
+              ),
+
+          counting:false,
+
+          counted:{}
+
+        };
 
         save();
 
-        event.target.value='';
+        event.target.value="";
 
-        alert(
-          '✅ Inventario importado.\n\n' +
-          data.rows.length +
-          ' productos encontrados.'
+        toast(
+          "✅ Inventario importado"
+        );
+
+        setTimeout(
+          () => {
+
+            alert(
+              "✅ Inventario importado correctamente.\n\n" +
+              inventory.rows.length +
+              " productos encontrados."
+            );
+
+          },
+          200
         );
 
       }
       catch(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
 
         alert(
-          '❌ No pude leer el archivo CSV.'
+          "❌ No pude leer el archivo.\n\n" +
+          "Asegúrate de seleccionar el CSV exportado desde Eleventa."
         );
 
       }
@@ -876,23 +1729,38 @@ function importEleventa(event){
 
   reader.readAsText(
     file,
-    'UTF-8'
+    "UTF-8"
   );
 
 }
 
 
 /* =========================================================
-   START COUNT
+   START INVENTORY
 ========================================================= */
 
-function startCount(){
+function startInventory(){
 
-  if(!data.rows.length){
+  if(
+    inventory.rows.length === 0
+  ){
 
     alert(
-      'Primero importa tu inventario de eleventa.'
+      "📥 Primero importa tu inventario de Eleventa."
     );
+
+    return;
+
+  }
+
+  const alreadyCounting =
+    inventory.counting;
+
+  if(
+    alreadyCounting
+  ){
+
+    openScanner();
 
     return;
 
@@ -900,51 +1768,34 @@ function startCount(){
 
   const answer =
     confirm(
-      '🧮 INICIAR CONTEO\n\n' +
-      'Esto pondrá el conteo físico en 0 para todos los productos.\n\n' +
-      'No borra nombres, precios, códigos ni datos de eleventa.\n\n' +
-      '¿Comenzar?'
+      "🧮 NUEVO CONTEO\n\n" +
+      "Vamos a empezar un conteo físico nuevo.\n\n" +
+      "Las cantidades anteriores del conteo serán reiniciadas a 0.\n\n" +
+      "¿Quieres comenzar?"
     );
 
   if(!answer)
     return;
 
-  data.scanned={};
+  inventory.counted={};
 
-  data.rows.forEach(
-    (row,index) => {
+  inventory.rows.forEach(
+    (_,index) => {
 
-      data.scanned[index]=0;
+      inventory.counted[
+        index
+      ]=0;
 
     }
   );
 
-  data.counting=true;
+  inventory.counting=true;
 
   save();
 
-  openScanner();
-
-}
-
-
-/* =========================================================
-   OPEN NORMAL SCANNER
-========================================================= */
-
-function openScannerNormal(){
-
-  if(!data.rows.length){
-
-    alert(
-      'Primero importa tu inventario de eleventa.'
-    );
-
-    return;
-
-  }
-
-  data.counting=false;
+  toast(
+    "🧮 Conteo iniciado"
+  );
 
   openScanner();
 
@@ -956,34 +1807,30 @@ function openScannerNormal(){
 ========================================================= */
 
 let scanner=null;
+
 let scannerRunning=false;
-let lastCode='';
-let lastTime=0;
-let scanTotal=0;
+
+let lastCode="";
+
+let lastScanTime=0;
+
 
 function openScanner(){
 
   document.getElementById(
-    'scanner'
-  ).style.display='block';
+    "scanner"
+  ).style.display="block";
 
   document.getElementById(
-    'resultBox'
-  ).style.display='none';
-
-  scanTotal=0;
+    "scanResult"
+  ).style.display="none";
 
   document.getElementById(
-    'scannerCount'
-  ).textContent=
-    'Escaneados: 0';
-
-  document.getElementById(
-    'scannerStatus'
-  ).textContent=
-    data.counting
-    ? '🧮 Cuenta cada pieza física.'
-    : '📷 Escanea un producto.';
+    "scannerStatus"
+  ).textContent =
+    inventory.counting
+    ? "Escanea cada pieza que encuentres."
+    : "Apunta al código de barras.";
 
   startCamera();
 
@@ -992,12 +1839,14 @@ function openScanner(){
 
 function startCamera(){
 
-  if(scannerRunning)
+  if(
+    scannerRunning
+  )
     return;
 
   scanner =
     new Html5Qrcode(
-      'reader'
+      "reader"
     );
 
   scannerRunning=true;
@@ -1005,39 +1854,54 @@ function startCamera(){
   scanner.start(
 
     {
-      facingMode:'environment'
+      facingMode:
+        "environment"
     },
 
     {
       fps:10,
+
       qrbox:{
         width:280,
         height:160
-      }
+      },
+
+      aspectRatio:
+        1.7777778
+
     },
 
     code => {
 
       handleScan(
-        String(code).trim()
+        String(
+          code
+        ).trim()
       );
 
     },
 
-    error => {}
+    () => {}
 
-  ).catch(error => {
+  )
+  .catch(
+    error => {
 
-    console.error(error);
+      console.error(
+        error
+      );
 
-    scannerRunning=false;
-    scanner=null;
+      scannerRunning=false;
 
-    alert(
-      'No se pudo acceder a la cámara. Revisa el permiso de cámara de Safari.'
-    );
+      scanner=null;
 
-  });
+      alert(
+        "❌ No pude abrir la cámara.\n\n" +
+        "Asegúrate de permitir el acceso a la cámara."
+      );
+
+    }
+  );
 
 }
 
@@ -1051,66 +1915,85 @@ function handleScan(code){
   if(!code)
     return;
 
-  const now=Date.now();
+  const now =
+    Date.now();
+
+  /*
+    Prevent duplicate camera detections
+    within one second.
+  */
 
   if(
     code === lastCode &&
-    now-lastTime < 1000
+    now-lastScanTime < 1000
   ){
 
     return;
 
   }
 
-  lastCode=code;
-  lastTime=now;
+  lastCode =
+    code;
 
-  const barcodeCol =
-    barcodeIndex();
+  lastScanTime =
+    now;
+
+  const codeCol =
+    barcodeColumn();
 
   const nameCol =
-    nameIndex();
+    productColumn();
 
   const existenceCol =
-    existenceIndex();
+    existenceColumn();
 
-  const rowIndex =
-    data.rows.findIndex(
+  const index =
+    inventory.rows.findIndex(
       row =>
         String(
-          row[barcodeCol] || ''
-        ).trim() === code
+          row[
+            codeCol
+          ] || ""
+        ).trim()
+        === code
     );
 
-  /* PRODUCT NOT FOUND */
+  /*
+    PRODUCT NOT FOUND
+  */
 
-  if(rowIndex < 0){
+  if(index < 0){
 
     pauseCamera();
 
     document.getElementById(
-      'scannerStatus'
-    ).textContent=
-      '⚠️ Producto no encontrado';
+      "scannerStatus"
+    ).textContent =
+      "⚠️ Producto no encontrado";
 
     document.getElementById(
-      'resultBox'
-    ).style.display='block';
+      "scanResult"
+    ).style.display="block";
 
     document.getElementById(
-      'resultName'
-    ).textContent=
-      '🆕 No está en Eleventa';
+      "resultName"
+    ).textContent =
+      "Producto no encontrado";
 
     document.getElementById(
-      'resultQty'
-    ).textContent=
+      "resultCode"
+    ).textContent =
       code;
 
     document.getElementById(
-      'resultInfo'
-    ).textContent=
-      'Este código no existe en el inventario importado.';
+      "resultNumber"
+    ).textContent =
+      "🆕";
+
+    document.getElementById(
+      "resultLabel"
+    ).textContent =
+      "Este código no existe en Eleventa.";
 
     return;
 
@@ -1118,47 +2001,56 @@ function handleScan(code){
 
 
   const row =
-    data.rows[rowIndex];
+    inventory.rows[
+      index
+    ];
 
   const name =
-    row[nameCol] ||
-    'Producto';
+    row[
+      nameCol
+    ] ||
+    "Producto";
 
-  /* COUNT MODE */
+  /*
+    INVENTORY COUNT
+  */
 
-  if(data.counting){
+  if(
+    inventory.counting
+  ){
 
-    data.scanned[rowIndex] =
+    inventory.counted[
+      index
+    ] =
       Number(
-        data.scanned[rowIndex] || 0
+        inventory.counted[
+          index
+        ] || 0
       ) + 1;
 
-    scanTotal++;
-
-    const quantity =
-      data.scanned[rowIndex];
-
-    showResult(
+    showScanResult(
       name,
-      quantity,
-      'Conteo físico'
+      code,
+      inventory.counted[
+        index
+      ]
     );
 
   }
 
-  /* NORMAL MODE */
+  /*
+    NORMAL SCAN
+  */
 
   else{
 
-    const current =
-      Number(
-        row[existenceCol] || 0
-      );
-
-    showResult(
+    showScanResult(
       name,
-      current,
-      'Existencia en Eleventa'
+      code,
+      row[
+        existenceCol
+      ] || "0",
+      "Existencia actual"
     );
 
   }
@@ -1172,43 +2064,44 @@ function handleScan(code){
    SHOW RESULT
 ========================================================= */
 
-function showResult(
+function showScanResult(
   name,
-  quantity,
-  info
+  code,
+  number,
+  label="Piezas contadas"
 ){
 
   pauseCamera();
 
   document.getElementById(
-    'scannerStatus'
-  ).textContent=
-    '✅ Producto encontrado';
+    "scannerStatus"
+  ).textContent =
+    "✅ Producto encontrado";
 
   document.getElementById(
-    'scannerCount'
-  ).textContent=
-    'Escaneados: ' +
-    scanTotal;
+    "scanResult"
+  ).style.display =
+    "block";
 
   document.getElementById(
-    'resultBox'
-  ).style.display='block';
-
-  document.getElementById(
-    'resultName'
-  ).textContent=
+    "resultName"
+  ).textContent =
     name;
 
   document.getElementById(
-    'resultQty'
-  ).textContent=
-    quantity;
+    "resultCode"
+  ).textContent =
+    code;
 
   document.getElementById(
-    'resultInfo'
-  ).textContent=
-    info;
+    "resultNumber"
+  ).textContent =
+    number;
+
+  document.getElementById(
+    "resultLabel"
+  ).textContent =
+    label;
 
 }
 
@@ -1219,28 +2112,38 @@ function showResult(
 
 function pauseCamera(){
 
-  if(!scanner)
+  if(
+    !scanner
+  )
     return;
 
-  const old =
+  const current =
     scanner;
 
   scanner=null;
+
   scannerRunning=false;
 
-  old.stop()
+  current
+    .stop()
     .then(
       () => {
+
         try{
-          old.clear();
-        }catch(e){}
+          current.clear();
+        }
+        catch(e){}
+
       }
     )
     .catch(
       () => {
+
         try{
-          old.clear();
-        }catch(e){}
+          current.clear();
+        }
+        catch(e){}
+
       }
     );
 
@@ -1248,16 +2151,17 @@ function pauseCamera(){
 
 
 /* =========================================================
-   RESUME
+   CONTINUE
 ========================================================= */
 
-function resumeScanner(){
+function continueScanning(){
 
   document.getElementById(
-    'resultBox'
-  ).style.display='none';
+    "scanResult"
+  ).style.display =
+    "none";
 
-  lastCode='';
+  lastCode="";
 
   startCamera();
 
@@ -1265,36 +2169,40 @@ function resumeScanner(){
 
 
 /* =========================================================
-   CLOSE
+   CLOSE SCANNER
 ========================================================= */
 
 function closeScanner(){
 
-  document.getElementById(
-    'scanner'
-  ).style.display='none';
-
-  document.getElementById(
-    'resultBox'
-  ).style.display='none';
-
   pauseCamera();
 
-  lastCode='';
+  document.getElementById(
+    "scanner"
+  ).style.display =
+    "none";
+
+  document.getElementById(
+    "scanResult"
+  ).style.display =
+    "none";
+
+  lastCode="";
 
 }
 
 
 /* =========================================================
-   FINISH COUNT
+   FINISH INVENTORY
 ========================================================= */
 
-function finishCount(){
+function finishInventory(){
 
-  if(!data.counting){
+  if(
+    !inventory.counting
+  ){
 
-    alert(
-      'No hay un conteo activo.'
+    toast(
+      "No hay un conteo activo."
     );
 
     return;
@@ -1303,39 +2211,42 @@ function finishCount(){
 
   const answer =
     confirm(
-      '✅ TERMINAR CONTEO\n\n' +
-      'Las cantidades físicas escaneadas reemplazarán las existencias de Eleventa.\n\n' +
-      '¿Ya terminaste de contar?'
+      "✅ TERMINAR INVENTARIO\n\n" +
+      "Las cantidades que escaneaste reemplazarán la columna Existencia de Eleventa.\n\n" +
+      "¿Ya terminaste de contar?"
     );
 
   if(!answer)
     return;
 
   const existenceCol =
-    existenceIndex();
+    existenceColumn();
 
-  data.rows.forEach(
+  inventory.rows.forEach(
     (row,index) => {
 
-      row[existenceCol] =
+      row[
+        existenceCol
+      ] =
         String(
           Number(
-            data.scanned[index] || 0
+            inventory.counted[
+              index
+            ] || 0
           )
         );
 
     }
   );
 
-  data.counting=false;
+  inventory.counting=false;
 
   save();
 
   closeScanner();
 
-  alert(
-    '✅ Conteo terminado.\n\n' +
-    'Las existencias fueron actualizadas.'
+  toast(
+    "✅ Inventario actualizado"
   );
 
 }
@@ -1347,49 +2258,94 @@ function finishCount(){
 
 function exportEleventa(){
 
-  if(!data.rows.length){
+  if(
+    inventory.rows.length === 0
+  ){
 
     alert(
-      'No hay inventario para exportar.'
+      "📥 Primero importa tu inventario de Eleventa."
     );
 
     return;
 
   }
 
+  /*
+    If a count is still active,
+    ask before exporting.
+  */
+
+  if(
+    inventory.counting
+  ){
+
+    const answer =
+      confirm(
+        "🧮 El conteo todavía está activo.\n\n" +
+        "¿Quieres terminarlo y actualizar Existencia antes de exportar?"
+      );
+
+    if(!answer)
+      return;
+
+    const existenceCol =
+      existenceColumn();
+
+    inventory.rows.forEach(
+      (row,index) => {
+
+        row[
+          existenceCol
+        ] =
+          String(
+            Number(
+              inventory.counted[
+                index
+              ] || 0
+            )
+          );
+
+      }
+    );
+
+    inventory.counting=false;
+
+    save();
+
+  }
+
   let csv =
-    data.headers
-      .map(csvCell)
-      .join(',') +
-    '\r\n';
+    inventory.headers
+      .map(
+        csvCell
+      )
+      .join(",") +
+    "\r\n";
 
-  data.rows.forEach(
+  inventory.rows.forEach(
     row => {
-
-      /*
-        Make sure every row has the same
-        number of columns as the header.
-      */
 
       const fixed=[];
 
       for(
         let i=0;
-        i<data.headers.length;
+        i<inventory.headers.length;
         i++
       ){
 
         fixed.push(
-          row[i] ?? ''
+          row[i] ?? ""
         );
 
       }
 
       csv +=
         fixed
-          .map(csvCell)
-          .join(',') +
-        '\r\n';
+          .map(
+            csvCell
+          )
+          .join(",") +
+        "\r\n";
 
     }
   );
@@ -1397,12 +2353,12 @@ function exportEleventa(){
   const blob =
     new Blob(
       [
-        '\ufeff' +
+        "\ufeff",
         csv
       ],
       {
         type:
-          'text/csv;charset=utf-8'
+          "text/csv;charset=utf-8"
       }
     );
 
@@ -1411,24 +2367,35 @@ function exportEleventa(){
       blob
     );
 
-  const a =
-    document.createElement('a');
+  const link =
+    document.createElement(
+      "a"
+    );
 
-  a.href=url;
+  link.href =
+    url;
 
-  a.download=
-    'inventario_eleventa_actualizado.csv';
+  link.download =
+    "inventario_eleventa_actualizado.csv";
 
-  document.body.appendChild(a);
+  document.body.appendChild(
+    link
+  );
 
-  a.click();
+  link.click();
 
-  a.remove();
+  link.remove();
 
   setTimeout(
     () =>
-      URL.revokeObjectURL(url),
+      URL.revokeObjectURL(
+        url
+      ),
     1000
+  );
+
+  toast(
+    "📤 Archivo exportado"
   );
 
 }
@@ -1438,20 +2405,20 @@ function exportEleventa(){
    BACKUP
 ========================================================= */
 
-function backup(){
+function createBackup(){
 
   const blob =
     new Blob(
       [
         JSON.stringify(
-          data,
+          inventory,
           null,
           2
         )
       ],
       {
         type:
-          'application/json'
+          "application/json"
       }
     );
 
@@ -1460,31 +2427,42 @@ function backup(){
       blob
     );
 
-  const a =
-    document.createElement('a');
+  const link =
+    document.createElement(
+      "a"
+    );
 
-  a.href=url;
+  link.href =
+    url;
 
-  a.download=
-    'mi_tiendita_eleventa_backup.json';
+  link.download =
+    "mi_tiendita_respaldo.json";
 
-  document.body.appendChild(a);
+  document.body.appendChild(
+    link
+  );
 
-  a.click();
+  link.click();
 
-  a.remove();
+  link.remove();
 
   setTimeout(
     () =>
-      URL.revokeObjectURL(url),
+      URL.revokeObjectURL(
+        url
+      ),
     1000
+  );
+
+  toast(
+    "💾 Respaldo creado"
   );
 
 }
 
 
 /* =========================================================
-   RESTORE
+   RESTORE BACKUP
 ========================================================= */
 
 function restoreBackup(event){
@@ -1519,38 +2497,41 @@ function restoreBackup(event){
         ){
 
           throw new Error(
-            'Invalid backup'
+            "Invalid backup"
           );
 
         }
 
         const answer =
           confirm(
-            '📥 Restaurar respaldo\n\n' +
-            'Esto reemplazará el inventario guardado actualmente en este teléfono.\n\n' +
-            '¿Continuar?'
+            "📥 RESTAURAR RESPALDO\n\n" +
+            "Esto reemplazará el inventario actualmente guardado en este teléfono.\n\n" +
+            "¿Continuar?"
           );
 
         if(!answer)
           return;
 
-        data=restored;
+        inventory =
+          restored;
 
         save();
 
-        event.target.value='';
+        event.target.value="";
 
-        alert(
-          '✅ Respaldo restaurado.'
+        toast(
+          "✅ Respaldo restaurado"
         );
 
       }
       catch(error){
 
-        console.error(error);
+        console.error(
+          error
+        );
 
         alert(
-          '❌ El respaldo no es válido.'
+          "❌ Ese respaldo no es válido."
         );
 
       }
@@ -1565,61 +2546,35 @@ function restoreBackup(event){
 
 
 /* =========================================================
-   RENDER
+   DASHBOARD
 ========================================================= */
 
-function render(){
+function updateDashboard(){
 
   const total =
-    data.rows.length;
+    inventory.rows.length;
 
   const counted =
-    Object.keys(
-      data.scanned || {}
-    ).filter(
-      index =>
-        Number(
-          data.scanned[index]
-        ) > 0
-    ).length;
+    Object.values(
+      inventory.counted || {}
+    )
+    .filter(
+      value =>
+        Number(value) > 0
+    )
+    .length;
 
-  const units =
-    data.rows.reduce(
-      (total,row) => {
-
-        const col =
-          existenceIndex();
-
-        return total +
-          Number(
-            row[col] || 0
-          );
-
-      },
-      0
+  const pending =
+    Math.max(
+      0,
+      total-counted
     );
-
-  document.getElementById(
-    'totalProducts'
-  ).textContent=
-    total;
-
-  document.getElementById(
-    'countedProducts'
-  ).textContent=
-    data.counting
-    ? counted
-    : '—';
-
-  document.getElementById(
-    'totalUnits'
-  ).textContent=
-    units;
-
 
   let percent=0;
 
-  if(total){
+  if(
+    total > 0
+  ){
 
     percent =
       Math.round(
@@ -1631,67 +2586,127 @@ function render(){
   }
 
   document.getElementById(
-    'progressBar'
-  ).style.width=
-    percent + '%';
+    "heroNumber"
+  ).textContent =
+    percent + "%";
 
   document.getElementById(
-    'progressText'
-  ).textContent=
+    "heroSub"
+  ).textContent =
     total
-    ? (
-        data.counting
-        ? counted +
-          ' de ' +
-          total +
-          ' productos contados (' +
-          percent +
-          '%)'
-        : total +
-          ' productos cargados desde Eleventa'
-      )
-    : 'Importa tu inventario de eleventa para comenzar.';
+    ? inventory.counting
+      ? "Conteo físico en progreso"
+      : "Inventario listo"
+    : "Importa tu inventario de Eleventa";
+
+  document.getElementById(
+    "progressBar"
+  ).style.width =
+    percent + "%";
+
+  document.getElementById(
+    "progressLeft"
+  ).textContent =
+    total +
+    " productos";
+
+  document.getElementById(
+    "progressRight"
+  ).textContent =
+    counted +
+    " contados";
+
+  document.getElementById(
+    "statProducts"
+  ).textContent =
+    total;
+
+  document.getElementById(
+    "statCounted"
+  ).textContent =
+    counted;
+
+  document.getElementById(
+    "statPending"
+  ).textContent =
+    pending;
+
+}
 
 
-  const search =
-    (
-      document.getElementById(
-        'search'
-      )?.value ||
-      ''
-    )
-    .toLowerCase()
-    .trim();
+/* =========================================================
+   PRODUCT LIST
+========================================================= */
+
+function renderProducts(){
 
   const list =
     document.getElementById(
-      'list'
+      "productList"
     );
 
-  if(!total){
+  if(
+    inventory.rows.length === 0
+  ){
 
-    list.innerHTML=
-      '<div class="empty">' +
-      '📥 Importa primero tu inventario de Eleventa.' +
-      '</div>';
+    list.innerHTML = `
+
+      <div class="empty">
+
+        <div class="empty-icon">
+          📦
+        </div>
+
+        <div>
+          Todavía no hay productos.
+        </div>
+
+        <div style="font-size:12px;margin-top:4px">
+
+          Importa tu inventario de Eleventa para comenzar.
+
+        </div>
+
+      </div>
+
+    `;
 
     return;
 
   }
 
-  const barcodeCol =
-    barcodeIndex();
+  const search =
+    (
+      document.getElementById(
+        "search"
+      ).value ||
+      ""
+    )
+    .toLowerCase()
+    .trim();
+
+  const codeCol =
+    barcodeColumn();
 
   const nameCol =
-    nameIndex();
+    productColumn();
+
+  const costCol =
+    costColumn();
+
+  const saleCol =
+    saleColumn();
 
   const existenceCol =
-    existenceIndex();
+    existenceColumn();
 
   const shown =
-    data.rows
+    inventory.rows
       .map(
-        (row,index) => ({
+        (
+          row,
+          index
+        ) => ({
           row,
           index
         })
@@ -1704,11 +2719,18 @@ function render(){
 
           const text =
             (
-              row[nameCol] || '' +
-              ' ' +
-              row[barcodeCol] || ''
+              String(
+                row[
+                  nameCol
+                ] || ""
+              ) +
+              " " +
+              String(
+                row[
+                  codeCol
+                ] || ""
+              )
             )
-            .toString()
             .toLowerCase();
 
           return text.includes(
@@ -1717,22 +2739,36 @@ function render(){
 
         }
       )
-      .slice(0,100);
+      .slice(
+        0,
+        100
+      );
 
 
-  if(!shown.length){
+  if(
+    shown.length === 0
+  ){
 
-    list.innerHTML=
-      '<div class="empty">' +
-      'No se encontraron productos.' +
-      '</div>';
+    list.innerHTML = `
+
+      <div class="empty">
+
+        🔎
+
+        <br>
+
+        No encontramos ese producto.
+
+      </div>
+
+    `;
 
     return;
 
   }
 
 
-  list.innerHTML=
+  list.innerHTML =
     shown
       .map(
         item => {
@@ -1744,82 +2780,89 @@ function render(){
             item.index;
 
           const name =
-            row[nameCol] ||
-            'Sin nombre';
+            row[
+              nameCol
+            ] ||
+            "Sin nombre";
 
-          const barcode =
-            row[barcodeCol] ||
-            '';
+          const code =
+            row[
+              codeCol
+            ] ||
+            "";
+
+          const cost =
+            row[
+              costCol
+            ] ||
+            "0";
+
+          const sale =
+            row[
+              saleCol
+            ] ||
+            "0";
 
           const existence =
-            row[existenceCol] ||
-            '0';
+            row[
+              existenceCol
+            ] ||
+            "0";
 
-          const physical =
+          const counted =
             Number(
-              data.scanned[index] || 0
+              inventory.counted[
+                index
+              ] || 0
             );
+
+          const isCounted =
+            counted > 0;
 
           return `
 
             <div class="product">
 
-              <div class="product-top">
+              <div class="product-head">
 
                 <div>
 
-                  <div class="name">
+                  <div class="product-name">
 
-                    ${escapeHTML(name)}
-
-                    ${
-                      data.counting &&
-                      physical > 0
-                      ? '<span class="badge">CONTADO</span>'
-                      : ''
-                    }
+                    ${escapeHTML(
+                      name
+                    )}
 
                   </div>
 
-                  <div class="meta">
+                  <div class="product-code">
 
-                    📦 ${escapeHTML(barcode)}
-
-                    <br>
-
-                    Existencia Eleventa:
-                    <b>${escapeHTML(existence)}</b>
-
-                    ${
-                      data.counting
-                      ? '<br>🧮 Conteo: <b>' +
-                        physical +
-                        '</b>'
-                      : ''
-                    }
+                    ${escapeHTML(
+                      code
+                    )}
 
                   </div>
 
                 </div>
 
-                <div>
+                <div class="product-qty">
 
-                  <div class="qty">
+                  <div class="product-qty-number">
 
                     ${
-                      data.counting
-                      ? physical
+                      inventory.counting
+                      ? counted
                       : existence
                     }
 
                   </div>
 
-                  <div class="qty-label">
+                  <div class="product-qty-label">
 
                     ${
-                      data.counting
-                      ? 'contadas'
-                      : 'en Eleventa'
+                      inventory.counting
+                      ? "contadas"
+                      : "existencia"
                     }
 
                   </div>
@@ -1828,25 +2871,64 @@ function render(){
 
               </div>
 
+
+              <div class="product-meta">
+
+                <span class="tag">
+
+                  Venta $${escapeHTML(
+                    sale
+                  )}
+
+                </span>
+
+                <span class="tag">
+
+                  Costo $${escapeHTML(
+                    cost
+                  )}
+
+                </span>
+
+                ${
+                  isCounted
+                  ? `
+                    <span class="tag counted">
+                      ✓ Contado
+                    </span>
+                  `
+                  : ""
+                }
+
+              </div>
+
+
               ${
-                data.counting
+                inventory.counting
                 ? `
-                  <div class="product-actions">
+
+                  <div class="product-buttons">
 
                     <button
-                      onclick="manualAdjust(${index},-1)">
+                      class="small-button minus"
+                      onclick="adjustCount(${index},-1)">
+
                       −
+
                     </button>
 
                     <button
-                      class="green"
-                      onclick="manualAdjust(${index},1)">
-                      +
+                      class="small-button plus"
+                      onclick="adjustCount(${index},1)">
+
+                      + Añadir pieza
+
                     </button>
 
                   </div>
+
                 `
-                : ''
+                : ""
               }
 
             </div>
@@ -1855,28 +2937,34 @@ function render(){
 
         }
       )
-      .join('');
+      .join("");
 
 }
 
 
 /* =========================================================
-   MANUAL ADJUST
+   MANUAL COUNT
 ========================================================= */
 
-function manualAdjust(
+function adjustCount(
   index,
   amount
 ){
 
-  if(!data.counting)
+  if(
+    !inventory.counting
+  )
     return;
 
-  data.scanned[index] =
+  inventory.counted[
+    index
+  ] =
     Math.max(
       0,
       Number(
-        data.scanned[index] || 0
+        inventory.counted[
+          index
+        ] || 0
       ) + amount
     );
 
@@ -1889,31 +2977,88 @@ function manualAdjust(
    ESCAPE
 ========================================================= */
 
-function escapeHTML(text){
+function escapeHTML(
+  value
+){
 
   return String(
-    text ?? ''
+    value ?? ""
   )
   .replace(
     /[&<>"']/g,
     char =>
       ({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#39;'
-      }[char])
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
+      })[
+        char
+      ]
   );
 
 }
 
 
 /* =========================================================
-   INITIAL RENDER
+   SETTINGS
 ========================================================= */
 
-render();
+function openSettings(){
+
+  document.getElementById(
+    "settingsModal"
+  ).style.display =
+    "block";
+
+}
+
+function closeSettings(){
+
+  document.getElementById(
+    "settingsModal"
+  ).style.display =
+    "none";
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function scrollTopApp(){
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+function scrollToProducts(){
+
+  const element =
+    document.getElementById(
+      "productList"
+    );
+
+  element.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+updateDashboard();
+
+renderProducts();
 
 </script>
 
