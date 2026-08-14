@@ -81,6 +81,11 @@ button.green{
   color:white;
 }
 
+button.blue{
+  background:#1d4ed8;
+  color:white;
+}
+
 button.red{
   background:#dc2626;
   color:white;
@@ -172,6 +177,15 @@ label{
   text-align:center;
   color:#6b7280;
   padding:25px;
+}
+
+.notice{
+  background:#eff6ff;
+  border-radius:14px;
+  padding:12px;
+  margin-top:10px;
+  font-size:13px;
+  color:#1e3a8a;
 }
 
 small{
@@ -266,7 +280,7 @@ small{
 </header>
 
 
-<!-- STATS -->
+<!-- ESTADÍSTICAS -->
 
 <div class="card">
 
@@ -292,18 +306,18 @@ small{
 </div>
 
 
-<!-- MAIN BUTTONS -->
+<!-- BOTONES PRINCIPALES -->
 
 <div class="card">
 
   <div class="actions">
 
-    <button onclick="startSingleScanner()">
-      📷 Escanear
+    <button onclick="startInventoryCount()">
+      🧮 Nuevo conteo
     </button>
 
-    <button class="green" onclick="startInventoryMode()">
-      📦 Inventario
+    <button class="blue" onclick="startSingleScanner()">
+      📷 Escanear
     </button>
 
   </div>
@@ -313,13 +327,20 @@ small{
     style="width:100%;margin-top:10px"
     onclick="showAdd()"
   >
-    ➕ Agregar producto manualmente
+    ➕ Agregar producto
   </button>
+
+  <div class="notice">
+    <b>🧮 Nuevo conteo:</b>
+    empieza un conteo físico desde cero.
+    Tus productos, códigos, precios y costos
+    permanecen guardados.
+  </div>
 
 </div>
 
 
-<!-- ADD PRODUCT -->
+<!-- AGREGAR PRODUCTO -->
 
 <div
   class="card"
@@ -368,12 +389,12 @@ small{
     placeholder="0.00"
   >
 
-  <label>Cantidad</label>
+  <label>Cantidad inicial</label>
 
   <input
     id="qty"
     type="number"
-    min="1"
+    min="0"
     inputmode="numeric"
     value="1"
   >
@@ -396,7 +417,7 @@ small{
 </div>
 
 
-<!-- PRODUCT LIST -->
+<!-- LISTA -->
 
 <div class="card">
 
@@ -412,7 +433,7 @@ small{
 </div>
 
 
-<!-- BACKUP / EXPORT -->
+<!-- RESPALDO -->
 
 <div class="card">
 
@@ -452,7 +473,8 @@ small{
   >
 
   <small style="display:block;margin-top:10px">
-    Importa un respaldo anterior para recuperar tu inventario.
+    Puedes recuperar tu inventario anterior
+    usando un archivo JSON.
   </small>
 
 </div>
@@ -465,7 +487,7 @@ small{
 <div id="scanner">
 
   <div class="scanner-title">
-    📦 Modo inventario
+    🧮 Conteo de inventario
   </div>
 
   <div
@@ -479,13 +501,13 @@ small{
     id="scannerCount"
     class="scanner-count"
   >
-    Escaneados: 0
+    Piezas contadas: 0
   </div>
 
   <div id="reader"></div>
 
 
-  <!-- NEW PRODUCT -->
+  <!-- PRODUCTO NUEVO -->
 
   <div id="newProductNotice">
 
@@ -525,15 +547,13 @@ small{
 
   <button
     class="red scanner-button"
-    onclick="stopScanner()"
+    onclick="finishInventoryCount()"
   >
-    ❌ Terminar inventario
+    ✅ Terminar conteo
   </button>
 
 </div>
 
-
-<!-- BARCODE SCANNER -->
 
 <script
   src="https://unpkg.com/html5-qrcode"
@@ -544,8 +564,22 @@ small{
 <script>
 
 /* ==========================================
-   INVENTORY DATA
+   PRODUCTOS PERMANENTES
 ========================================== */
+
+/*
+  IMPORTANTE:
+
+  Los productos se guardan aquí y NO se borran
+  cuando empiezas un nuevo conteo.
+
+  Cada producto tiene:
+  - nombre
+  - código
+  - precio
+  - costo
+  - existencia
+*/
 
 let items = JSON.parse(
   localStorage.getItem(
@@ -555,7 +589,7 @@ let items = JSON.parse(
 
 
 /* ==========================================
-   SCANNER VARIABLES
+   VARIABLES DEL ESCÁNER
 ========================================== */
 
 let scanner = null;
@@ -577,8 +611,24 @@ let lastBarcodeTime = 0;
 let returnToInventory = false;
 
 
+/*
+  NEW COUNT
+
+  Cuando empieza un nuevo conteo,
+  guardamos las cantidades anteriores aquí.
+
+  Las cantidades visibles pasan temporalmente
+  a cero.
+
+  Al terminar, las nuevas cantidades quedan
+  guardadas.
+*/
+
+let countBackup = null;
+
+
 /* ==========================================
-   SAVE
+   GUARDAR
 ========================================== */
 
 function save(){
@@ -594,7 +644,7 @@ function save(){
 
 
 /* ==========================================
-   MONEY
+   DINERO
 ========================================== */
 
 function money(n){
@@ -606,7 +656,7 @@ function money(n){
 
 
 /* ==========================================
-   HTML ESCAPE
+   ESCAPAR HTML
 ========================================== */
 
 function esc(s){
@@ -626,16 +676,21 @@ function esc(s){
 
 
 /* ==========================================
-   RENDER
+   MOSTRAR INVENTARIO
 ========================================== */
 
 function render(){
 
+  const search =
+    document.getElementById(
+      'search'
+    );
+
   const q =
     (
-      document.getElementById(
-        'search'
-      ).value || ''
+      search
+      ? search.value
+      : ''
     )
     .toLowerCase()
     .trim();
@@ -732,7 +787,7 @@ function render(){
         <div>
 
           <div class="qty">
-            ${x.qty}
+            ${Number(x.qty || 0)}
           </div>
 
           <div class="row">
@@ -761,7 +816,7 @@ function render(){
 
 
 /* ==========================================
-   ADD FORM
+   FORMULARIO
 ========================================== */
 
 function showAdd(){
@@ -790,21 +845,31 @@ function hideAdd(){
 
 function clearAddForm(){
 
-  document.getElementById('name').value = '';
+  document.getElementById(
+    'name'
+  ).value = '';
 
-  document.getElementById('barcode').value = '';
+  document.getElementById(
+    'barcode'
+  ).value = '';
 
-  document.getElementById('price').value = '';
+  document.getElementById(
+    'price'
+  ).value = '';
 
-  document.getElementById('cost').value = '';
+  document.getElementById(
+    'cost'
+  ).value = '';
 
-  document.getElementById('qty').value = '1';
+  document.getElementById(
+    'qty'
+  ).value = '1';
 
 }
 
 
 /* ==========================================
-   SAVE PRODUCT
+   GUARDAR PRODUCTO
 ========================================== */
 
 function saveProduct(){
@@ -850,11 +915,11 @@ function saveProduct(){
 
   const qty =
     Math.max(
-      1,
+      0,
       Number(
         document.getElementById(
           'qty'
-        ).value || 1
+        ).value || 0
       )
     );
 
@@ -863,22 +928,41 @@ function saveProduct(){
     barcode &&
     items.find(
       x =>
-        String(x.barcode || '') === barcode
+        String(x.barcode || '') ===
+        barcode
     );
 
 
   if(existing){
 
+    /*
+      If registering an existing barcode
+      manually, don't create a duplicate.
+
+      We update its information.
+    */
+
+    existing.name =
+      name;
+
+
+    existing.price =
+      price;
+
+
+    existing.cost =
+      cost;
+
+
+    /*
+      If we're returning to an inventory count,
+      the quantity entered is the starting
+      quantity for this product.
+    */
+
     existing.qty =
-      Number(existing.qty || 0) + qty;
+      qty;
 
-    if(price > 0){
-      existing.price = price;
-    }
-
-    if(cost > 0){
-      existing.cost = cost;
-    }
 
     save();
 
@@ -886,12 +970,13 @@ function saveProduct(){
 
     clearAddForm();
 
+
     if(returnToInventory){
 
       returnToInventory = false;
 
       setTimeout(
-        startInventoryMode,
+        startInventoryCount,
         300
       );
 
@@ -935,7 +1020,7 @@ function saveProduct(){
     returnToInventory = false;
 
     setTimeout(
-      startInventoryMode,
+      startInventoryCount,
       300
     );
 
@@ -945,7 +1030,7 @@ function saveProduct(){
 
 
 /* ==========================================
-   CHANGE QUANTITY
+   CAMBIAR CANTIDAD MANUALMENTE
 ========================================== */
 
 function change(id,d){
@@ -974,25 +1059,73 @@ function change(id,d){
 
 
 /* ==========================================
-   SINGLE SCAN
+   COMENZAR NUEVO CONTEO
 ========================================== */
 
-function startSingleScanner(){
+function startInventoryCount(){
 
-  inventoryMode = false;
+  if(items.length === 0){
 
-  scannedCount = 0;
+    alert(
+      'Primero registra al menos un producto.'
+    );
 
-  openScanner();
+    showAdd();
 
-}
+    return;
+
+  }
 
 
-/* ==========================================
-   INVENTORY MODE
-========================================== */
+  const answer =
+    confirm(
+      '🧮 NUEVO CONTEO\n\n' +
 
-function startInventoryMode(){
+      'Esto pondrá las EXISTENCIAS actuales ' +
+      'en 0 temporalmente para que puedas ' +
+      'contar tu tienda desde cero.\n\n' +
+
+      'Tus productos, códigos, precios y costos ' +
+      'NO se borrarán.\n\n' +
+
+      '¿Quieres comenzar el conteo?'
+    );
+
+
+  if(!answer){
+    return;
+  }
+
+
+  /*
+    Save a copy of the old quantities.
+
+    This lets us restore them if the user
+    accidentally closes/cancels the count.
+  */
+
+  countBackup =
+    items.map(x => ({
+      id:x.id,
+      qty:Number(x.qty || 0)
+    }));
+
+
+  /*
+    RESET ONLY QUANTITIES
+
+    Products remain intact.
+  */
+
+  items.forEach(x => {
+
+    x.qty = 0;
+
+  });
+
+
+  save();
+
 
   inventoryMode = true;
 
@@ -1008,13 +1141,13 @@ function startInventoryMode(){
   document.getElementById(
     'scannerCount'
   ).textContent =
-    'Escaneados: 0';
+    'Piezas contadas: 0';
 
 
   document.getElementById(
     'scannerStatus'
   ).textContent =
-    'Escanea productos continuamente...';
+    'Escanea cada pieza que encuentres...';
 
 
   openScanner();
@@ -1023,7 +1156,24 @@ function startInventoryMode(){
 
 
 /* ==========================================
-   OPEN CAMERA
+   ESCANEAR UNO SOLO
+========================================== */
+
+function startSingleScanner(){
+
+  inventoryMode = false;
+
+  scannedCount = 0;
+
+  processingScan = false;
+
+  openScanner();
+
+}
+
+
+/* ==========================================
+   ABRIR CÁMARA
 ========================================== */
 
 function openScanner(){
@@ -1081,7 +1231,7 @@ function openScanner(){
 
     error => {
 
-      /* Ignore normal scan errors */
+      /* Normal scan errors are ignored. */
 
     }
 
@@ -1102,7 +1252,7 @@ function openScanner(){
 
     alert(
       'No se pudo acceder a la cámara. ' +
-      'Asegúrate de permitir el acceso a la cámara.'
+      'Asegúrate de permitir el acceso.'
     );
 
   });
@@ -1111,7 +1261,7 @@ function openScanner(){
 
 
 /* ==========================================
-   HANDLE BARCODE
+   PROCESAR CÓDIGO
 ========================================== */
 
 function handleScan(code){
@@ -1130,8 +1280,8 @@ function handleScan(code){
 
 
   /*
-    Prevent the same barcode from being
-    counted multiple times instantly.
+    Prevents the camera from reading the
+    same barcode many times per second.
   */
 
   if(
@@ -1160,7 +1310,8 @@ function handleScan(code){
   const found =
     items.find(
       x =>
-        String(x.barcode || '') === code
+        String(x.barcode || '') ===
+        code
     );
 
 
@@ -1191,7 +1342,7 @@ function handleScan(code){
     document.getElementById(
       'scannerCount'
     ).textContent =
-      'Escaneados: ' +
+      'Piezas contadas: ' +
       scannedCount;
 
 
@@ -1208,7 +1359,7 @@ function handleScan(code){
 
 
   /* ========================================
-     NEW PRODUCT IN INVENTORY MODE
+     PRODUCTO NUEVO
   ======================================== */
 
   if(inventoryMode){
@@ -1235,11 +1386,6 @@ function handleScan(code){
       '🆕 Producto nuevo';
 
 
-    /*
-      Keep camera alive, but block
-      processing until user decides.
-    */
-
     processingScan = true;
 
     return;
@@ -1247,9 +1393,9 @@ function handleScan(code){
   }
 
 
-  /* ========================================
-     NEW PRODUCT IN SINGLE MODE
-  ======================================== */
+  /*
+    Normal single-scan mode.
+  */
 
   stopScanner();
 
@@ -1270,7 +1416,7 @@ function handleScan(code){
 
 
 /* ==========================================
-   REGISTER NEW PRODUCT
+   REGISTRAR PRODUCTO NUEVO
 ========================================== */
 
 function registerNewFromScanner(){
@@ -1289,10 +1435,6 @@ function registerNewFromScanner(){
   returnToInventory = true;
 
 
-  /*
-    Hide scanner.
-  */
-
   document.getElementById(
     'scanner'
   ).style.display =
@@ -1301,10 +1443,6 @@ function registerNewFromScanner(){
 
   stopCameraOnly();
 
-
-  /*
-    Open registration form.
-  */
 
   showAdd();
 
@@ -1315,10 +1453,20 @@ function registerNewFromScanner(){
     code;
 
 
+  /*
+    IMPORTANT:
+
+    Since we're already doing a new count,
+    this product starts at ZERO.
+
+    When you register it, you'll then be able
+    to scan the physical pieces.
+  */
+
   document.getElementById(
     'qty'
   ).value =
-    '1';
+    '0';
 
 
   document.getElementById(
@@ -1329,7 +1477,7 @@ function registerNewFromScanner(){
 
 
 /* ==========================================
-   CANCEL NEW PRODUCT
+   CANCELAR PRODUCTO NUEVO
 ========================================== */
 
 function cancelNewProduct(){
@@ -1361,7 +1509,120 @@ function cancelNewProduct(){
 
 
 /* ==========================================
-   STOP CAMERA
+   TERMINAR CONTEO
+========================================== */
+
+function finishInventoryCount(){
+
+  if(!inventoryMode){
+
+    stopScanner();
+
+    return;
+
+  }
+
+
+  const answer =
+    confirm(
+      '✅ TERMINAR CONTEO\n\n' +
+
+      'Las cantidades que has contado ' +
+      'se convertirán en tu nuevo inventario.\n\n' +
+
+      '¿Ya terminaste de contar la tienda?'
+    );
+
+
+  if(!answer){
+    return;
+  }
+
+
+  /*
+    The new quantities are already in items.
+
+    We simply keep them and clear the backup.
+  */
+
+  countBackup = null;
+
+  inventoryMode = false;
+
+
+  stopScanner();
+
+
+  alert(
+    '✅ Conteo terminado.\n\n' +
+    'Tu nuevo inventario ha sido guardado.'
+  );
+
+}
+
+
+/* ==========================================
+   CANCELAR CONTEO SIN GUARDAR
+========================================== */
+
+function cancelInventoryAndRestore(){
+
+  if(
+    !inventoryMode ||
+    !countBackup
+  ){
+
+    stopScanner();
+
+    return;
+
+  }
+
+
+  const answer =
+    confirm(
+      '¿Cancelar el conteo?\n\n' +
+      'Se restaurarán las cantidades que tenías antes de comenzar.'
+    );
+
+
+  if(!answer){
+    return;
+  }
+
+
+  countBackup.forEach(old => {
+
+    const item =
+      items.find(
+        x => x.id === old.id
+      );
+
+
+    if(item){
+
+      item.qty =
+        old.qty;
+
+    }
+
+  });
+
+
+  countBackup = null;
+
+  inventoryMode = false;
+
+
+  save();
+
+  stopScanner();
+
+}
+
+
+/* ==========================================
+   DETENER CÁMARA
 ========================================== */
 
 function stopCameraOnly(){
@@ -1400,7 +1661,7 @@ function stopCameraOnly(){
 
 
 /* ==========================================
-   CLOSE SCANNER
+   CERRAR ESCÁNER
 ========================================== */
 
 function stopScanner(){
@@ -1410,8 +1671,6 @@ function stopScanner(){
   ).style.display =
     'none';
 
-
-  inventoryMode = false;
 
   processingScan = false;
 
@@ -1434,7 +1693,7 @@ function stopScanner(){
 
 
 /* ==========================================
-   EXPORT CSV
+   EXPORTAR CSV
 ========================================== */
 
 function exportEleventaCSV(){
@@ -1511,7 +1770,7 @@ function exportEleventaCSV(){
 
 
 /* ==========================================
-   EXPORT JSON
+   EXPORTAR JSON
 ========================================== */
 
 function exportJSON(){
@@ -1562,7 +1821,7 @@ function exportJSON(){
 
 
 /* ==========================================
-   IMPORT JSON BACKUP
+   IMPORTAR JSON
 ========================================== */
 
 function importJSON(event){
@@ -1634,15 +1893,16 @@ function importJSON(event){
                 x =>
                   String(
                     x.barcode || ''
-                  ).trim() === barcode
+                  ).trim() ===
+                  barcode
               );
 
           }
 
 
           /*
-            If there is no barcode,
-            match by product name.
+            If no barcode,
+            match by name.
           */
 
           if(
@@ -1679,8 +1939,12 @@ function importJSON(event){
               );
 
 
-            existing.barcode =
-              barcode;
+            if(barcode){
+
+              existing.barcode =
+                barcode;
+
+            }
 
 
             existing.price =
@@ -1772,8 +2036,7 @@ function importJSON(event){
 
 
         alert(
-          '❌ No se pudo leer el respaldo. ' +
-          'Selecciona un archivo JSON creado por Mi Tiendita.'
+          '❌ No se pudo leer el respaldo.'
         );
 
       }
@@ -1787,7 +2050,7 @@ function importJSON(event){
 
 
 /* ==========================================
-   START
+   INICIO
 ========================================== */
 
 render();
